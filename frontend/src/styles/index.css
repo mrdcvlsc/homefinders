@@ -1,0 +1,15 @@
+*{
+  margin: 0px;
+  padding: 0px;
+  box-sizing:border-box;
+  font-family: 'Ubuntu', 'Heebo', sans-serif;
+  outline: none;
+}
+
+body {
+  /* this border is for debugging purposes only, remove in production */
+  border: solid 2px green;
+
+  height: 100vh;
+  width: 100vw;
+}

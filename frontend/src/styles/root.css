@@ -1,0 +1,74 @@
+/* style for the container that holds the logo, website name, and navigation bar */
+#navigation-panel {
+    border: 1px solid red;
+    width: 100%;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 2em;
+}
+
+/* style for the container that holds the navigation buttons */
+#navigation-bar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+/* main buttons */
+#navigation-bar > div {
+    position: relative;
+    background-color: rgba(0, 153, 255, 0.685);
+}
+
+/* main buttons - on hover */
+#navigation-bar > div:hover {
+    background-color: rgba(255, 0, 119, 0.685);
+}
+
+/* container of sub buttons - hidden by default*/
+#navigation-bar > div > div {
+    display: none;
+    position: absolute;
+
+    top: 100%;
+    left: 0%;
+}
+
+/* container of sub buttons - show on main button hover*/
+#navigation-bar > div:hover > div {
+    display: block;
+}
+
+/* all buttons */
+#navigation-bar > div, #navigation-bar > div > div > div {
+    padding: 12px 24px;
+}
+
+/* sub buttons */
+#navigation-bar > div > div > div {
+    background-color: rgba(0, 195, 255, 0.685);
+}
+
+/* sub buttons - on hover */
+#navigation-bar > div > div > div:hover {
+    background-color: rgba(153, 0, 255, 0.685);
+}
+
+/* navigation bar links */
+#navigation-bar a {
+    color: white;
+    text-decoration: none;
+}
+
+/* navigation bar links - when clicked */
+#navigation-bar a:active {
+    color: green;
+}
+
+/* navigation bar links - on hover */
+#navigation-bar a:hover {
+    color: black;
+}
