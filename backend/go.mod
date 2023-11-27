@@ -1,4 +1,4 @@
-module homefinders
+module github.com/mrdcvlsc/homefinders
 
 go 1.21.3
 
