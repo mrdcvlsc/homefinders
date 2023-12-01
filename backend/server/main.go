@@ -16,7 +16,12 @@ func main() {
 
 	router := gin.Default()
 	router.Use(static.Serve("/", static.LocalFile("../../frontend/dist", true)))
+
 	router.GET("/", routes.ServeWebApp)
+
+	router.POST("/register", routes.Register)
+	router.POST("/login", routes.Login)
+
 	router.GET("/albums", routes.GetAlbums)
 	router.GET("/albums/:id", routes.GetAlbumByID)
 	router.POST("/albums", routes.PostAlbums)
