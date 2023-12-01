@@ -1,0 +1,27 @@
+name: frontend
+
+on:
+  push:
+    branches: [ "master", "main", "implement_workflow" ]
+  pull_request:
+    branches: [ "master", "main", "implement_workflow" ]
+
+jobs:
+  frontend_build:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node-version: [18.x, 20.x]
+        architecture: [x64, x86]
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Node:${{ matrix.node-version }}, OS:${{ matrix.os }}, arch:${{ matrix.architecture }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        
+    - run: make isolated_frontend_build
