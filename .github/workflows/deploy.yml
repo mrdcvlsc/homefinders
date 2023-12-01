@@ -1,0 +1,73 @@
+name: deploy
+
+on:
+  push:
+    branches: [ "master", "main", "implement_workflow" ]
+  pull_request:
+    branches: [ "master", "main", "implement_workflow" ]
+
+jobs:
+  backend_build:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        go-version: [ 1.21.x ]
+        architecture: [x64]
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup Go ${{ matrix.go-version }}
+      uses: actions/setup-go@v4
+      with:
+        go-version: ${{ matrix.go-version }}
+
+    - name: Display Go version
+      run: make isolated_backend_build
+            
+  frontend_build:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node-version: [20.x]
+        architecture: [x64]
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Node:${{ matrix.node-version }}, OS:${{ matrix.os }}, arch:${{ matrix.architecture }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        
+    - run: make isolated_frontend_build
+
+  deployment:
+    needs: [backend_build, frontend_build]
+    runs-on: ubuntu-latest
+
+    permissions:
+        contents: write
+
+    steps:
+      - name: Push to cannary branch
+        uses: actions/checkout@v4
+
+      - name: Configure Email
+        run:  git config --local user.email auto.bench@script.yml
+
+      - name: Configure Name
+        run:  git config --local user.name bench.yml
+
+      - name: Git Status
+        run: git status
+
+      - name: Create and/or switch to cannary branch
+        run: git checkout -B cannary
+
+      - name: Push Changes To Benchmark Branch
+        run: git push --force origin cannary
