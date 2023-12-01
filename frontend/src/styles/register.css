@@ -1,0 +1,38 @@
+.form-page {
+    border: 3px solid blue;
+    display: flex;
+    justify-content: center;
+}
+
+.form-box {
+    /* set registration box width */
+    width: clamp(300px, 40%, 800px);
+    border: yellow 2px solid;
+
+    padding: 2em;
+}
+
+.form-headings {
+    text-align: center;
+}
+
+.register-input-fields {
+    display: flex;
+    justify-content: center;
+    align-items: left;
+    flex-direction: column;
+
+    padding: 0.5em;
+
+    /* border: green solid 1px; */
+}
+
+.register-input-fields > input, .register-input-fields > button {
+    height: 2.5em;
+}
+
+.form-error-message {
+    color: red;
+    font-size: small;
+    font-style: italic;
+}

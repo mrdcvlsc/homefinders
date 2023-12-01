@@ -1,24 +1,28 @@
 import React from 'react'
+import '../styles/register.css'
+
+import { validateForm } from '../helpers/validate'
 
 export default function Registration() {
-    const [username, setUsername] = React.useState(null)
-    const [password, setPassword] = React.useState(null)
-    const [retyped, setRetyped] = React.useState(null)
+    const [username, setUsername] = React.useState('')
+    const [password, setPassword] = React.useState('')
+    const [retyped, setRetyped] = React.useState('')
+    const [formErrors, setFormErrors] = React.useState({})
 
-    async function register(e) {
-        if (password < 8) {
-            console.log('password should be greater or equal 8 characters')
-        }
+    async function handleRegister(e) {
+        e.preventDefault();
 
-        if (password !== retyped) {
-            console.log('password did not match')
+        const form_error = validateForm(username, password, retyped)
+        setFormErrors(form_error)
+
+        if (Object.keys(form_error).length !== 0) {
+            console.log('Registration Form Validation Error : ', Object.keys(form_error).length)
             return
         } else {
-            console.log('password match')
+            console.log('No Registration Form Validation Error : ', Object.keys(form_error).length)
         }
 
         try {
-            e.preventDefault();
             const response = await fetch('/register', {
                 credentials: 'include',
                 headers: {
@@ -33,24 +37,53 @@ export default function Registration() {
             });
     
             if (response.status === 200) {
-                // success
+                console.log('Register Success : status code = ', response.status)
             } else {
-                // err
+                console.log('Register Failed : status code = ', response.status)
             }
         } catch (err) {
-            // err
+            console.log('Register Unexpected Error : \n\n', err)
         }
       }
 
     return (
-        <div>
-            <h1>Registration Page</h1>
-            <form>
-                <input onChange={(e) => setUsername(e.target.value)}  name="username" type="text" />
-                <input onChange={(e) => setPassword(e.target.value)} name="password" type="password" />
-                <input onChange={(e) => setRetyped(e.target.value)} name="retyped" type="password" />
-                <button onClick={register} type="submit">Register</button>
-            </form>
+        <div className='form-page'>
+            <div className='form-box'><form onSubmit={handleRegister}>
+                <div className='form-headings'>
+                    <h1>Registration Page</h1>
+                </div>
+
+                <div className='register-input-fields'>
+                    <input onChange={(e) => setUsername(e.target.value)}
+                        name="username"
+                        placeholder="Username or Email"
+                        type="text" required
+                    />
+                    {formErrors.username && <p className='form-error-message'>{formErrors.username}</p>}
+                </div>
+                
+                <div className='register-input-fields'>
+                    <input onChange={(e) => setPassword(e.target.value)}
+                        name="password"
+                        placeholder="Password"
+                        type="password" required
+                    />
+                    {formErrors.password && <p className='form-error-message'>{formErrors.password}</p>}
+                </div>
+
+                <div className='register-input-fields'>
+                    <input onChange={(e) => setRetyped(e.target.value)}
+                        name="retyped"
+                        placeholder="Re-typed Password"
+                        type="password" required
+                    />
+                    {formErrors.retyped && <p className='form-error-message'>{formErrors.retyped}</p>}
+                </div>
+
+                <div className='register-input-fields'>
+                    <button onClick={(e) => handleRegister(e)} type="submit">Register</button>
+                </div>
+            </form></div>
         </div>
     )
 }
