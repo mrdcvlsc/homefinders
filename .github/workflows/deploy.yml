@@ -37,7 +37,7 @@ jobs:
         architecture: [x64]
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Node:${{ matrix.node-version }}, OS:${{ matrix.os }}, arch:${{ matrix.architecture }}
       uses: actions/setup-node@v3
@@ -50,9 +50,12 @@ jobs:
     needs: [backend_build, frontend_build]
     runs-on: ubuntu-latest
 
+    permissions:
+        contents: write
+
     steps:
       - name: Push to cannary branch
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Configure Email
         run:  git config --local user.email auto.bench@script.yml
@@ -63,4 +66,8 @@ jobs:
       - name: Git Status
         run: git status
 
-      - 
+      - name: Create and/or switch to cannary branch
+        run: git checkout -B cannary
+
+      - name: Push Changes To Benchmark Branch
+        run: git push --force origin cannary
