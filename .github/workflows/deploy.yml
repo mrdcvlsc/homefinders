@@ -54,7 +54,7 @@ jobs:
         contents: write
 
     steps:
-      - name: Push to cannary branch
+      - name: Push to canary branch
         uses: actions/checkout@v4
 
       - name: Configure Email
@@ -66,8 +66,8 @@ jobs:
       - name: Git Status
         run: git status
 
-      - name: Create and/or switch to cannary branch
-        run: git checkout -B cannary
+      - name: Create and/or switch to canary branch
+        run: git checkout -B canary
 
       - name: Push Changes To Benchmark Branch
-        run: git push --force origin cannary
+        run: git push --force origin canary

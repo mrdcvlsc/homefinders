@@ -6,12 +6,14 @@ ASSETS := $(wildcard frontend/src/*.jsx)
 GO_SRC := $(wildcard backend/*/*.go)
 
 backend: frontend backend/server/main.go
-	go -C backend/server build -tags netgo -ldflags '-s -w' -o app
+	$(MAKE) isolated_backend_build
 	cd backend/server && ./app
 
 frontend: $(SRC_JSX) $(ROUTES_JSX) $(CSS) $(ASSETS) $(GO_SRC)
-	npm install --prefix frontend
-	npm run build --prefix frontend
+	$(MAKE) isolated_frontend_build
+
+run:
+	cd backend/server && ./app
 
 isolated_backend_build:
 	go -C backend/server build -tags netgo -ldflags '-s -w' -o app
