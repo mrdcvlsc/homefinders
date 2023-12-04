@@ -9,15 +9,16 @@ import (
 	"github.com/go-sql-driver/mysql"
 )
 
-var database_instance *sql.DB
+type MariaDB struct {
+	Instance *sql.DB
+}
 
-// Get a thread safe db instance `*sql.DB`.
-func GetMariadbInstance() *sql.DB {
-	return database_instance
+func (db *MariaDB) GetInstance() *sql.DB {
+	return db.Instance
 }
 
 // Initialize a thread safe db instance `*sql.DB`.
-func InitializeMariaDB() {
+func (db *MariaDB) Connect() error {
 	// Capture connection properties.
 	cfg := mysql.Config{
 		AllowNativePasswords: true,
@@ -30,14 +31,18 @@ func InitializeMariaDB() {
 
 	// Get a database handle.
 	var err error
-	database_instance, err = sql.Open("mysql", cfg.FormatDSN())
+	db.Instance, err = sql.Open("mysql", cfg.FormatDSN())
 	if err != nil {
 		log.Fatal(err)
+		return err
 	}
 
-	pingErr := database_instance.Ping()
+	pingErr := db.Instance.Ping()
 	if pingErr != nil {
 		log.Fatal(pingErr)
+		return err
 	}
-	fmt.Println("Connected!")
+
+	fmt.Println("Successfully connected to MariaDB!")
+	return nil
 }

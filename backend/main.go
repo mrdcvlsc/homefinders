@@ -7,15 +7,19 @@ import (
 	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
 
-	"github.com/mrdcvlsc/homefinders/database"
+	"github.com/mrdcvlsc/homefinders/persistence"
 	"github.com/mrdcvlsc/homefinders/routes"
 )
 
 func main() {
-	database.InitializeMariaDB()
+	err := persistence.Initialize()
+	if err != nil {
+		fmt.Println("Database Error", err)
+		os.Exit(1)
+	}
 
 	router := gin.Default()
-	router.Use(static.Serve("/", static.LocalFile("../../frontend/dist", true)))
+	router.Use(static.Serve("/", static.LocalFile("../frontend/dist", true)))
 
 	router.GET("/", routes.ServeWebApp)
 

@@ -58,7 +58,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Configure Email
-        run:  git config --local user.email auto.bench@script.yml
+        run:  git config --local user.email cannary_deploy@script.yml
 
       - name: Configure Name
         run:  git config --local user.name bench.yml

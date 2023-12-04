@@ -6,7 +6,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/mrdcvlsc/homefinders/database"
+	"github.com/mrdcvlsc/homefinders/persistence"
 )
 
 // Album represents data about a record Album.
@@ -36,7 +36,7 @@ func NewAlbum(ID, Title, Artist string, Price float64) Album {
 func GetAlbums(c *gin.Context) {
 	album_collection := NewAlbumCollection()
 
-	db := database.GetMariadbInstance()
+	db := persistence.GetInstanceDB()
 	rows, err := db.Query("SELECT * FROM album")
 
 	if err != nil {
@@ -72,7 +72,7 @@ func PostAlbums(c *gin.Context) {
 		return
 	}
 
-	db := database.GetMariadbInstance()
+	db := persistence.GetInstanceDB()
 	result, err := db.Exec("INSERT INTO album (title, artist, price) VALUES (?, ?, ?)", newAlbum.Title, newAlbum.Artist, newAlbum.Price)
 	if err != nil {
 		c.IndentedJSON(http.StatusBadRequest, gin.H{"message": err})
@@ -97,7 +97,7 @@ func GetAlbumByID(c *gin.Context) {
 
 	id := c.Param("id")
 
-	db := database.GetMariadbInstance()
+	db := persistence.GetInstanceDB()
 	row := db.QueryRow("SELECT * FROM album WHERE id = ?", id)
 	if err := row.Scan(&album.ID, &album.Title, &album.Artist, &album.Price); err != nil {
 		if err == sql.ErrNoRows {

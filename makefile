@@ -1,23 +1,33 @@
-SRC_JSX := $(wildcard frontend/src/*.jsx)
-ROUTES_JSX := $(wildcard frontend/src/routes/*.jsx)
-CSS := $(wildcard frontend/styles/*.css)
-ASSETS := $(wildcard frontend/src/*.jsx)
+################################################################################
+# Dependencies
+################################################################################
 
 GO_SRC := $(wildcard backend/*/*.go)
+GO_SRC_SUBDIR := $(wildcard backend/*/*/*.go)
+REACT_SRC_FILES := $(wildcard frontend/src/*.*)
+REACT_SRC_SUBDIR_FILES := $(wildcard frontend/src/*/*.*)
 
-backend: frontend backend/server/main.go
-	$(MAKE) isolated_backend_build
-	cd backend/server && ./app
+.PHONY: backend frontend run isolated_backend_build isolated_frontend_build
 
-frontend: $(SRC_JSX) $(ROUTES_JSX) $(CSS) $(ASSETS) $(GO_SRC)
-	$(MAKE) isolated_frontend_build
+run: backend/app frontend/dist/index.html
+	cd backend && ./app
 
-run:
-	cd backend/server && ./app
+################################################################################
+# Development Targets
+################################################################################
 
-isolated_backend_build:
-	go -C backend/server build -tags netgo -ldflags '-s -w' -o app
+backend/app: backend/main.go
+	go -C backend build -tags netgo -ldflags '-s -w' -o app
 
-isolated_frontend_build:
-	npm install --prefix frontend
-	npm run build --prefix frontend
+frontend/dist/index.html: $(REACT_SRC_FILES) $(REACT_SRC_SUBDIR_FILES)
+	npm install --prefix frontend && npm run build --prefix frontend
+
+################################################################################
+# Canary Targets
+################################################################################
+
+isolated_backend_build: frontend backend/main.go
+	go -C backend build -tags netgo -ldflags '-s -w' -o app
+
+isolated_frontend_build: $(REACT_SRC_FILES) $(REACT_SRC_SUBDIR_FILES)
+	npm install --prefix frontend && npm run build --prefix frontend
