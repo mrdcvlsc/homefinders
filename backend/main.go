@@ -2,8 +2,7 @@ package main
 
 import (
 	"fmt"
-	"log"
-	"net"
+	"net/http"
 	"os"
 
 	"github.com/gin-contrib/sessions"
@@ -14,25 +13,26 @@ import (
 	"github.com/mrdcvlsc/homefinders/routes"
 )
 
-// Get preferred outbound ip of this machine
-func GetOutboundIP() net.IP {
-	conn, err := net.Dial("udp", "8.8.8.8:80")
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer conn.Close()
-
-	localAddr := conn.LocalAddr().(*net.UDPAddr)
-
-	return localAddr.IP
-}
-
 func main() {
 	err := persistence.Initialize()
 	if err != nil {
 		fmt.Println("Database Error", err)
 		os.Exit(1)
 	}
+
+	secure_cookie := false
+	same_site := http.SameSiteDefaultMode
+	if os.Getenv("GIN_MODE") == "release" {
+		secure_cookie = true
+		same_site = http.SameSiteNoneMode
+	}
+
+	routes.SetSessionOptions(sessions.Options{
+		MaxAge:   30, // seconds
+		Secure:   secure_cookie,
+		HttpOnly: true,
+		SameSite: same_site,
+	})
 
 	router := gin.Default()
 
@@ -46,14 +46,15 @@ func main() {
 
 	router.GET("/test/session", routes.TestSession)
 
-	/////// examples ////////
+	/////// examples routes ////////
 
 	router.GET("/albums", routes.GetAlbums)
 	router.GET("/albums/:id", routes.GetAlbumByID)
 	router.POST("/albums", routes.PostAlbums)
 
-	fmt.Printf("\n\nRunning on %v\n\n", GetOutboundIP())
+	////////////////////////////////
 
+	routes.DisplayOutboundIP()
 	router.Run(fmt.Sprintf(":%s", os.Getenv("PORT")))
 
 }
