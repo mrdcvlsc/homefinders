@@ -50,13 +50,14 @@ export default function Registration() {
         <div className='form-page'>
             <div className='form-box'><form onSubmit={handleRegister}>
                 <div className='form-headings'>
-                    <h1>Registration Page</h1>
+                    <h1>Registration</h1>
+                    <p>Fill up this form to create an account</p>
                 </div>
 
                 <div className='register-input-fields'>
                     <input onChange={(e) => setUsername(e.target.value)}
                         name="username"
-                        placeholder="Username or Email"
+                        placeholder="Email or Username"
                         type="text" required
                     />
                     {formErrors.username && <p className='form-error-message'>{formErrors.username}</p>}
@@ -74,14 +75,14 @@ export default function Registration() {
                 <div className='register-input-fields'>
                     <input onChange={(e) => setRetyped(e.target.value)}
                         name="retyped"
-                        placeholder="Re-typed Password"
+                        placeholder="Confirm Password"
                         type="password" required
                     />
                     {formErrors.retyped && <p className='form-error-message'>{formErrors.retyped}</p>}
                 </div>
 
                 <div className='register-input-fields'>
-                    <button onClick={(e) => handleRegister(e)} type="submit">Register</button>
+                    <button onClick={(e) => handleRegister(e)} type="submit">Sign Up</button>
                 </div>
             </form></div>
         </div>

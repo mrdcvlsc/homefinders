@@ -50,12 +50,13 @@ export default function Login() {
             <div className='form-box'><form onSubmit={handleLogin}>
                 <div className='form-headings'>
                     <h1>Login</h1>
+                    <p>Enter your email/username and password to login</p>
                 </div>
 
                 <div className='register-input-fields'>
                     <input onChange={(e) => setUsername(e.target.value)}
                         name="username"
-                        placeholder="Username or Email"
+                        placeholder="Email or Username"
                         type="text" required
                     />
                     {formErrors.username && <p className='form-error-message'>{formErrors.username}</p>}

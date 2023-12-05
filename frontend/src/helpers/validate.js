@@ -10,22 +10,22 @@ export function validateForm(username, password, retyped_password = null) {
   if (!username) {
       form_errors.username = '*Email or Username is required'
   } else if (username.includes('@') && !EMAIL_REGEX.test(username)) {
-      form_errors.username = "*Invalid Email"
+      form_errors.username = "*Invalid email"
   } else if (!username.includes('@') && !USERNAME_REGEX.test(username)) {
-      form_errors.username = "*Invalid Username"
+      form_errors.username = "*Invalid username"
   }
 
   if (!password) {
       form_errors.password = '*Password is required'
   } else if (password.length < 8) {
-      form_errors.password = '*Password length is too short'
+      form_errors.password = '*Password requires to be at least 8 characters long'
   }
 
   if (retyped_password !== null) {
     if (password && !retyped_password) {
-      form_errors.retyped = '*Retyped Password is required'
+      form_errors.retyped = '*Retyped password is required'
     } else if (password && retyped_password !== password) {
-        form_errors.retyped = '*Re-typed Password mismatched'
+        form_errors.retyped = '*Re-typed password mismatched'
     }
   }
 
