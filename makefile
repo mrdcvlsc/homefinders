@@ -16,7 +16,7 @@ run: backend/app frontend/dist/index.html
 # Development Targets
 ################################################################################
 
-backend/app: backend/main.go
+backend/app: backend/main.go $(GO_SRC) $(GO_SRC_SUBDIR)
 	go -C backend build -tags netgo -ldflags '-s -w' -o app
 
 frontend/dist/index.html: $(REACT_SRC_FILES) $(REACT_SRC_SUBDIR_FILES)
@@ -26,7 +26,7 @@ frontend/dist/index.html: $(REACT_SRC_FILES) $(REACT_SRC_SUBDIR_FILES)
 # Canary Targets
 ################################################################################
 
-isolated_backend_build: frontend backend/main.go
+isolated_backend_build: frontend backend/main.go $(GO_SRC) $(GO_SRC_SUBDIR)
 	go -C backend build -tags netgo -ldflags '-s -w' -o app
 
 isolated_frontend_build: $(REACT_SRC_FILES) $(REACT_SRC_SUBDIR_FILES)
