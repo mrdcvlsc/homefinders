@@ -5,7 +5,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 
-import Root from './routes/root';
+import Navigation from './routes/navigation';
 
 import Landing from './routes/landing';
 import Registration from './routes/register';
@@ -18,7 +18,7 @@ import './styles/index.css'
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Root />,
+    element: <Navigation />,
     errorElement: <ErrorPage />,
     children: [
       {

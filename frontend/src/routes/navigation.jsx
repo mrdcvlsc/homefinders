@@ -2,11 +2,11 @@ import { Outlet, Link } from "react-router-dom";
 
 import ImgLogo from '../assets/logo.png';
 
-import '../styles/root.css'
+import '../styles/navigation.css'
 
 /// The main navigation component.
 /// This is the navigation bar in our web app.
-export default function Root() {
+export default function Navigation() {
   return (
     <>
       <div id="navigation-panel">
