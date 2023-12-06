@@ -76,15 +76,24 @@ func Login(c *gin.Context) {
 	}
 }
 
-func TestSession(c *gin.Context) {
+/*
+returns the user who is logged in the current session
+
+	`\who` POST handler response status codes:
+
+200 - Successfully responded the logged in user.
+
+401 - No user is logged in yet.
+*/
+func Who(c *gin.Context) {
 	session := sessions.Default(c)
 
 	fmt.Printf("\nTest Session : %+v", session)
 
 	user := session.Get("logged_in_user")
 	if user == nil {
-		c.IndentedJSON(http.StatusUnauthorized, gin.H{"error": "please login first"})
+		c.Status(http.StatusUnauthorized)
 	} else {
-		c.IndentedJSON(http.StatusOK, gin.H{"error": fmt.Sprintf("hello %s, test is working", user)})
+		c.JSON(http.StatusOK, gin.H{"user": user})
 	}
 }

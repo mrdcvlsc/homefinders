@@ -44,7 +44,7 @@ func main() {
 	router.POST("/register", routes.Register)
 	router.POST("/login", routes.Login)
 
-	router.GET("/test/session", routes.TestSession)
+	router.GET("/who", routes.Who)
 
 	/////// examples routes ////////
 
