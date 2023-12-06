@@ -5,15 +5,16 @@ import {
   RouterProvider,
 } from "react-router-dom";
 
-import Navigation from './routes/navigation';
+import Navigation from './pages/navigation';
 
-import Landing from './routes/landing';
-import Registration from './routes/register';
-import Login from './routes/login';
+import Landing from './pages/landing';
+import Registration from './pages/register';
+import Login from './pages/login';
 
 import ErrorPage from './error-page';
 
 import './styles/index.css'
+import Units from './pages/units';
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
       {
         path: "home",
         element: <Landing />,
+      },
+      {
+        path: "units",
+        element: <Units />,
       },
       {
         path: "register",

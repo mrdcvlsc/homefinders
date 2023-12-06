@@ -4,8 +4,7 @@ import ImgLogo from '../assets/logo.png';
 
 import '../styles/navigation.css'
 
-/// The main navigation component.
-/// This is the navigation bar in our web app.
+// The main navigation component, this is the root of the react-router-dom.
 export default function Navigation() {
   return (
     <>
@@ -15,6 +14,7 @@ export default function Navigation() {
 
         <div id="navigation-bar">
           <div><Link to={`home`}>Home</Link></div>
+          <div><Link to={`units`}>Units</Link></div>
           <div><Link to={`#`}>Admin</Link>
             <div>
               <div><Link to={`register`}>Register</Link></div>

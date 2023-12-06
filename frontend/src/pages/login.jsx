@@ -71,10 +71,13 @@ export default function Login() {
                     {formErrors.password && <p className='form-error-message'>{formErrors.password}</p>}
                 </div>
 
+                <label for="remember_me">Remember me </label><input type="checkbox" id="remember_me" name="remember_me"/>
+
                 <div className='register-input-fields'>
                     <button onClick={(e) => handleLogin(e)} type="submit">Login</button>
                 </div>
             </form></div>
+            
         </div>
     )
 }
