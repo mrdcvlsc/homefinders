@@ -8,6 +8,8 @@ type I interface {
 	Connect() error
 	GetInstance() *sql.DB
 	InitializeTables() error
+	RecordUsingEmail(*User) error
+	RecordUsingUsername(*User) error
 }
 
 /*
@@ -19,7 +21,17 @@ If instead the user provided a username (not an email) during registration, the 
 will be left empty, and the `Username` attribute will be set to the provided username.
 */
 type User struct {
-	Username string
-	Email    string
-	Password string
+	Id                int
+	Username          string
+	Email             string
+	SaltedHashPasswrd string
+	DateCreated       string
+}
+
+func NewUser(username, email, salted_hash_passwrd, data_created string) *User {
+	return &User{
+		Username:    username,
+		Email:       salted_hash_passwrd,
+		DateCreated: data_created,
+	}
 }

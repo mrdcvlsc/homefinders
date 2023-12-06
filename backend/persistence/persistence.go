@@ -25,3 +25,11 @@ func Initialize() error {
 func GetInstanceDB() *sql.DB {
 	return db.GetInstance()
 }
+
+func SaveUserWithEmail(user *database.User) error {
+	return db.RecordUsingEmail(user)
+}
+
+func SaveUserWithUsername(user *database.User) error {
+	return db.RecordUsingUsername(user)
+}

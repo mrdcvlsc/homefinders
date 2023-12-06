@@ -52,7 +52,7 @@ func (db *MariaDB) InitializeTables() error {
 			username VARCHAR(25) UNIQUE NOT NULL,
 			email VARCHAR(254) UNIQUE,
 			salted_hash_passwrd VARCHAR(72) NOT NULL,
-			date_created DATETIME NOT NULL
+			date_created DATETIME DEFAULT NOW()
 		)`
 
 	if _, err := db.Instance.Exec(user_tbl_create_query); err != nil {
@@ -60,4 +60,23 @@ func (db *MariaDB) InitializeTables() error {
 	}
 
 	return nil
+}
+
+func (db *MariaDB) RecordUsingEmail(user *User) error {
+	_, err := db.Instance.Exec(
+		"INSERT INTO Users (username, email, salted_hash_passwrd) VALUES (?, ?, ?)",
+		user.Username,
+		user.Email,
+		user.SaltedHashPasswrd,
+	)
+	return err
+}
+
+func (db *MariaDB) RecordUsingUsername(user *User) error {
+	_, err := db.Instance.Exec(
+		"INSERT INTO Users (username, salted_hash_passwrd) VALUES (?, ?)",
+		user.Username,
+		user.SaltedHashPasswrd,
+	)
+	return err
 }
