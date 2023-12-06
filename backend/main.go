@@ -16,20 +16,20 @@ import (
 func main() {
 	err := persistence.Initialize()
 	if err != nil {
-		fmt.Println("Database Error", err)
+		fmt.Println("\nPersistence Initialization Error : ", err)
 		os.Exit(1)
 	}
 
-	secure_cookie := false
+	use_secure_cookie := false
 	same_site := http.SameSiteDefaultMode
 	if os.Getenv("GIN_MODE") == "release" {
-		secure_cookie = true
+		use_secure_cookie = true
 		same_site = http.SameSiteNoneMode
 	}
 
 	routes.SetSessionOptions(sessions.Options{
 		MaxAge:   30, // seconds
-		Secure:   secure_cookie,
+		Secure:   use_secure_cookie,
 		HttpOnly: true,
 		SameSite: same_site,
 	})

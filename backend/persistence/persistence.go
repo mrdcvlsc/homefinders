@@ -10,7 +10,16 @@ var db database.I
 
 func Initialize() error {
 	db = &database.MariaDB{}
-	return db.Connect()
+
+	if err := db.Connect(); err != nil {
+		return err
+	}
+
+	if err := db.InitializeTables(); err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func GetInstanceDB() *sql.DB {

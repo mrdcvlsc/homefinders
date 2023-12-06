@@ -1,10 +1,13 @@
 package database
 
-import "database/sql"
+import (
+	"database/sql"
+)
 
 type I interface {
 	Connect() error
 	GetInstance() *sql.DB
+	InitializeTables() error
 }
 
 /*
