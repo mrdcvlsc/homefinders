@@ -8,8 +8,12 @@ type I interface {
 	Connect() error
 	GetInstance() *sql.DB
 	InitializeTables() error
+
 	RecordUsingEmail(*User) error
 	RecordUsingUsername(*User) error
+
+	GetUserUsingEmail(email string) (*User, error)
+	GetUserUsingUsername(username string) (*User, error)
 }
 
 /*

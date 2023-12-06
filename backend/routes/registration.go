@@ -16,6 +16,19 @@ type RegistrationForm struct {
 	Password string `json:"password"`
 }
 
+/*
+	`\register` POST handler response status codes:
+
+200 - Successfully created a user.
+
+400 - Body might be corrupted.
+
+401 - Wrong Password.
+
+403 - That user already exist.
+
+500 - Internal Server Error.
+*/
 func Register(c *gin.Context) {
 	regform_data := RegistrationForm{}
 

@@ -80,3 +80,21 @@ func (db *MariaDB) RecordUsingUsername(user *User) error {
 	)
 	return err
 }
+
+// test with `err == sql.ErrNoRows`, if true user not found, else internal server error
+func (db *MariaDB) GetUserUsingEmail(email string) (*User, error) {
+	user := &User{}
+
+	row := db.Instance.QueryRow("SELECT * FROM Users WHERE email = ?", email)
+	err := row.Scan(&user.Id, &user.Username, &user.Email, &user.SaltedHashPasswrd, &user.DateCreated)
+	return user, err
+}
+
+// test with `err == sql.ErrNoRows`, if true user not found, else internal server error
+func (db *MariaDB) GetUserUsingUsername(username string) (*User, error) {
+	user := &User{}
+
+	row := db.Instance.QueryRow("SELECT id, username, salted_hash_passwrd, date_created FROM Users WHERE username = ?", username)
+	err := row.Scan(&user.Id, &user.Username, &user.SaltedHashPasswrd, &user.DateCreated)
+	return user, err
+}

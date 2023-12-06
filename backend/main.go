@@ -37,7 +37,7 @@ func main() {
 	router := gin.Default()
 
 	router.Use(static.Serve("/", static.LocalFile("../frontend/dist", true)))
-	router.Use(sessions.Sessions("admin", routes.SessionStore))
+	router.Use(sessions.Sessions("session_id", routes.SessionStore))
 
 	router.GET("/", routes.ServeWebApp)
 

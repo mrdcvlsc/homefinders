@@ -2,6 +2,7 @@ package persistence
 
 import (
 	"database/sql"
+	"strings"
 
 	"github.com/mrdcvlsc/homefinders/database"
 )
@@ -32,4 +33,17 @@ func SaveUserWithEmail(user *database.User) error {
 
 func SaveUserWithUsername(user *database.User) error {
 	return db.RecordUsingUsername(user)
+}
+
+// test with `err == sql.ErrNoRows`, if true user not found, else internal server error
+func GetUser(username_or_email string) (*database.User, error) {
+	user := &database.User{}
+	var err error
+	if strings.Contains(username_or_email, "@") {
+		user, err = db.GetUserUsingEmail(username_or_email)
+	} else {
+		user, err = db.GetUserUsingUsername(username_or_email)
+	}
+
+	return user, err
 }

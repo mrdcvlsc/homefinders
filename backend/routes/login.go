@@ -1,11 +1,14 @@
 package routes
 
 import (
+	"database/sql"
 	"fmt"
 	"net/http"
 
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
+	"github.com/mrdcvlsc/homefinders/persistence"
+	"golang.org/x/crypto/bcrypt"
 )
 
 type LoginForm struct {
@@ -13,29 +16,64 @@ type LoginForm struct {
 	Password string `json:"password"`
 }
 
-func Login(c *gin.Context) {
-	logged_in_user := LoginForm{}
+/*
+	`\login` POST handler response status codes:
 
-	// if error when parsing jason
-	if err := c.BindJSON(&logged_in_user); err != nil {
-		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err})
+200 - Successfully Logged In.
+
+208 - Already Logged In.
+
+400 - Body might be corrupted.
+
+401 - Wrong Password.
+
+404 - User not found.
+
+500 - Internal Server Error.
+*/
+func Login(c *gin.Context) {
+	loginform_data := LoginForm{}
+
+	/////////////////////// parse the form data ///////////////////////
+
+	if err := c.BindJSON(&loginform_data); err != nil {
+		fmt.Println("Bad Request")
+		c.Status(http.StatusBadRequest)
 		return
 	}
 
-	session := sessions.Default(c)
+	/////////////////////// find if user exist ///////////////////////
 
-	fmt.Printf("\nLogin Session : %+v", session)
-
-	user := session.Get("user")
-	if user == nil {
-		session.Set("user", logged_in_user.Username)
-		session.Save()
-		c.IndentedJSON(http.StatusOK, gin.H{"error": fmt.Sprintf("welcome %s to the server", user)})
-	} else {
-		c.IndentedJSON(http.StatusOK, gin.H{"error": fmt.Sprintf("you are already logged in %s to the server", user)})
+	user, findUserErr := persistence.GetUser(loginform_data.Username)
+	if findUserErr != nil {
+		if findUserErr == sql.ErrNoRows {
+			c.Status(http.StatusNotFound)
+		} else {
+			fmt.Println(findUserErr)
+			c.Status(http.StatusInternalServerError)
+		}
+		return
 	}
 
-	fmt.Print("\nlogged_in_user = ", logged_in_user, "\n\n")
+	/////////////////////// validate user password ///////////////////////
+
+	if err := bcrypt.CompareHashAndPassword([]byte(user.SaltedHashPasswrd), []byte(loginform_data.Password)); err != nil {
+		c.Status(http.StatusUnauthorized)
+		return
+	}
+
+	/////////////////////// create user session ///////////////////////
+
+	session := sessions.Default(c)
+	logged_in_user := session.Get("logged_in_user")
+
+	if logged_in_user == nil {
+		session.Set("logged_in_user", user.Username)
+		session.Save()
+		c.Status(http.StatusOK)
+	} else {
+		c.Status(http.StatusAlreadyReported)
+	}
 }
 
 func TestSession(c *gin.Context) {
@@ -43,11 +81,10 @@ func TestSession(c *gin.Context) {
 
 	fmt.Printf("\nTest Session : %+v", session)
 
-	user := session.Get("user")
+	user := session.Get("logged_in_user")
 	if user == nil {
 		c.IndentedJSON(http.StatusUnauthorized, gin.H{"error": "please login first"})
 	} else {
 		c.IndentedJSON(http.StatusOK, gin.H{"error": fmt.Sprintf("hello %s, test is working", user)})
-
 	}
 }
