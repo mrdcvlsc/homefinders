@@ -40,7 +40,7 @@ export default function Registration() {
             });
     
             if (response.status === 200) {
-                validation_result.success = 'login successful'
+                validation_result.success = 'Registration successful'
             }
 
             if (response.status === 400) {
