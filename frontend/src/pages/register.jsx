@@ -48,7 +48,7 @@ export default function Registration() {
             }
 
             if (response.status === 403) {
-                throw '*That username or email is already used'
+                throw '*That username or email is taken'
             }
 
             if (response.status === 500) {
