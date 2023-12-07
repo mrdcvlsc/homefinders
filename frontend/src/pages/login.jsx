@@ -10,19 +10,22 @@ export default function Login() {
 
     const [username, setUsername] = React.useState('')
     const [password, setPassword] = React.useState('')
-    const [formErrors, setFormErrors] = React.useState({})
+    const [formCatch, setFormCatch] = React.useState({})
+    const [disable, setDisable] = React.useState(false)
 
     async function handleLogin(e) {
+        setDisable(true)
         e.preventDefault();
 
-        const form_error = validateForm(username, password)
-        setFormErrors(form_error)
+        const validation_result = validateForm(username, password)
+        setFormCatch(validation_result)
 
-        if (Object.keys(form_error).length !== 0) {
-            console.log('Login Form Validation Error : ', Object.keys(form_error).length)
+        if (Object.keys(validation_result).length !== 0) {
+            console.log('Login Form Validation Error : ', Object.keys(validation_result).length)
+            setDisable(false)
             return
         } else {
-            console.log('No Login Form Validation Error : ', Object.keys(form_error).length)
+            console.log('No Login Form Validation Error : ', Object.keys(validation_result).length)
         }
 
         try {
@@ -40,15 +43,35 @@ export default function Login() {
             });
     
             if (response.status === 200) {
-                console.log('Login Success : status code = ', response.status)
+                validation_result.success = 'login successful'
+                setFormCatch(validation_result)
+                setDisable(false)
                 navigate('/units')
-            } else {
-                console.log('Login Failed : status code = ', response.status)
+                return
+            }
+
+            if (response.status === 400) {
+                throw '*Bad request, body might be corrupted or maliciously altered'
+            }
+
+            if (response.status === 401) {
+                throw '*Wrong password'
+            }
+
+            if (response.status === 404) {
+                throw '*User not found'
+            }
+
+            if (response.status === 500) {
+                throw '*Internal server error'
             }
         } catch (err) {
-            console.log('Login Unexpected Error : \n\n', err)
+            validation_result.error = err
         }
-      }
+        
+        setFormCatch(validation_result)
+        setDisable(false)
+    }
 
     return (
         <div className='form-page'>
@@ -63,8 +86,9 @@ export default function Login() {
                         name="username"
                         placeholder="Email or Username"
                         type="text" required
+                        disabled={disable}
                     />
-                    {formErrors.username && <p className='form-error-message'>{formErrors.username}</p>}
+                    {formCatch.invalidUsername && <p className='form-error-message'>{formCatch.invalidUsername}</p>}
                 </div>
                 
                 <div className='register-input-fields'>
@@ -72,14 +96,19 @@ export default function Login() {
                         name="password"
                         placeholder="Password"
                         type="password" required
+                        disabled={disable}
                     />
-                    {formErrors.password && <p className='form-error-message'>{formErrors.password}</p>}
+                    {formCatch.invalidPassword && <p className='form-error-message'>{formCatch.invalidPassword}</p>}
                 </div>
 
-                <label for="remember_me">Remember me </label><input type="checkbox" id="remember_me" name="remember_me"/>
+                <label for="remember_me">Remember me
+                    <input type="checkbox" id="remember_me" name="remember_me" disabled={disable}/>
+                </label>
 
                 <div className='register-input-fields'>
-                    <button onClick={(e) => handleLogin(e)} type="submit">Login</button>
+                    <button onClick={(e) => handleLogin(e)} type="submit" disabled={disable} >Login</button>
+                    {formCatch.error && <p className='form-error-message'>{formCatch.error}</p>}
+                    {formCatch.success && <p className='form-success-message'>{formCatch.success}</p>}
                 </div>
             </form></div>
             

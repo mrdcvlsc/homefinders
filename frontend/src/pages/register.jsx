@@ -7,19 +7,22 @@ export default function Registration() {
     const [username, setUsername] = React.useState('')
     const [password, setPassword] = React.useState('')
     const [retyped, setRetyped] = React.useState('')
-    const [formErrors, setFormErrors] = React.useState({})
+    const [formCatch, setFormCatch] = React.useState({})
+    const [disable, setDisable] = React.useState(false)
 
     async function handleRegister(e) {
+        setDisable(true)
         e.preventDefault();
 
-        const form_error = validateForm(username, password, retyped)
-        setFormErrors(form_error)
+        const validation_result = validateForm(username, password, retyped)
+        setFormCatch(validation_result)
 
-        if (Object.keys(form_error).length !== 0) {
-            console.log('Registration Form Validation Error : ', Object.keys(form_error).length)
+        if (Object.keys(validation_result).length !== 0) {
+            console.log('Registration Form Validation Error : ', Object.keys(validation_result).length)
+            setDisable(false)
             return
         } else {
-            console.log('No Registration Form Validation Error : ', Object.keys(form_error).length)
+            console.log('No Registration Form Validation Error : ', Object.keys(validation_result).length)
         }
 
         try {
@@ -37,14 +40,27 @@ export default function Registration() {
             });
     
             if (response.status === 200) {
-                console.log('Register Success : status code = ', response.status)
-            } else {
-                console.log('Register Failed : status code = ', response.status)
+                validation_result.success = 'login successful'
+            }
+
+            if (response.status === 400) {
+                throw '*Bad request, body might be corrupted or maliciously altered'
+            }
+
+            if (response.status === 403) {
+                throw '*That username or email is already used'
+            }
+
+            if (response.status === 500) {
+                throw '*Internal server error'
             }
         } catch (err) {
-            console.log('Register Unexpected Error : \n\n', err)
+            validation_result.error = err
         }
-      }
+        
+        setFormCatch(validation_result)
+        setDisable(false)
+    }
 
     return (
         <div className='form-page'>
@@ -59,8 +75,9 @@ export default function Registration() {
                         name="username"
                         placeholder="Email or Username"
                         type="text" required
+                        disabled={disable}
                     />
-                    {formErrors.username && <p className='form-error-message'>{formErrors.username}</p>}
+                    {formCatch.invalidUsername && <p className='form-error-message'>{formCatch.invalidUsername}</p>}
                 </div>
                 
                 <div className='register-input-fields'>
@@ -68,8 +85,9 @@ export default function Registration() {
                         name="password"
                         placeholder="Password"
                         type="password" required
+                        disabled={disable}
                     />
-                    {formErrors.password && <p className='form-error-message'>{formErrors.password}</p>}
+                    {formCatch.invalidPassword && <p className='form-error-message'>{formCatch.invalidPassword}</p>}
                 </div>
 
                 <div className='register-input-fields'>
@@ -77,12 +95,15 @@ export default function Registration() {
                         name="retyped"
                         placeholder="Confirm Password"
                         type="password" required
+                        disabled={disable}
                     />
-                    {formErrors.retyped && <p className='form-error-message'>{formErrors.retyped}</p>}
+                    {formCatch.passwordMismatched && <p className='form-error-message'>{formCatch.passwordMismatched}</p>}
                 </div>
 
                 <div className='register-input-fields'>
-                    <button onClick={(e) => handleRegister(e)} type="submit">Sign Up</button>
+                    <button onClick={(e) => handleRegister(e)} type="submit" disabled={disable}>Sign Up</button>
+                    {formCatch.error && <p className='form-error-message'>{formCatch.error}</p>}
+                    {formCatch.success && <p className='form-success-message'>{formCatch.success}</p>}
                 </div>
             </form></div>
         </div>

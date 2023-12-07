@@ -29,13 +29,17 @@
     height: 3em;
 }
 
-.form-error-message {
+.form-error-message, .form-success-message {
     position: absolute;
     bottom: 0;
+    font-size: small;
+    font-style: italic;
 }
 
 .form-error-message {
     color: red;
-    font-size: small;
-    font-style: italic;
+}
+
+.form-success-message {
+    color: rgb(55, 248, 30)
 }

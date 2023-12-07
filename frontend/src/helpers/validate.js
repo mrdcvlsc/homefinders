@@ -5,37 +5,37 @@ const USERNAME_REGEX = /^[a-zA-Z0-9!#$%^&*_.+-]+$/
 const PASSWORD_REGEX = /^(?=.*[a-zA-Z])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{8,}$/
 
 export function validateForm(username, password, retyped_password = null) {
-    const form_errors = {}
+    const form_catch = {}
 
     if (!username) {
-        form_errors.username = '*Email or Username is required'
+        form_catch.invalidUsername = '*Email or Username is required'
     } else if (username.includes('@') && username.length < 4) {
-        form_errors.username = "*Minimum of 4 characters"
+        form_catch.invalidUsername = "*Minimum of 4 characters"
     } else if (username.includes('@') && username.length > 254) {
-        form_errors.username = "*RFC2821, maximum of 254 characters"
+        form_catch.invalidUsername = "*RFC2821, maximum of 254 characters"
     } else if (username.includes('@') && !EMAIL_REGEX.test(username)) {
-        form_errors.username = "*Invalid email format"
+        form_catch.invalidUsername = "*Invalid email format"
     } else if (!username.includes('@') && !USERNAME_REGEX.test(username)) {
-        form_errors.username = "*Alphanumeric characters and !#$%^&*_.+- only"
+        form_catch.invalidUsername = "*Alphanumeric characters and !#$%^&*_.+- only"
     } else if (!username.includes('@') && username.length > 25) {
-        form_errors.username = "*Maximum of 25 characters"
+        form_catch.invalidUsername = "*Maximum of 25 characters"
     }
 
     if (!password) {
-        form_errors.password = '*Password required'
+        form_catch.invalidPassword = '*Password required'
     } else if (password.length < 8) {
-        form_errors.password = '*Minimum of 8 characters'
+        form_catch.invalidPassword = '*Minimum of 8 characters'
     } else if (password.length > 64) {
-        form_errors.password = '*Maximum of 65 characters'
+        form_catch.invalidPassword = '*Maximum of 65 characters'
     }
 
     if (retyped_password !== null) {
-      if (password && !retyped_password) {
-        form_errors.retyped = '*Retyped password is required'
-      } else if (password && retyped_password !== password) {
-          form_errors.retyped = '*Re-typed password mismatched'
-      }
+        if (password && !retyped_password) {
+            form_catch.passwordMismatched = '*Retyped password is required'
+        } else if (password && retyped_password !== password) {
+            form_catch.passwordMismatched = '*Re-typed password mismatched'
+        }
     }
 
-    return form_errors
+    return form_catch
 }

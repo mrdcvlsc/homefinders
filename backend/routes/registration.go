@@ -23,8 +23,6 @@ type RegistrationForm struct {
 
 400 - Body might be corrupted.
 
-401 - Wrong Password.
-
 403 - That user already exist.
 
 500 - Internal Server Error.
