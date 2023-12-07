@@ -47,7 +47,7 @@ export default function Login() {
 
     return (
         <div className='form-page'>
-            <div className='form-box'><form onSubmit={handleLogin}>
+            <div className='form-box'><form>
                 <div className='form-headings'>
                     <h1>Login</h1>
                     <p>Enter your email/username and password to login</p>

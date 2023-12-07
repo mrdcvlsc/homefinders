@@ -48,7 +48,7 @@ export default function Registration() {
 
     return (
         <div className='form-page'>
-            <div className='form-box'><form onSubmit={handleRegister}>
+            <div className='form-box'><form>
                 <div className='form-headings'>
                     <h1>Registration</h1>
                     <p>Fill up this form to create an account</p>
