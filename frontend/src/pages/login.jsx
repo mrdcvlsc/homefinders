@@ -1,9 +1,13 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
+
 import '../styles/register.css'
 
 import { validateForm } from '../helpers/validate'
 
 export default function Login() {
+    const navigate = useNavigate()
+
     const [username, setUsername] = React.useState('')
     const [password, setPassword] = React.useState('')
     const [formErrors, setFormErrors] = React.useState({})
@@ -37,6 +41,7 @@ export default function Login() {
     
             if (response.status === 200) {
                 console.log('Login Success : status code = ', response.status)
+                navigate('/units')
             } else {
                 console.log('Login Failed : status code = ', response.status)
             }
