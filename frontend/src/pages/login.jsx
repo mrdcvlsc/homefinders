@@ -51,22 +51,22 @@ export default function Login() {
             }
 
             if (response.status === 400) {
-                throw '*Bad request, body might be corrupted or maliciously altered'
+                throw new Error('*Bad request, body might be corrupted or maliciously altered')
             }
 
             if (response.status === 401) {
-                throw '*Wrong password'
+                throw new Error('*Wrong password')
             }
 
             if (response.status === 404) {
-                throw '*User not found'
+                throw new Error('*User not found')
             }
 
             if (response.status === 500) {
-                throw '*Internal server error'
+                throw new Error('*Internal server error')
             }
         } catch (err) {
-            validation_result.error = err
+            validation_result.error = err.message
         }
         
         setFormCatch(validation_result)
@@ -101,9 +101,8 @@ export default function Login() {
                     {formCatch.invalidPassword && <p className='form-error-message'>{formCatch.invalidPassword}</p>}
                 </div>
 
-                <label for="remember_me">Remember me
-                    <input type="checkbox" id="remember_me" name="remember_me" disabled={disable}/>
-                </label>
+                <label htmlFor='remember_me'>Remember me</label>
+                <input type="checkbox" id="remember_me" name="remember_me" disabled={disable}/>
 
                 <div className='register-input-fields'>
                     <button onClick={(e) => handleLogin(e)} type="submit" disabled={disable} >Login</button>

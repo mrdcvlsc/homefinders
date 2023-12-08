@@ -44,18 +44,18 @@ export default function Registration() {
             }
 
             if (response.status === 400) {
-                throw '*Bad request, body might be corrupted or maliciously altered'
+                throw new Error('*Bad request, body might be corrupted or maliciously altered')
             }
 
             if (response.status === 403) {
-                throw '*That username or email is taken'
+                throw new Error('*That username or email is taken')
             }
 
             if (response.status === 500) {
-                throw '*Internal server error'
+                throw new Error('*Internal server error')
             }
         } catch (err) {
-            validation_result.error = err
+            validation_result.error = err.message
         }
         
         setFormCatch(validation_result)
