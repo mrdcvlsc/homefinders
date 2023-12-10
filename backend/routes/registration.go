@@ -1,9 +1,11 @@
 package routes
 
 import (
+	"crypto/rand"
 	"fmt"
 	"net/http"
 	"strings"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/mrdcvlsc/homefinders/database"
@@ -14,6 +16,18 @@ import (
 type RegistrationForm struct {
 	Username string `json:"username"`
 	Password string `json:"password"`
+}
+
+func new_registration_code() (string, error) {
+	rand_bytes := make([]byte, 1)
+	_, err := rand.Read(rand_bytes)
+	if err != nil {
+		return "", err
+	}
+
+	curr_unit_time_in_sec := uint64(time.Now().Unix())
+	new_registration_code := fmt.Sprintf("%02x%08x", rand_bytes, curr_unit_time_in_sec)
+	return new_registration_code, nil
 }
 
 /*
