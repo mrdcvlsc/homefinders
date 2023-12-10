@@ -33,8 +33,7 @@ func Register(c *gin.Context) {
 	/////////////////////// parse the form data ///////////////////////
 
 	if err := c.BindJSON(&regform_data); err != nil {
-		fmt.Println(err)
-		c.Status(http.StatusBadRequest)
+		c.JSON(http.StatusBadRequest, gin.H{"msg": response_bad_request()})
 		return
 	}
 
@@ -44,7 +43,7 @@ func Register(c *gin.Context) {
 	hash, hashErr := bcrypt.GenerateFromPassword(raw_passwrd_byte, bcrypt.DefaultCost)
 	if hashErr != nil {
 		fmt.Println(hashErr)
-		c.Status(http.StatusInternalServerError)
+		c.JSON(http.StatusInternalServerError, gin.H{"msg": response_internal_server_error()})
 		return
 	}
 
@@ -77,11 +76,11 @@ func Register(c *gin.Context) {
 
 	if saveErr != nil {
 		fmt.Println(saveErr)
-		c.Status(http.StatusForbidden)
+		c.JSON(http.StatusForbidden, gin.H{"msg": response_username_taken()})
 		return
 	}
 
 	/////////////////////// registration success ///////////////////////
 
-	c.Status(http.StatusOK)
+	c.JSON(http.StatusOK, gin.H{"msg": response_registration_success()})
 }

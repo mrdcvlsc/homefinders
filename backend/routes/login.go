@@ -37,8 +37,7 @@ func Login(c *gin.Context) {
 	/////////////////////// parse the form data ///////////////////////
 
 	if err := c.BindJSON(&loginform_data); err != nil {
-		fmt.Println("Bad Request")
-		c.Status(http.StatusBadRequest)
+		c.JSON(http.StatusBadRequest, gin.H{"msg": response_bad_request()})
 		return
 	}
 
@@ -47,10 +46,10 @@ func Login(c *gin.Context) {
 	user, findUserErr := persistence.GetUser(loginform_data.Username)
 	if findUserErr != nil {
 		if findUserErr == sql.ErrNoRows {
-			c.Status(http.StatusNotFound)
+			c.JSON(http.StatusNotFound, gin.H{"msg": response_user_not_found()})
 		} else {
 			fmt.Println(findUserErr)
-			c.Status(http.StatusInternalServerError)
+			c.JSON(http.StatusInternalServerError, gin.H{"msg": response_internal_server_error()})
 		}
 		return
 	}
@@ -58,7 +57,7 @@ func Login(c *gin.Context) {
 	/////////////////////// validate user password ///////////////////////
 
 	if err := bcrypt.CompareHashAndPassword([]byte(user.SaltedHashPasswrd), []byte(loginform_data.Password)); err != nil {
-		c.Status(http.StatusUnauthorized)
+		c.JSON(http.StatusUnauthorized, gin.H{"msg": response_wrong_password()})
 		return
 	}
 
@@ -70,9 +69,9 @@ func Login(c *gin.Context) {
 	if logged_in_user == nil {
 		session.Set("logged_in_user", user.Username)
 		session.Save()
-		c.Status(http.StatusOK)
+		c.JSON(http.StatusOK, gin.H{"msg": response_login_success()})
 	} else {
-		c.Status(http.StatusAlreadyReported)
+		c.JSON(http.StatusAlreadyReported, gin.H{"msg": response_already_logged_in()})
 	}
 }
 

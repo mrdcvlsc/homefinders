@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import '../styles/register.css'
 
 import { validateForm } from '../helpers/validate'
+import { post_credentials } from '../requests/login_register';
 
 export default function Login() {
     const navigate = useNavigate()
@@ -29,41 +30,19 @@ export default function Login() {
         }
 
         try {
-            const response = await fetch('/login', {
-                credentials: 'include',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                method: 'post',
-                body:JSON.stringify({
-                    username: username,
-                    password: password,
-                })
-            });
-    
-            if (response.status === 200) {
-                validation_result.success = 'login successful'
+            const [ok, data] = await post_credentials('/login', {
+                username: username,
+                password: password,
+            })
+
+            if (ok) {
+                validation_result.success = data.msg
                 setFormCatch(validation_result)
                 setDisable(false)
                 navigate('/units')
                 return
-            }
-
-            if (response.status === 400) {
-                throw new Error('*Bad request, body might be corrupted or maliciously altered')
-            }
-
-            if (response.status === 401) {
-                throw new Error('*Wrong password')
-            }
-
-            if (response.status === 404) {
-                throw new Error('*User not found')
-            }
-
-            if (response.status === 500) {
-                throw new Error('*Internal server error')
+            } else {
+                throw new Error(data.msg)
             }
         } catch (err) {
             validation_result.error = err.message

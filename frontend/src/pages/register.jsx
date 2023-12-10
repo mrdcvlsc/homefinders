@@ -2,11 +2,14 @@ import React from 'react'
 import '../styles/register.css'
 
 import { validateForm } from '../helpers/validate'
+import { post_credentials } from '../requests/login_register'
 
 export default function Registration() {
     const [username, setUsername] = React.useState('')
     const [password, setPassword] = React.useState('')
     const [retyped, setRetyped] = React.useState('')
+    const [registrationCode, setRegistrationCode] = React.useState('')
+
     const [formCatch, setFormCatch] = React.useState({})
     const [disable, setDisable] = React.useState(false)
 
@@ -26,33 +29,16 @@ export default function Registration() {
         }
 
         try {
-            const response = await fetch('/register', {
-                credentials: 'include',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                method: 'post',
-                body:JSON.stringify({
-                    username: username,
-                    password: password,
-                })
-            });
-    
-            if (response.status === 200) {
-                validation_result.success = 'Registration successful'
-            }
+            const [ok, data] = await post_credentials('/register', {
+                username: username,
+                password: password,
+                registration_code: registrationCode,
+            })
 
-            if (response.status === 400) {
-                throw new Error('*Bad request, body might be corrupted or maliciously altered')
-            }
-
-            if (response.status === 403) {
-                throw new Error('*That username or email is taken')
-            }
-
-            if (response.status === 500) {
-                throw new Error('*Internal server error')
+            if (ok) {
+                validation_result.success = data.msg
+            } else {
+                throw new Error(data.msg)
             }
         } catch (err) {
             validation_result.error = err.message
@@ -95,6 +81,16 @@ export default function Registration() {
                         name="retyped"
                         placeholder="Confirm Password"
                         type="password" required
+                        disabled={disable}
+                    />
+                    {formCatch.passwordMismatched && <p className='form-error-message'>{formCatch.passwordMismatched}</p>}
+                </div>
+
+                <div className='register-input-fields'>
+                    <input onChange={(e) => setRegistrationCode(e.target.value)}
+                        name="retyped"
+                        placeholder="Registration Code"
+                        type="text" required
                         disabled={disable}
                     />
                     {formCatch.passwordMismatched && <p className='form-error-message'>{formCatch.passwordMismatched}</p>}
