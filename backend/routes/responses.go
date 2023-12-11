@@ -20,6 +20,10 @@ func response_user_not_found() string {
 	return "*User not found"
 }
 
+func response_registration_code_not_found() string {
+	return "*Unknown registration code"
+}
+
 func response_bad_request() string {
 	return "*Bad request, body might be corrupted or maliciously altered"
 }

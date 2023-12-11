@@ -17,7 +17,7 @@ export default function Registration() {
         setDisable(true)
         e.preventDefault();
 
-        const validation_result = validateForm(username, password, retyped)
+        const validation_result = validateForm(username, password, retyped, registrationCode)
         setFormCatch(validation_result)
 
         if (Object.keys(validation_result).length !== 0) {
@@ -88,12 +88,12 @@ export default function Registration() {
 
                 <div className='register-input-fields'>
                     <input onChange={(e) => setRegistrationCode(e.target.value)}
-                        name="retyped"
+                        name="registration_code"
                         placeholder="Registration Code"
                         type="text" required
                         disabled={disable}
                     />
-                    {formCatch.passwordMismatched && <p className='form-error-message'>{formCatch.passwordMismatched}</p>}
+                    {formCatch.registrationCodeInvalidLength && <p className='form-error-message'>{formCatch.registrationCodeInvalidLength}</p>}
                 </div>
 
                 <div className='register-input-fields'>

@@ -18,7 +18,7 @@ export default function Login() {
         setDisable(true)
         e.preventDefault();
 
-        const validation_result = validateForm(username, password)
+        const validation_result = validateForm(username, password, null, null)
         setFormCatch(validation_result)
 
         if (Object.keys(validation_result).length !== 0) {

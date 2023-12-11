@@ -45,6 +45,24 @@ func (db *MariaDB) Connect() error {
 }
 
 func (db *MariaDB) InitializeTables() error {
+	// create registration code tble if it does not exist yet
+	regcode_tbl_create_query :=
+		`CREATE TABLE IF NOT EXISTS RegCodes (
+			reg_code VARCHAR(10) UNIQUE NOT NULL
+		)`
+
+	if _, err := db.Instance.Exec(regcode_tbl_create_query); err != nil {
+		return err
+	}
+
+	// create initial admin user
+	if _, err := db.Instance.Exec(
+		"INSERT INTO RegCodes (reg_code) VALUES (?)",
+		"cafebabe03", // default code
+	); err != nil {
+		fmt.Print("\n\nDB INITIALIZATION LOG: an initial registration code is already existing\n\n")
+	}
+
 	// create users table if it is not created yet
 	user_tbl_create_query :=
 		`CREATE TABLE IF NOT EXISTS Users (
@@ -97,4 +115,13 @@ func (db *MariaDB) GetUserUsingUsername(username string) (*User, error) {
 	row := db.Instance.QueryRow("SELECT id, username, salted_hash_passwrd, date_created FROM Users WHERE username = ?", username)
 	err := row.Scan(&user.Id, &user.Username, &user.SaltedHashPasswrd, &user.DateCreated)
 	return user, err
+}
+
+// test with `err == sql.ErrNoRows`, if true user not found, else internal server error
+func (db *MariaDB) FindRegistrationCode(reg_code string) (string, error) {
+	var read_reg_code string
+
+	row := db.Instance.QueryRow("SELECT reg_code FROM RegCodes WHERE reg_code = ?", reg_code)
+	err := row.Scan(&read_reg_code)
+	return read_reg_code, err
 }

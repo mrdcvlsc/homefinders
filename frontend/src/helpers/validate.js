@@ -4,7 +4,9 @@ const USERNAME_REGEX = /^[a-zA-Z0-9!#$%^&*_.+-]+$/
 // Password should contain at least 1 lowercase and uppercase letter each, 1 number and 1 special character
 const PASSWORD_REGEX = /^(?=.*[a-zA-Z])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{8,}$/
 
-export function validateForm(username, password, retyped_password = null) {
+const REGCODE_REGEX = /^[a-f0-9]+$/
+
+export function validateForm(username, password, retyped_password, registration_code) {
     const form_catch = {}
 
     if (!username) {
@@ -34,6 +36,14 @@ export function validateForm(username, password, retyped_password = null) {
             form_catch.passwordMismatched = '*Retyped password is required'
         } else if (password && retyped_password !== password) {
             form_catch.passwordMismatched = '*Re-typed password mismatched'
+        }
+    }
+
+    if (registration_code !== null) {
+        if (registration_code.length != 10) {
+            form_catch.registrationCodeInvalidLength = '*Registration code needs to be 10 characters'
+        } else if (!REGCODE_REGEX.test(registration_code)) {
+            form_catch.registrationCodeInvalidLength = '*Allowed characters are only "a" to "f" and "0" to "9"'
         }
     }
 

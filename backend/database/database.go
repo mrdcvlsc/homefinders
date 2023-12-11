@@ -14,6 +14,8 @@ type I interface {
 
 	GetUserUsingEmail(email string) (*User, error)
 	GetUserUsingUsername(username string) (*User, error)
+
+	FindRegistrationCode(reg_code string) (string, error)
 }
 
 /*

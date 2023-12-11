@@ -47,3 +47,9 @@ func GetUser(username_or_email string) (*database.User, error) {
 
 	return user, err
 }
+
+// returns true if the given registration code is available.
+func IsAvailableRegCode(reg_code string) bool {
+	_, err := db.FindRegistrationCode(reg_code)
+	return err == nil
+}

@@ -14,10 +14,12 @@ import (
 )
 
 type RegistrationForm struct {
-	Username string `json:"username"`
-	Password string `json:"password"`
+	Username         string `json:"username"`
+	Password         string `json:"password"`
+	RegistrationCode string `json:"registration_code"`
 }
 
+// generate 10 character registration code
 func new_registration_code() (string, error) {
 	rand_bytes := make([]byte, 1)
 	_, err := rand.Read(rand_bytes)
@@ -25,8 +27,9 @@ func new_registration_code() (string, error) {
 		return "", err
 	}
 
+	mask := uint64(0x00000000ffffffff)
 	curr_unit_time_in_sec := uint64(time.Now().Unix())
-	new_registration_code := fmt.Sprintf("%02x%08x", rand_bytes, curr_unit_time_in_sec)
+	new_registration_code := fmt.Sprintf("%02x%08x", rand_bytes, curr_unit_time_in_sec&mask)
 	return new_registration_code, nil
 }
 
@@ -48,6 +51,13 @@ func Register(c *gin.Context) {
 
 	if err := c.BindJSON(&regform_data); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"msg": response_bad_request()})
+		return
+	}
+
+	/////////////////////// check if registration code is valid ///////////////////////
+
+	if !persistence.IsAvailableRegCode(regform_data.RegistrationCode) {
+		c.JSON(http.StatusNotFound, gin.H{"msg": response_registration_code_not_found()})
 		return
 	}
 
