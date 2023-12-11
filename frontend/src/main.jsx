@@ -15,6 +15,7 @@ import ErrorPage from './error-page';
 
 import './styles/index.css'
 import Units from './pages/units';
+import Calculator from './pages/calculator';
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
       {
         path: "home",
         element: <Landing />,
+      },
+      {
+        path: "calculator",
+        element: <Calculator />,
       },
       {
         path: "units",

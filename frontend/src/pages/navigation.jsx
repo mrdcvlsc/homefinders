@@ -13,12 +13,13 @@ export default function Navigation() {
         <h3>Home Finders</h3>
 
         <div id="navigation-bar">
-          <div><Link to={`home`}>Home</Link></div>
-          <div><Link to={`units`}>Units</Link></div>
-          <div><Link to={`#`}>Admin</Link>
+          <Link className="react-router-link" to={`home`}>Home</Link>
+          <Link className="react-router-link" to={`calculator`}>Mortgage Calculator</Link>
+          <Link className="react-router-link" to={`units`}>Explore Homes</Link>
+          <div className="react-router-link" to={'#'}> &#11206;
             <div>
-              <div><Link to={`register`}>Register</Link></div>
-              <div><Link to={`login`}>Login</Link></div>
+              <Link className="react-router-sub-link" to={`register`}>Register</Link>
+              <Link className="react-router-sub-link" to={`login`}>Login</Link>
             </div>
           </div>
         </div>

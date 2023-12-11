@@ -84,7 +84,7 @@ export default function Login() {
                 <input type="checkbox" id="remember_me" name="remember_me" disabled={disable}/>
 
                 <div className='register-input-fields'>
-                    <button onClick={(e) => handleLogin(e)} type="submit" disabled={disable} >Login</button>
+                    <button onClick={(e) => handleLogin(e)} type="submit" disabled={disable} > &#11119; Login</button>
                     {formCatch.error && <p className='form-error-message'>{formCatch.error}</p>}
                     {formCatch.success && <p className='form-success-message'>{formCatch.success}</p>}
                 </div>
