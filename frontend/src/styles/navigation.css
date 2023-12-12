@@ -1,6 +1,6 @@
 /* style for the container that holds the logo, website name, and navigation bar */
 #navigation-panel {
-  border: 1px solid red;
+  /* border: 1px solid red; */
   width: 100%;
   background-color: black;
 
@@ -20,7 +20,7 @@
 
 /* style for the container that holds the navigation buttons */
 #navigation-bar {
-  border: solid yellow 1px;
+  /* border: solid yellow 1px; */
   padding-inline: 1em;
 
   display: flex;
@@ -81,7 +81,7 @@
 /* navigation bar links */
 .react-router-link,
 .react-router-sub-link {
-  border: 1px solid greenyellow;
+  /* border: 1px solid greenyellow; */
   position: relative;
 
   color: white;
@@ -89,10 +89,10 @@
 }
 
 /* navigation bar links - when clicked */
-.react-router-link:active,
+/* .react-router-link:active,
 .react-router-sub-link:active {
   color: green;
-}
+} */
 
 /* navigation bar links - on hover */
 .react-router-link:hover,

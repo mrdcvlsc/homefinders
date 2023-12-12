@@ -1,5 +1,5 @@
 #calculator-page {
-  border: 10px solid saddlebrown;
+  /* border: 10px solid saddlebrown; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -18,7 +18,7 @@
   justify-content: center;
   align-items: center;
 
-  border: 2px solid red;
+  /* border: 2px solid red; */
 }
 
 .loan-calculator-form,

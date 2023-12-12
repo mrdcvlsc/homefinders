@@ -8,7 +8,7 @@
 
 body {
   /* this border is for debugging purposes only, remove in production */
-  border: solid 2px green;
+  /* border: solid 2px green; */
 
   height: 100vh;
   width: 100vw;
