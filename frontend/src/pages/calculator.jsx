@@ -1,13 +1,11 @@
-import MortgageCalculator from '../components/MortgageCalculator';
+import LoanCalculator from '../components/LoanCalculator';
 
-import '../styles/landing.css';
+import '../styles/calculator.css';
 
 export default function Calculator() {
     return (
-        <div>
-            <h1>Home Loan Calculator</h1>
-            <br/>
-            <MortgageCalculator/>
+        <div id='calculator-page'>
+            <LoanCalculator/>
         </div>
     )
 }

@@ -1,0 +1,153 @@
+.login-page-container {
+    position: absolute;
+    border: pink 10px solid;
+    height: 100vh;
+    width: 100vw;
+    top: 0;
+    left: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-btn-open{
+    width: 130px;
+    height: 50px;
+    background: transparent;
+    border: 2px solid #fff;
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.1em;
+    color: #fff;
+    font-weight: 500;
+    margin-left: 40px;
+    transition: .5s;
+}
+
+.login-btn-open:hover{
+    background: #fff;
+    color: #162938;
+}
+
+.login-div {
+    /* position: relative; */
+    width: 400px;
+    height: 440px;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, .5);
+    border-radius:  20px;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 30px rgba(0, 0, 0, .5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    /* transform: scale(1); */
+    transition: transform .5 ease, height .2s ease; 
+}
+
+.login-div .active-popup{
+    transform: scale(1);
+}
+
+.login-div.active {
+    height: 520px;
+}
+
+.login-div .login-form {
+    width: 100%;
+    padding: 40px;
+}
+
+.login-div .login-form.login{
+    transition: transform .18s ease;
+    transform: trasnlateX(0);
+}
+
+.login-div.active .login-form.login{
+    transition: none;
+    transform: translateX(-400px);
+}
+
+.login-div .login-btn-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 45px;
+    height: 45px;
+    background: #162938;
+    font-size: 2em;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom-left-radius: 20px;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.login-form h2{
+    font-size: 2em;
+    color:#162938;
+    text-align: center;
+
+}
+
+.login-form-inputs {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    border-bottom: 2px solid #162938;
+    margin: 30px 0;
+}
+
+.login-form-inputs label{
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    transform:  translateY(-50%);
+    font-size: 1em;
+    color: #162938;
+    font-weight: 500;
+    pointer-events: none;
+    transition: .5s;
+}
+
+.login-form-inputs input:focus~label, .login-form-inputs input:valid~label {
+    top: -5px;
+}
+
+.login-form-inputs input{
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: none;  
+    outline: none;
+    font-size: 1em;
+    color:#162938;
+    font-weight: 600;
+    padding: 0 35px 0 5px;
+}
+
+.login-form-inputs .login-form-icons{
+    position: absolute;
+    right: 8px;
+    font-size: 1.2em;
+    color: #162938;
+    line-height: 57px;
+}
+
+.login-btn-submit {
+    width: 100%;
+    height: 45px;
+    background: #162938;
+    border: none;
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1em;
+    color: #fff;
+    font-weight: 500;
+}

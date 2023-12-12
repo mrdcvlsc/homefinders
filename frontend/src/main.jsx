@@ -13,9 +13,11 @@ import Login from './pages/login';
 
 import ErrorPage from './error-page';
 
-import './styles/index.css'
+import './styles/main.css'
 import Units from './pages/units';
+import LoanCalculator from './components/LoanCalculator';
 import Calculator from './pages/calculator';
+import About from './pages/about';
 
 const router = createBrowserRouter([
   {
@@ -39,6 +41,10 @@ const router = createBrowserRouter([
       {
         path: "units",
         element: <Units />,
+      },
+      {
+        path: "about",
+        element: <About />,
       },
       {
         path: "register",
