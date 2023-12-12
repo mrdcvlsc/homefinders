@@ -103,7 +103,7 @@ export default function Navigation() {
             </button>
           )}
 
-          <div className="react-router-link" to={"#"}>
+          {/* <div className="react-router-link" to={"#"}>
             &#11206;
             <div>
               <Link className="react-router-sub-link" to={`register`}>
@@ -113,7 +113,7 @@ export default function Navigation() {
                 Login
               </Link>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
 
