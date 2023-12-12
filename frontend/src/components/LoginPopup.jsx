@@ -1,6 +1,53 @@
+import React from 'react'
+import { validateForm } from '../helpers/validate'
+import { post_credentials } from '../requests/login_register';
+
 import '../styles/LoginPopup.css'
 
 export default function LoginPopup({closeLoginForm}) {
+
+    const [username, setUsername] = React.useState('')
+    const [password, setPassword] = React.useState('')
+    const [formCatch, setFormCatch] = React.useState({})
+    const [disable, setDisable] = React.useState(false)
+
+    async function handleLogin(e) {
+        setDisable(true)
+        e.preventDefault();
+
+        const validation_result = validateForm(username, password, null, null)
+        setFormCatch(validation_result)
+
+        if (Object.keys(validation_result).length !== 0) {
+            console.log('Login Form Validation Error : ', Object.keys(validation_result).length)
+            setDisable(false)
+            return
+        } else {
+            console.log('No Login Form Validation Error : ', Object.keys(validation_result).length)
+        }
+
+        try {
+            const [ok, data] = await post_credentials('/login', {
+                username: username,
+                password: password,
+            })
+
+            if (ok) {
+                validation_result.success = data.msg
+                setFormCatch(validation_result)
+                setDisable(false)
+                return
+            } else {
+                throw new Error(data.msg)
+            }
+        } catch (err) {
+            validation_result.error = err.message
+        }
+        
+        setFormCatch(validation_result)
+        setDisable(false)
+    }
+
     return (
         <div className='login-page-container'>
             <div className="login-div">
@@ -16,7 +63,13 @@ export default function LoginPopup({closeLoginForm}) {
                             <span className="login-form-icons">
                                 <ion-icon name="mail"></ion-icon>
                             </span>
-                            <input type="email" required/>
+                            <input onChange={(e) => setUsername(e.target.value)}
+                                name="username"
+                                placeholder="Email or Username"
+                                type="text" required
+                                disabled={disable}
+                            />
+                            {formCatch.invalidUsername && <p className='form-error-message'>{formCatch.invalidUsername}</p>}
                             <label> Email </label>
                         </div>
 
@@ -24,10 +77,23 @@ export default function LoginPopup({closeLoginForm}) {
                             <span className="login-form-icons">
                                 <ion-icon name="lock-closed"></ion-icon>
                             </span>
-                            <input type="password" required/>
+                            <input onChange={(e) => setPassword(e.target.value)}
+                                name="password"
+                                placeholder="Password"
+                                type="password" required
+                                disabled={disable}
+                            />
+                            {formCatch.invalidPassword && <p className='form-error-message'>{formCatch.invalidPassword}</p>}
                             <label> Password </label>
                         </div>
-                        <button type="submit" className="login-btn-submit"> Login </button>
+                        <button
+                            onClick={(e) => handleLogin(e)}
+                            type="submit"
+                            className="login-btn-submit"
+                            disabled={disable}
+                        > Login</button>
+                        {formCatch.error && <p className='form-error-message'>{formCatch.error}</p>}
+                        {formCatch.success && <p className='form-success-message'>{formCatch.success}</p>}
                     </form>
                 </div>
             </div>
