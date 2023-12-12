@@ -1,45 +1,47 @@
 .form-page {
-    border: 3px solid blue;
-    display: flex;
-    justify-content: center;
+  border: 3px solid blue;
+  display: flex;
+  justify-content: center;
 
-    padding: 8vh 0px;
+  padding: 8vh 0px;
 }
 
 .form-box {
-    /* set registration box width */
-    width: clamp(300px, 30%, 800px);
-    border: yellow 2px solid;
+  /* set registration box width */
+  width: clamp(300px, 30%, 800px);
+  border: yellow 2px solid;
 
-    padding: 2em 1em;
+  padding: 2em 1em;
 }
 
 .form-headings {
-    text-align: center;
+  text-align: center;
 }
 
 .register-input-fields {
-    position: relative;
-    padding: 0.95em 0em;
-    /* border: green solid 1px; */
+  position: relative;
+  padding: 0.95em 0em;
+  /* border: green solid 1px; */
 }
 
-.register-input-fields > input, .register-input-fields > button {
-    width: 100%;
-    height: 3em;
+.register-input-fields > input,
+.register-input-fields > button {
+  width: 100%;
+  height: 3em;
 }
 
-.form-error-message, .form-success-message {
-    position: absolute;
-    bottom: 0;
-    font-size: small;
-    font-style: italic;
+.form-error-message,
+.form-success-message {
+  position: absolute;
+  bottom: 0;
+  font-size: small;
+  font-style: italic;
 }
 
 .form-error-message {
-    color: red;
+  color: red;
 }
 
 .form-success-message {
-    color: rgb(55, 248, 30)
+  color: rgb(55, 248, 30);
 }

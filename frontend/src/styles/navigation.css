@@ -1,39 +1,39 @@
 /* style for the container that holds the logo, website name, and navigation bar */
 #navigation-panel {
-    border: 1px solid red;
-    width: 100%;
-    background-color: black;
+  border: 1px solid red;
+  width: 100%;
+  background-color: black;
 
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1em 2.5em;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1em 2.5em;
 }
 
 .logo {
-    font-size: 1.75em;
-    color: #fff;
-    user-select: none;
-    text-decoration: none;
+  font-size: 1.75em;
+  color: #fff;
+  user-select: none;
+  text-decoration: none;
 }
 
 /* style for the container that holds the navigation buttons */
 #navigation-bar {
-    border: solid yellow 1px;
-    padding-inline: 1em;
+  border: solid yellow 1px;
+  padding-inline: 1em;
 
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: 2em;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 2em;
 }
 
 /* main buttons */
 .react-router-link {
-    position: relative;
-    /* background-color: black; */
+  position: relative;
+  /* background-color: black; */
 }
 
 /* main buttons - on hover */
@@ -43,33 +43,34 @@
 
 /* container of sub buttons - hidden by default*/
 .react-router-link > div {
-    display: none;
-    position: absolute;
+  display: none;
+  position: absolute;
 
-    top: 101%;
-    left: 0%;
+  top: 101%;
+  left: 0%;
 }
 
 /* container of sub buttons - show on main button hover*/
 .react-router-link:hover > div {
-    display: flex;
-    flex-direction: column;
-    /* justify-content: ; */
+  display: flex;
+  flex-direction: column;
+  /* justify-content: ; */
 }
 
 /* all buttons */
-.react-router-link, .react-router-sub-link {
-    /* font-size: medium; */
-    height: 3em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.5em 1em;
+.react-router-link,
+.react-router-sub-link {
+  /* font-size: medium; */
+  height: 3em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5em 1em;
 }
 
 /* sub buttons */
 .react-router-sub-link {
-    background-color: black;
+  background-color: black;
 }
 
 /* sub buttons - on hover */
@@ -78,63 +79,68 @@
 } */
 
 /* navigation bar links */
-.react-router-link, .react-router-sub-link {
-    border: 1px solid greenyellow;
-    position: relative;
+.react-router-link,
+.react-router-sub-link {
+  border: 1px solid greenyellow;
+  position: relative;
 
-    color: white;
-    text-decoration: none;
+  color: white;
+  text-decoration: none;
 }
 
 /* navigation bar links - when clicked */
-.react-router-link:active, .react-router-sub-link:active {
-    color: green;
+.react-router-link:active,
+.react-router-sub-link:active {
+  color: green;
 }
 
 /* navigation bar links - on hover */
-.react-router-link:hover, .react-router-sub-link:hover {
-    cursor: pointer;
-    /* color: black; */
+.react-router-link:hover,
+.react-router-sub-link:hover {
+  cursor: pointer;
+  /* color: black; */
 }
 
-.react-router-link::after, .react-router-sub-link::after{
-    content: '';
+.react-router-link::after,
+.react-router-sub-link::after {
+  content: "";
 
-    position: absolute;
-    bottom: 5%;
+  position: absolute;
+  bottom: 5%;
 
-    width: 100%;
-    height: 0.18em;
+  width: 100%;
+  height: 0.18em;
 
-    background: #fff;
+  background: #fff;
 
-    border-radius: 5px;
+  border-radius: 5px;
 
-    transform-origin: right;
-    transform: scaleX(0);
-    transition: transform .5s;
+  transform-origin: right;
+  transform: scaleX(0);
+  transition: transform 0.5s;
 }
 
-.react-router-link:hover::after, .react-router-sub-link:hover::after{
-    transform-origin: left;
-    transform: scaleX(1);
+.react-router-link:hover::after,
+.react-router-sub-link:hover::after {
+  transform-origin: left;
+  transform: scaleX(1);
 }
 
 #admin-login-btn {
-    background: transparent;
-    border: 2px solid #fff;
-    outline: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 1.1em;
-    color: #fff;
-    font-weight: 500;
-    transition: .5s;
+  background: transparent;
+  border: 2px solid #fff;
+  outline: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1.1em;
+  color: #fff;
+  font-weight: 500;
+  transition: 0.5s;
 
-    padding: 0.65em;
+  padding: 0.65em;
 }
 
 #admin-login-btn:hover {
-    color: black;
-    background-color: white;
+  color: black;
+  background-color: white;
 }

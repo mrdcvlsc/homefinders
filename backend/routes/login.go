@@ -91,8 +91,29 @@ func Who(c *gin.Context) {
 
 	user := session.Get("logged_in_user")
 	if user == nil {
-		c.Status(http.StatusUnauthorized)
+		c.JSON(http.StatusUnauthorized, gin.H{"msg": "no user logged in"})
 	} else {
-		c.JSON(http.StatusOK, gin.H{"user": user})
+		c.JSON(http.StatusOK, gin.H{
+			"msg":  "successfully logged in",
+			"user": user,
+		})
 	}
+}
+
+func Logout(c *gin.Context) {
+	session := sessions.Default(c)
+
+	user := session.Get("logged_in_user")
+	if user == nil {
+		c.JSON(http.StatusForbidden, gin.H{"msg": "no initial user logged in"})
+		return
+	}
+
+	session.Delete("logged_in_user")
+	if err := session.Save(); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"msg": "failed to log out"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"msg": "successfully logged out"})
 }

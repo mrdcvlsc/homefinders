@@ -1,23 +1,19 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import Navigation from './pages/navigation';
+import Navigation from "./pages/navigation";
 
-import Landing from './pages/landing';
-import Registration from './pages/register';
-import Login from './pages/login';
+import Landing from "./pages/landing";
+import Registration from "./pages/register";
+import Login from "./pages/login";
 
-import ErrorPage from './error-page';
+import ErrorPage from "./error-page";
 
-import './styles/main.css'
-import Units from './pages/units';
-import LoanCalculator from './components/LoanCalculator';
-import Calculator from './pages/calculator';
-import About from './pages/about';
+import "./styles/main.css";
+import Calculator from "./pages/calculator";
+import About from "./pages/about";
+import Listing from "./pages/listing";
 
 const router = createBrowserRouter([
   {
@@ -39,8 +35,8 @@ const router = createBrowserRouter([
         element: <Calculator />,
       },
       {
-        path: "units",
-        element: <Units />,
+        path: "listing",
+        element: <Listing />,
       },
       {
         path: "about",
@@ -62,8 +58,8 @@ const router = createBrowserRouter([
   // },
 ]);
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <RouterProvider router={router} />
   </React.StrictMode>,
-)
+);

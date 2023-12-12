@@ -1,8 +1,8 @@
-*{
+* {
   margin: 0px;
   padding: 0px;
-  box-sizing:border-box;
-  font-family: sans-serif, 'Ubuntu', 'Heebo';
+  box-sizing: border-box;
+  font-family: sans-serif, "Ubuntu", "Heebo";
   outline: none;
 }
 
