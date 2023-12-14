@@ -1,7 +1,7 @@
 import { Outlet, Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-import ImgLogo from "../assets/logo.png";
+// import ImgLogo from "../assets/logo.png";
 
 import "../styles/navigation.css";
 import LoginPopup from "../components/LoginPopup";
@@ -103,7 +103,7 @@ export default function Navigation() {
             </button>
           )}
 
-          {/* <div className="react-router-link" to={"#"}>
+          <div className="react-router-link hidden-black" to={"#"}>
             &#11206;
             <div>
               <Link className="react-router-sub-link" to={`register`}>
@@ -113,7 +113,7 @@ export default function Navigation() {
                 Login
               </Link>
             </div>
-          </div> */}
+          </div>
         </div>
       </div>
 
