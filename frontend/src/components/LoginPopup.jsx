@@ -47,7 +47,7 @@ export default function LoginPopup({ closeLoginForm, getLoggedInUser }) {
         setDisable(false);
         closeLoginForm();
         getLoggedInUser();
-        navigate('listing');
+        navigate("listing");
         return;
       } else {
         throw new Error(data.msg);

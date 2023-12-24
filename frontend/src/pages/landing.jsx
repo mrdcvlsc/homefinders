@@ -1,3 +1,4 @@
+import UploadDragOrSelect from "../components/UploadDragOrSelect";
 import "../styles/landing.css";
 
 export default function Landing() {
@@ -10,6 +11,8 @@ export default function Landing() {
       <h3>
         <i>cooming soon...</i>
       </h3>
+      <br />
+      <UploadDragOrSelect />
     </div>
   );
 }

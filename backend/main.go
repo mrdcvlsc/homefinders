@@ -37,16 +37,20 @@ func main() {
 
 	router := gin.Default()
 
+	// maximum memory limit for multipart form file uploads
+	router.MaxMultipartMemory = 50 << 20 // 50 MiB
+
 	router.Use(static.Serve("/", static.LocalFile("../frontend/dist", true)))
 	router.Use(sessions.Sessions("session_id", routes.SessionStore))
 
 	router.GET("/", routes.ServeWebApp)
 
+	router.GET("/logout", routes.Logout)
+	router.GET("/who", routes.Who)
+
 	router.POST("/register", routes.Register)
 	router.POST("/login", routes.Login)
-	router.GET("/logout", routes.Logout)
-
-	router.GET("/who", routes.Who)
+	router.POST("/upload", routes.Upload)
 
 	/////// examples routes ////////
 
