@@ -25,7 +25,7 @@ func (db *MariaDB) Connect() error {
 		Passwd:               os.Getenv("DBPASS"),
 		Net:                  os.Getenv("PROTOCOL"),
 		Addr:                 os.Getenv("DBADDRES"),
-		DBName:               "golangdb",
+		DBName:               os.Getenv("DATABASE"),
 	}
 
 	// Get a database handle.
