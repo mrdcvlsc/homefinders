@@ -8,6 +8,7 @@ import (
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"github.com/mrdcvlsc/homefinders/persistence"
+	"github.com/mrdcvlsc/homefinders/respond"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -31,33 +32,33 @@ type LoginForm struct {
 
 500 - Internal Server Error.
 */
-func Login(c *gin.Context) {
+func LogIn(c *gin.Context) {
 	loginform_data := LoginForm{}
 
 	/////////////////////// parse the form data ///////////////////////
 
 	if err := c.BindJSON(&loginform_data); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"msg": response_bad_request()})
+		c.JSON(http.StatusBadRequest, gin.H{"msg": respond.BadRequest})
 		return
 	}
 
 	/////////////////////// find if user exist ///////////////////////
 
 	user, findUserErr := persistence.GetUser(loginform_data.Username)
-	if findUserErr != nil {
-		if findUserErr == sql.ErrNoRows {
-			c.JSON(http.StatusNotFound, gin.H{"msg": response_user_not_found()})
-		} else {
-			fmt.Println(findUserErr)
-			c.JSON(http.StatusInternalServerError, gin.H{"msg": response_internal_server_error()})
-		}
+
+	if findUserErr == sql.ErrNoRows {
+		c.JSON(http.StatusNotFound, gin.H{"msg": respond.LogInUserNotFound})
+		return
+	} else if findUserErr != nil {
+		fmt.Println("findUserErr : ", findUserErr)
+		c.JSON(http.StatusInternalServerError, gin.H{"msg": respond.InternalServerError})
 		return
 	}
 
 	/////////////////////// validate user password ///////////////////////
 
 	if err := bcrypt.CompareHashAndPassword([]byte(user.SaltedHashPasswrd), []byte(loginform_data.Password)); err != nil {
-		c.JSON(http.StatusUnauthorized, gin.H{"msg": response_wrong_password()})
+		c.JSON(http.StatusUnauthorized, gin.H{"msg": respond.LogInWrongPassword})
 		return
 	}
 
@@ -69,10 +70,11 @@ func Login(c *gin.Context) {
 	if logged_in_user == nil {
 		session.Set("logged_in_user", user.Username)
 		session.Save()
-		c.JSON(http.StatusOK, gin.H{"msg": response_login_success()})
-	} else {
-		c.JSON(http.StatusAlreadyReported, gin.H{"msg": response_already_logged_in()})
+		c.JSON(http.StatusOK, gin.H{"msg": respond.LogInSuccess})
+		return
 	}
+
+	c.JSON(http.StatusAlreadyReported, gin.H{"msg": respond.LogInDoneAlready})
 }
 
 /*
@@ -91,29 +93,30 @@ func Who(c *gin.Context) {
 
 	user := session.Get("logged_in_user")
 	if user == nil {
-		c.JSON(http.StatusUnauthorized, gin.H{"msg": "no user logged in"})
-	} else {
-		c.JSON(http.StatusOK, gin.H{
-			"msg":  "successfully logged in",
-			"user": user,
-		})
+		c.JSON(http.StatusUnauthorized, gin.H{"msg": respond.LogInNone})
+		return
 	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"msg":  respond.LogInDoneAlready,
+		"user": user,
+	})
 }
 
-func Logout(c *gin.Context) {
+func LogOut(c *gin.Context) {
 	session := sessions.Default(c)
 
 	user := session.Get("logged_in_user")
 	if user == nil {
-		c.JSON(http.StatusForbidden, gin.H{"msg": "no initial user logged in"})
+		c.JSON(http.StatusForbidden, gin.H{"msg": respond.LogInNone})
 		return
 	}
 
 	session.Delete("logged_in_user")
 	if err := session.Save(); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"msg": "failed to log out"})
+		c.JSON(http.StatusInternalServerError, gin.H{"msg": respond.LogOutFail})
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"msg": "successfully logged out"})
+	c.JSON(http.StatusOK, gin.H{"msg": respond.LogOutSuccess})
 }

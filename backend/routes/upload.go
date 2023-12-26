@@ -2,16 +2,19 @@ package routes
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/mrdcvlsc/homefinders/respond"
 )
 
 func Upload(c *gin.Context) {
 	form, err := c.MultipartForm()
 
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"msg": "error parsing form data in the server"})
+		c.JSON(http.StatusBadRequest, gin.H{"msg": respond.BadRequest})
+		log.Println("error parsing form data in the server")
 	}
 
 	// key of form.File[] should match the frontend upload post request key of files array
@@ -29,5 +32,5 @@ func Upload(c *gin.Context) {
 		}
 	}
 
-	c.JSON(http.StatusOK, gin.H{"msg": "upload success"})
+	c.JSON(http.StatusOK, gin.H{"msg": respond.UploadSuccess})
 }

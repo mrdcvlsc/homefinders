@@ -45,11 +45,11 @@ func main() {
 
 	router.GET("/", routes.ServeWebApp)
 
-	router.GET("/logout", routes.Logout)
+	router.GET("/logout", routes.LogOut)
 	router.GET("/who", routes.Who)
 
 	router.POST("/register", routes.Register)
-	router.POST("/login", routes.Login)
+	router.POST("/login", routes.LogIn)
 	router.POST("/upload", routes.Upload)
 
 	/////// examples routes ////////

@@ -5,7 +5,7 @@ import (
 	"net"
 )
 
-// Get preferred outbound ip of this machine
+// Get preferred outbound ip of the current machine
 func DisplayOutboundIP() {
 	conn, err := net.Dial("udp", "8.8.8.8:80")
 	if err != nil {
