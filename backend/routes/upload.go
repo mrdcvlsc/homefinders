@@ -15,21 +15,21 @@ func Upload(c *gin.Context) {
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"msg": respond.BadRequest})
 		log.Println("error parsing form data in the server")
+		return
 	}
 
 	// key of form.File[] should match the frontend upload post request key of files array
 	files := form.File["files[]"]
 
 	for _, file := range files {
-		fmt.Println("\nfile.Filename : ")
-		fmt.Println(file.Filename)
-
 		saveErr := c.SaveUploadedFile(file, fmt.Sprintf("uploads/%s", file.Filename))
 
 		if saveErr != nil {
-			fmt.Println("Save Upload Error : ")
-			fmt.Print(saveErr, "\n\n")
+			log.Println(" | file upload error : ", saveErr)
+			continue
 		}
+
+		log.Println(" | file uploaded : ", file.Filename)
 	}
 
 	c.JSON(http.StatusOK, gin.H{"msg": respond.UploadSuccess})
