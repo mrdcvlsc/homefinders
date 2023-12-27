@@ -80,7 +80,7 @@ func (db *MariaDB) InitializeTables() error {
 	return nil
 }
 
-func (db *MariaDB) RecordUsingEmail(user *User) error {
+func (db *MariaDB) SaveUserWithEmail(user *User) error {
 	_, err := db.Instance.Exec(
 		"INSERT INTO Users (username, email, salted_hash_passwrd) VALUES (?, ?, ?)",
 		user.Username,
@@ -90,7 +90,7 @@ func (db *MariaDB) RecordUsingEmail(user *User) error {
 	return err
 }
 
-func (db *MariaDB) RecordUsingUsername(user *User) error {
+func (db *MariaDB) SaveUserWithUsername(user *User) error {
 	_, err := db.Instance.Exec(
 		"INSERT INTO Users (username, salted_hash_passwrd) VALUES (?, ?)",
 		user.Username,
@@ -100,7 +100,7 @@ func (db *MariaDB) RecordUsingUsername(user *User) error {
 }
 
 // test with `err == sql.ErrNoRows`, if true user not found, else internal server error
-func (db *MariaDB) GetUserUsingEmail(email string) (*User, error) {
+func (db *MariaDB) GetUserWithEmail(email string) (*User, error) {
 	user := &User{}
 
 	row := db.Instance.QueryRow("SELECT * FROM Users WHERE email = ?", email)
@@ -109,7 +109,7 @@ func (db *MariaDB) GetUserUsingEmail(email string) (*User, error) {
 }
 
 // test with `err == sql.ErrNoRows`, if true user not found, else internal server error
-func (db *MariaDB) GetUserUsingUsername(username string) (*User, error) {
+func (db *MariaDB) GetUserWithUsername(username string) (*User, error) {
 	user := &User{}
 
 	row := db.Instance.QueryRow("SELECT id, username, salted_hash_passwrd, date_created FROM Users WHERE username = ?", username)
@@ -118,7 +118,7 @@ func (db *MariaDB) GetUserUsingUsername(username string) (*User, error) {
 }
 
 // test with `err == sql.ErrNoRows`, if true user not found, else internal server error
-func (db *MariaDB) FindRegistrationCode(reg_code string) (string, error) {
+func (db *MariaDB) FindRegCode(reg_code string) (string, error) {
 	var read_reg_code string
 
 	row := db.Instance.QueryRow("SELECT reg_code FROM RegCodes WHERE reg_code = ?", reg_code)

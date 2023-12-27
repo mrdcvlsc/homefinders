@@ -57,7 +57,7 @@ func Register(c *gin.Context) {
 
 	/////////////////////// check if registration code is valid ///////////////////////
 
-	if !persistence.IsAvailableRegCode(regform_data.RegistrationCode) {
+	if !persistence.IsValidRegCode(regform_data.RegistrationCode) {
 		c.JSON(http.StatusNotFound, gin.H{"msg": respond.RegisterCodeNotFound})
 		return
 	}

@@ -9,13 +9,13 @@ type I interface {
 	GetInstance() *sql.DB
 	InitializeTables() error
 
-	RecordUsingEmail(*User) error
-	RecordUsingUsername(*User) error
+	SaveUserWithEmail(*User) error
+	SaveUserWithUsername(*User) error
 
-	GetUserUsingEmail(email string) (*User, error)
-	GetUserUsingUsername(username string) (*User, error)
+	GetUserWithEmail(email string) (*User, error)
+	GetUserWithUsername(username string) (*User, error)
 
-	FindRegistrationCode(reg_code string) (string, error)
+	FindRegCode(reg_code string) (string, error)
 }
 
 /*
