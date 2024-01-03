@@ -6,7 +6,7 @@ export default function About() {
       <h1>About us page</h1>
       <br />
       <h3>
-        <i>cooming soon...</i>
+        <i>coming soon...</i>
       </h3>
       <br />
       <h3>

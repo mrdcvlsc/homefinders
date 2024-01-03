@@ -9,10 +9,10 @@ export default function Landing() {
       <h3>Home Finders - Landing Page</h3>
       <br />
       <h3>
-        <i>cooming soon...</i>
+        <i>coming soon...</i>
       </h3>
       <br />
-      <UploadDragOrSelect />
+      {/* <UploadDragOrSelect /> */}
     </div>
   );
 }
