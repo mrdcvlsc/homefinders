@@ -1,6 +1,27 @@
 /* landing page styles goes here */
 
 #landing-page {
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+  
   height: 100%;
-  /* border: goldenrod solid 2px; */
+  border: goldenrod solid 4px;
+
+  gap: 5.25em;
+  padding: 5.25em;
+}
+
+.search-box {
+  display: flex;
+  gap: 1em;
+  
+  padding: 2em;
+  border: 2px solid red;
+}
+
+.drop-box-container {
+  border: 2px solid green;
 }
