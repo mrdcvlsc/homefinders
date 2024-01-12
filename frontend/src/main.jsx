@@ -14,6 +14,7 @@ import "./styles/main.css";
 import Calculator from "./pages/calculator";
 import About from "./pages/about";
 import Listing from "./pages/listing";
+import AddProperty from "./pages/addproperty";
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
       {
         path: "calculator",
         element: <Calculator />,
+      },
+      {
+        path: "add-property",
+        element: <AddProperty />,
       },
       {
         path: "listing",

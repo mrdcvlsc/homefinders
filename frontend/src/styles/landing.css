@@ -6,7 +6,7 @@
 
   justify-content: center;
   align-items: center;
-  
+
   height: 100%;
   border: goldenrod solid 4px;
 
@@ -17,7 +17,7 @@
 .search-box {
   display: flex;
   gap: 1em;
-  
+
   padding: 2em;
   border: 2px solid red;
 }

@@ -27,22 +27,22 @@ export default function UploadDragOrSelect() {
       selectedFiles.append("files[]", file, file.name);
     }
 
-    console.log('selectedFiles = ')
-    console.log(selectedFiles)
+    console.log("selectedFiles = ");
+    console.log(selectedFiles);
 
     try {
-      const response = await fetch('/upload', {
+      const response = await fetch("/upload", {
         credentials: "include",
         method: "POST",
-        body: selectedFiles
-      })
+        body: selectedFiles,
+      });
 
       const data = await response.json();
-      console.log('fetched data = ')
-      console.log(data)
-    } catch(err) {
-      console.log('upload try catch error = ')
-      console.error(err)
+      console.log("fetched data = ");
+      console.log(data);
+    } catch (err) {
+      console.log("upload try catch error = ");
+      console.error(err);
     }
   };
 

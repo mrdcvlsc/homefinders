@@ -1,0 +1,35 @@
+.add-property-page {
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  border: 2px solid red;
+}
+
+.add-property-form-container {
+  display: flex;
+
+  width: 100vw;
+
+  border: 2px solid blue;
+}
+
+.add-property-form-left-side,
+.add-property-form-right-side {
+  width: 50%;
+  padding: 2em;
+}
+
+.add-property-form-left-side {
+  border: yellow solid 2px;
+}
+
+.add-property-form-right-side {
+  border: pink solid 2px;
+}
+
+.address-fields {
+  border: solid 2px green;
+}

@@ -87,6 +87,16 @@ export default function Navigation() {
             About Us
           </Link>
 
+          <div className="react-router-link" to={"#"}>
+            {" "}
+            Listing Temporary
+            <div>
+              <Link className="react-router-sub-link" to={`add-property`}>
+                Add Property
+              </Link>
+            </div>
+          </div>
+
           {user && (
             <Link className="react-router-link" to={`listing`}>
               Listings
