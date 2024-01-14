@@ -2,7 +2,7 @@ import React from "react";
 
 import "../styles/UploadDragOrSelect.css";
 
-export default function UploadDragOrSelect() {
+export default function UploadDragOrSelect({imagesUploadPostRoute}) {
   const [files, setFiles] = React.useState(null);
   const inputRef = React.useRef();
 
@@ -31,7 +31,7 @@ export default function UploadDragOrSelect() {
     console.log(selectedFiles);
 
     try {
-      const response = await fetch("/upload", {
+      const response = await fetch(imagesUploadPostRoute, {
         credentials: "include",
         method: "POST",
         body: selectedFiles,
