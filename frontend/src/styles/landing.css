@@ -8,7 +8,6 @@
   align-items: center;
 
   height: 100%;
-  border: goldenrod solid 4px;
 
   gap: 5.25em;
   padding: 5.25em;
@@ -19,9 +18,26 @@
   gap: 1em;
 
   padding: 2em;
-  border: 2px solid red;
+  border: thick solid black;
+  border-radius: 1em;
 }
 
 .drop-box-container {
-  border: 2px solid green;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+}
+
+.drop-box-container > button {
+  height: 2em;
+  width: 10em;
+
+  border-radius: 0.5em;
+}
+
+.drop-box-container > select {
+  height: 2em;
+  width: 100%;
+
+  border-radius: 0.5em;
 }

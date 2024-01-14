@@ -16,13 +16,20 @@
   border: 2px solid blue;
 }
 
-.add-property-form-left-side,
+.add-property-form-left-side {
+  width: 60%;
+  padding: 2em;
+}
+
 .add-property-form-right-side {
-  width: 50%;
+  width: 40%;
   padding: 2em;
 }
 
 .add-property-form-left-side {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
   border: yellow solid 2px;
 }
 
@@ -30,6 +37,19 @@
   border: pink solid 2px;
 }
 
-.address-fields {
-  border: solid 2px green;
+.add-property-form-right-side {
+  display: flex;
+  flex-direction: column;
+
+  gap: 1em;
+
+  border: solid 2px violet;
+}
+
+.add-property-form-right-content {
+  display: flex;
+  flex-direction: column;
+
+  border: solid 2px goldenrod;
+  height: 50%;
 }

@@ -6,8 +6,8 @@
   align-items: center;
   justify-content: space-evenly;
 
-  height: 8em;
-  width: 25em;
+  height: 100%;
+  width: 100%;
 }
 
 .files-selected {

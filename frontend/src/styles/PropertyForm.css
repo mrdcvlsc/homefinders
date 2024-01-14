@@ -1,0 +1,36 @@
+.property-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+
+  border: 2px solid red;
+}
+
+.property-form-single-row-two-inputs,
+.property-form-single-row-four-fields,
+.property-form-single-row-price-type-storeys {
+  display: flex;
+  gap: 1em;
+}
+
+.property-form-single-row-price-type-storeys > input {
+  width: 50%;
+}
+
+.property-form-single-row-price-type-storeys > select {
+  width: 25%;
+}
+
+.property-form-single-row-two-inputs input {
+  width: 50%;
+}
+
+.property-form input,
+.property-form select {
+  height: 2em;
+}
+
+.property-form-single-row-four-fields > select,
+.property-form-single-row-four-fields > input {
+  width: 25%;
+}

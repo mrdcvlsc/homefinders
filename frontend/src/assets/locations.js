@@ -1,31 +1,31 @@
 let PhLocationJSON = {
-  "regions": [
+  regions: [
     {
-      "name": "South Luzon",
-      "provinces": [
+      name: "South Luzon",
+      provinces: [
         {
-          "name": "Batangas",
-          "cities": [
+          name: "Batangas",
+          cities: [
             {
-              "name": "Batangas  City",
-              "barangays": ["Balagtas", "San Agapito"],
+              name: "Batangas  City",
+              barangays: ["Balagtas", "San Agapito"],
             },
             {
-              "name": "Taal",
-              "barangays": ["Apacay", "Balisong"],
+              name: "Taal",
+              barangays: ["Apacay", "Balisong"],
             },
           ],
         },
         {
-          "name": "Cavite",
-          "cities": [
+          name: "Cavite",
+          cities: [
             {
-              "name": "City of Dasmariñas",
-              "barangays": ["Sampaloc I", "Sampaloc IV", "Salawag"],
+              name: "City of Dasmariñas",
+              barangays: ["Sampaloc I", "Sampaloc IV", "Salawag"],
             },
             {
-              "name": "Silang",
-              "barangays": ["Biga I", "Anahaw II"],
+              name: "Silang",
+              barangays: ["Biga I", "Anahaw II"],
             },
           ],
         },

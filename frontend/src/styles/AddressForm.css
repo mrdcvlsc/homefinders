@@ -1,0 +1,24 @@
+.address-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+
+  border: solid 2px blueviolet;
+}
+
+.address-fields-drop-box-row {
+  display: flex;
+  gap: 1em;
+}
+
+.address-fields-drop-box-row > select {
+  width: 25%;
+}
+
+.address-fields-drop-box-row > select {
+  height: 2em;
+}
+
+.address-form > input {
+  height: 2em;
+}
