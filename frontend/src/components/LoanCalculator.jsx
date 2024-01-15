@@ -20,18 +20,16 @@ export default function LoanCalculator() {
       (Math.pow(1 + interest, loanTenure.current) /
         (Math.pow(1 + interest, loanTenure.current) - 1));
 
-    const newTotalAmount = Math.round(loanTenure.current * newLoanEMI);
-    const newTotalInterestPayable = Math.round(
-      newTotalAmount - loanAmount.current,
-    );
+    const newTotalAmount = loanTenure.current * newLoanEMI;
+    const newTotalInterestPayable = newTotalAmount - loanAmount.current;
 
     // a note to my future self : mf only render states after all the
     // calculations are done, it will save you 2 hours of debugging time,
     // useState calls are asynchronous so you can not trust then in
     // between sequential calculations.
-    setLoanEMI(Math.round(newLoanEMI));
-    setTotalAmount(newTotalAmount);
-    setTotalInterestPayable(newTotalInterestPayable);
+    setLoanEMI(newLoanEMI.toFixed(2));
+    setTotalAmount(newTotalAmount.toFixed(2));
+    setTotalInterestPayable(newTotalInterestPayable.toFixed(2));
   };
 
   return (

@@ -5,6 +5,9 @@
   align-items: center;
   justify-content: center;
 
+  padding: 1em;
+  gap: 0.5em;
+
   border: 2px solid red;
 }
 

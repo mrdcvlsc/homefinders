@@ -112,6 +112,7 @@ const PropertyAdd = () => {
           </div>
         </div>
       </div>
+      <button>Save</button>
     </div>
   );
 };
