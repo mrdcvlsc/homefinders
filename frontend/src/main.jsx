@@ -3,18 +3,19 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import Navigation from "./pages/navigation";
-
 import Landing from "./pages/landing";
-import Registration from "./pages/register";
+import Calculator from "./pages/calculator";
+import About from "./pages/about";
 import Login from "./pages/login";
+import Registration from "./pages/register";
+
+import Listing from "./pages/listing";
+import PropertyAdd from "./pages/property-add";
+import PropertyManage from "./pages/property-manage"
 
 import ErrorPage from "./error-page";
 
 import "./styles/main.css";
-import Calculator from "./pages/calculator";
-import About from "./pages/about";
-import Listing from "./pages/listing";
-import AddProperty from "./pages/addproperty";
 
 const router = createBrowserRouter([
   {
@@ -37,7 +38,11 @@ const router = createBrowserRouter([
       },
       {
         path: "add-property",
-        element: <AddProperty />,
+        element: <PropertyAdd />,
+      },
+      {
+        path: "manage-property",
+        element: <PropertyManage />,
       },
       {
         path: "listing",

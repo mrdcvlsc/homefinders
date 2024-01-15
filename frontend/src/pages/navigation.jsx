@@ -93,6 +93,9 @@ export default function Navigation() {
               <Link className="react-router-sub-link" to={`add-property`}>
                 Add Property
               </Link>
+              <Link className="react-router-sub-link" to={`manage-property`}>
+                Manage Property
+              </Link>
             </div>
           </div>
 

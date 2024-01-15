@@ -7,6 +7,7 @@ export default function AddressForm({
   setProvince,
   setCity,
   setBarangay,
+  setExactAddress,
 }) {
   const [regionIndex, setRegionIndex] = React.useState(-1);
   const [provinceIndex, setProvinceIndex] = React.useState(-1);
@@ -83,18 +84,18 @@ export default function AddressForm({
       <h3>Address</h3>
       <div className="address-fields-drop-box-row">
         <select onChange={selectRegion}>
-          <option value={regionIndex} label="Region" disabled selected />
+          <option value={regionIndex} label="Region" disabled selected={regionIndex === -1} />
           {extractOptions(PhLocationJSON.regions)}
         </select>
 
         <select onChange={selectProvince} disabled={regionIndex === -1}>
-          <option value={provinceIndex} label="Province" disabled selected />
+          <option value={provinceIndex} label="Province" disabled selected={provinceIndex === -1} />
           {regionIndex !== -1 &&
             extractOptions(PhLocationJSON.regions[regionIndex].provinces)}
         </select>
 
         <select onChange={selectCity} disabled={provinceIndex === -1}>
-          <option value={cityIndex} label="City" disabled selected />
+          <option value={cityIndex} label="City" disabled selected={cityIndex === -1} />
           {provinceIndex !== -1 &&
             extractOptions(
               PhLocationJSON.regions[regionIndex].provinces[provinceIndex]
@@ -103,7 +104,7 @@ export default function AddressForm({
         </select>
 
         <select onChange={selectBarangay} disabled={cityIndex === -1}>
-          <option value={barangayIndex} label="Barangay" disabled selected />
+          <option value={barangayIndex} label="Barangay" disabled selected={barangayIndex === -1} />
           {cityIndex !== -1 &&
             extractBarangayOptions(
               PhLocationJSON.regions[regionIndex].provinces[provinceIndex]
@@ -112,6 +113,7 @@ export default function AddressForm({
         </select>
       </div>
       <input
+        onChange={(e) => setExactAddress(e.target.value)}
         type="text"
         placeholder="Street Name/House No./Building/Exact Address"
       />
