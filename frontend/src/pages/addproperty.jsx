@@ -1,9 +1,11 @@
-import { useNavigate } from "react-router-dom";
-import UploadDragOrSelect from "../components/UploadDragOrSelect";
-import "../styles/addproperty.css";
-import AddressForm from "../components/AddressForm";
 import React from "react";
+import { useNavigate } from "react-router-dom";
+
+import AddressForm from "../components/AddressForm";
 import PropertyForm from "../components/PropertyForm";
+import UploadDragOrSelect from "../components/UploadDragOrSelect";
+
+import "../styles/addproperty.css";
 
 const AddProperty = () => {
   const navigate = useNavigate();
@@ -99,11 +101,11 @@ const AddProperty = () => {
         <div className="add-property-form-right-side">
           <div className="add-property-form-right-content">
             <h3>Property Sample Images</h3>
-            <UploadDragOrSelect imagesUploadPostRoute={'/upload'} />
+            <UploadDragOrSelect imagesUploadPostRoute={"/upload"} />
           </div>
           <div className="add-property-form-right-content">
             <h3>Floor Plan Images</h3>
-            <UploadDragOrSelect imagesUploadPostRoute={'/upload'}/>
+            <UploadDragOrSelect imagesUploadPostRoute={"/upload"} />
           </div>
         </div>
       </div>

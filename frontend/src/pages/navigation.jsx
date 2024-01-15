@@ -1,12 +1,11 @@
+import React from "react";
 import { Outlet, Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-// import ImgLogo from "../assets/logo.png";
+import LoginPopup from "../components/LoginPopup";
+import { get_loggedin_user, logout_request } from "../requests/login_register";
 
 import "../styles/navigation.css";
-import LoginPopup from "../components/LoginPopup";
-import React from "react";
-import { get_loggedin_user, logout_request } from "../requests/login_register";
 
 // The main navigation component, this is the root of the react-router-dom.
 export default function Navigation() {

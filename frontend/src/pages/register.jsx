@@ -1,8 +1,9 @@
 import React from "react";
-import "../styles/register.css";
 
 import { validateForm } from "../helpers/validate";
 import { post_credentials } from "../requests/login_register";
+
+import "../styles/register.css";
 
 export default function Registration() {
   const [username, setUsername] = React.useState("");

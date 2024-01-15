@@ -1,5 +1,6 @@
 import "../styles/about.css";
-import AboutUsHouse from "../../public/logo.png";
+
+import AboutUsHouse from "../assets/logo.png";
 
 export default function About() {
   return (
@@ -18,12 +19,12 @@ export default function About() {
         </p>
 
         <p>
-          Our dedicated team is passionate about creating a user-friendly
+          {`Our dedicated team is passionate about creating a user-friendly
           platform that seamlessly combines cutting-edge technology with a
           personalized touch. Whether you're a first-time buyer, a seasoned
           homeowner, or someone simply seeking a change, our app offers a
           comprehensive and intuitive solution to navigate the complexities of
-          the real estate market.
+          the real estate market.`}
         </p>
         <p>
           Join us on this exciting adventure as we redefine the home-searching

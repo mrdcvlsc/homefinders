@@ -2,7 +2,7 @@ import React from "react";
 
 import "../styles/UploadDragOrSelect.css";
 
-export default function UploadDragOrSelect({imagesUploadPostRoute}) {
+export default function UploadDragOrSelect({ imagesUploadPostRoute }) {
   const [files, setFiles] = React.useState(null);
   const inputRef = React.useRef();
 

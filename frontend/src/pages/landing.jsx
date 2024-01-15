@@ -1,6 +1,6 @@
-import PhLocationJSON from "../assets/locations";
-import UploadDragOrSelect from "../components/UploadDragOrSelect";
 import "../styles/landing.css";
+
+import PhLocationJSON from "../assets/locations";
 
 export default function Landing() {
   return (
