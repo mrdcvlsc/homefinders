@@ -1,7 +1,7 @@
 import React from "react";
 
 import { validateForm } from "../helpers/validate";
-import { post_credentials } from "../requests/login_register";
+import { post_with_credentials } from "../requests/post";
 
 import "../styles/register.css";
 
@@ -41,7 +41,7 @@ export default function Registration() {
     }
 
     try {
-      const [ok, data] = await post_credentials("/register", {
+      const [ok, data] = await post_with_credentials("/register", {
         username: username,
         password: password,
         registration_code: registrationCode,

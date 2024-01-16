@@ -1,6 +1,6 @@
 import React from "react";
 
-import { get_loggedin_user } from "../requests/login_register";
+import { get_loggedin_user } from "../requests/get";
 
 import "../styles/units.css";
 

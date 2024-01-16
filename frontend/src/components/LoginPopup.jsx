@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 import { validateForm } from "../helpers/validate";
-import { post_credentials } from "../requests/login_register";
+import { post_with_credentials } from "../requests/post";
 
 import "../styles/LoginPopup.css";
 
@@ -36,7 +36,7 @@ export default function LoginPopup({ closeLoginForm, getLoggedInUser }) {
     }
 
     try {
-      const [ok, data] = await post_credentials("/login", {
+      const [ok, data] = await post_with_credentials("/login", {
         username: username,
         password: password,
       });

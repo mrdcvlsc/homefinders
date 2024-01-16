@@ -3,7 +3,7 @@ import { Outlet, Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 import LoginPopup from "../components/LoginPopup";
-import { get_loggedin_user, logout_request } from "../requests/login_register";
+import { get_loggedin_user, logout_request } from "../requests/get";
 
 import "../styles/navigation.css";
 
