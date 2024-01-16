@@ -3,6 +3,7 @@ import "../styles/AddressForm.css";
 import PhLocationJSON from "../assets/locations";
 
 export default function AddressForm({
+  componentHeadingText,
   setRegion,
   setProvince,
   setCity,
@@ -81,7 +82,7 @@ export default function AddressForm({
 
   return (
     <div className="address-form">
-      <h3>Address</h3>
+      <h3>{componentHeadingText}</h3>
       <div className="address-fields-drop-box-row">
         <select onChange={selectRegion}>
           <option value={regionIndex} label="Region" disabled selected={regionIndex === -1} />

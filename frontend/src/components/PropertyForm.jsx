@@ -2,6 +2,7 @@ import PropertyOptionsJSON from "../assets/property";
 import "../styles/PropertyForm.css";
 
 export default function PropertyForm({
+  componentHeadingText,
   setPropertyName,
   setPrice,
   setPropertyType,
@@ -22,10 +23,12 @@ export default function PropertyForm({
   setBalcony,
   setLanai,
   setCarPort,
+  setDescription
 }) {
   return (
     <div className="property-form">
-      <h3>Property Information</h3>
+      <h3>{componentHeadingText}</h3>
+      {/* <h3>Property Information</h3> */}
 
       {/*=======================================================================*/}
       <input
@@ -230,15 +233,16 @@ export default function PropertyForm({
           })}
         </select>
       </div>
-      {/*=======================================================================*/}
+      {setDescription ?
       <textarea
+        onChange={setDescription}
         name=""
         id=""
         cols="30"
         rows="7"
         placeholder="Description/Other Details"
-      />
-      {/*=======================================================================*/}
+      /> :
+      null}
     </div>
   );
 }

@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 
 import AddressForm from "../components/AddressForm";
 import PropertyForm from "../components/PropertyForm";
-import UploadDragOrSelect from "../components/UploadDragOrSelect";
 
 import "../styles/property-manage.css";
 
@@ -71,13 +70,17 @@ const PropertyManage = () => {
       <div className="manage-property-form-container">
         <div className="manage-property-form-left-side">
           <AddressForm
+            componentHeadingText={'Match Address Filter'}
             setRegion={setRegion}
             setProvince={setProvince}
             setCity={setCity}
             setBarangay={setBarangay}
             setExactAddress={setExactAddress}
           />
+        </div>
+        <div className="manage-property-form-right-side">
           <PropertyForm
+            componentHeadingText={'Match Property Information'}
             setPropertyName={setPropertyName}
             setPrice={setPrice}
             setPropertyType={setPropertyType}
