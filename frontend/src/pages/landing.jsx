@@ -19,9 +19,9 @@ export default function Landing() {
               disabled
               selected
             />
-            {PhLocationJSON.regions.map((value, index) => {
-              return value.provinces.map((v, i) => {
-                return <option key={i} value={v.name} label={v.name} />;
+            {PhLocationJSON.r.map((value, index) => {
+              return value.p.map((v, i) => {
+                return <option key={i} value={v.n} label={v.n} />;
               });
             })}
           </select>

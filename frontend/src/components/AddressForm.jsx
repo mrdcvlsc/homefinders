@@ -15,7 +15,7 @@ export default function AddressForm({
   const [barangayIndex, setBarangayIndex] = React.useState(-1);
 
   const selectRegion = (e) => {
-    setRegion(PhLocationJSON.regions[Number(e.target.value)].name);
+    setRegion(PhLocationJSON.r[Number(e.target.value)].n);
     setProvince("");
     setCity("");
     setBarangay("");
@@ -29,8 +29,8 @@ export default function AddressForm({
   const selectProvince = (e) => {
     if (setProvince) {
       setProvince(
-        PhLocationJSON.regions[regionIndex].provinces[Number(e.target.value)]
-          .name,
+        PhLocationJSON.r[regionIndex].p[Number(e.target.value)]
+          .n,
       );
       setCity("");
       setBarangay("");
@@ -44,9 +44,9 @@ export default function AddressForm({
   const selectCity = (e) => {
     if (setCity) {
       setCity(
-        PhLocationJSON.regions[regionIndex].provinces[provinceIndex].cities[
+        PhLocationJSON.r[regionIndex].p[provinceIndex].c[
           Number(e.target.value)
-        ].name,
+        ].n,
       );
       setBarangay("");
     }
@@ -58,9 +58,9 @@ export default function AddressForm({
   const selectBarangay = (e) => {
     if (setBarangay) {
       setBarangay(
-        PhLocationJSON.regions[regionIndex].provinces[provinceIndex].cities[
+        PhLocationJSON.r[regionIndex].p[provinceIndex].c[
           cityIndex
-        ].barangays[Number(e.target.value)],
+        ].b[Number(e.target.value)],
       );
     }
 
@@ -69,7 +69,7 @@ export default function AddressForm({
 
   const extractOptions = (optionsArray) => {
     return optionsArray.map((option, index) => (
-      <option key={index} value={index} label={option.name} />
+      <option key={index} value={index} label={option.n} />
     ));
   };
 
@@ -85,21 +85,21 @@ export default function AddressForm({
       <div className="address-fields-drop-box-row">
         <select onChange={selectRegion}>
           <option value={regionIndex} label="Region" disabled selected={regionIndex === -1} />
-          {extractOptions(PhLocationJSON.regions)}
+          {extractOptions(PhLocationJSON.r)}
         </select>
 
         <select onChange={selectProvince} disabled={regionIndex === -1}>
           <option value={provinceIndex} label="Province" disabled selected={provinceIndex === -1} />
           {regionIndex !== -1 &&
-            extractOptions(PhLocationJSON.regions[regionIndex].provinces)}
+            extractOptions(PhLocationJSON.r[regionIndex].p)}
         </select>
 
         <select onChange={selectCity} disabled={provinceIndex === -1}>
           <option value={cityIndex} label="City" disabled selected={cityIndex === -1} />
           {provinceIndex !== -1 &&
             extractOptions(
-              PhLocationJSON.regions[regionIndex].provinces[provinceIndex]
-                .cities,
+              PhLocationJSON.r[regionIndex].p[provinceIndex]
+                .c,
             )}
         </select>
 
@@ -107,8 +107,8 @@ export default function AddressForm({
           <option value={barangayIndex} label="Barangay" disabled selected={barangayIndex === -1} />
           {cityIndex !== -1 &&
             extractBarangayOptions(
-              PhLocationJSON.regions[regionIndex].provinces[provinceIndex]
-                .cities[cityIndex].barangays,
+              PhLocationJSON.r[regionIndex].p[provinceIndex]
+                .c[cityIndex].b,
             )}
         </select>
       </div>
