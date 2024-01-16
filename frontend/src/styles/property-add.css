@@ -19,11 +19,6 @@
   border: 2px solid blue;
 }
 
-.add-property-form-left-side {
-  width: 60%;
-  padding: 2em;
-}
-
 .add-property-form-right-side {
   width: 40%;
   padding: 2em;
@@ -33,6 +28,10 @@
   display: flex;
   flex-direction: column;
   gap: 1em;
+
+  width: 60%;
+  padding: 1em;
+
   border: yellow solid 2px;
 }
 
@@ -55,4 +54,19 @@
 
   border: solid 2px goldenrod;
   height: 50%;
+}
+
+.add-property-form-btns {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2em;
+
+  border: 1px solid green;
+  width: 100%;
+}
+
+.add-property-form-btns > button {
+  height: 2em;
+  width: 8em;
 }

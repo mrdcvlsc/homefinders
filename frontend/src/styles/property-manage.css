@@ -1,32 +1,32 @@
 .manage-property-page {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 
-    align-items: center;
-    justify-content: center;
+  align-items: center;
+  justify-content: center;
 
-    border: 2px solid green;
+  border: 2px solid green;
 
-    padding: 1em;
+  padding: 1em;
 }
 
 .manage-property-form-container {
-    display: flex;
+  display: flex;
 
-    gap: 1em;
-    padding: 1em;
+  gap: 1em;
+  padding: 1em;
 
-    width: 100%;
+  width: 100%;
 
-    border: 2px solid green;
+  border: 2px solid green;
 }
 
 .manage-property-form-left-side {
-    width: 60%;
-    border: solid gold 2px;
+  width: 60%;
+  border: solid gold 2px;
 }
 
 .manage-property-form-right-side {
-    width: 40%;
-    border: solid orange 2px;
+  width: 40%;
+  border: solid orange 2px;
 }

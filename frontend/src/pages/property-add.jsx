@@ -14,7 +14,7 @@ const PropertyAdd = () => {
   const [province, setProvince] = React.useState("");
   const [city, setCity] = React.useState("");
   const [barangay, setBarangay] = React.useState("");
-  const [exactAddress, setExactAddress] = React.useState("")
+  const [exactAddress, setExactAddress] = React.useState("");
 
   const [PropertyName, setPropertyName] = React.useState("");
   const [Price, setPrice] = React.useState(0);
@@ -36,12 +36,12 @@ const PropertyAdd = () => {
   const [Balcony, setBalcony] = React.useState(0);
   const [Lanai, setLanai] = React.useState(0);
   const [CarPort, setCarPort] = React.useState(0);
-  const [Description, setDescription] = React.useState('')
+  const [Description, setDescription] = React.useState("");
 
   return (
     <div className="add-property-page">
       <h1>Add New Property</h1>
-{/* 
+      {/* 
       <p>region : {region}</p>
       <p>province : {province}</p>
       <p>city : {city}</p>
@@ -72,7 +72,7 @@ const PropertyAdd = () => {
       <div className="add-property-form-container">
         <div className="add-property-form-left-side">
           <AddressForm
-            componentHeadingText={'Address'}
+            componentHeadingText={"Address"}
             setRegion={setRegion}
             setProvince={setProvince}
             setCity={setCity}
@@ -80,7 +80,7 @@ const PropertyAdd = () => {
             setExactAddress={setExactAddress}
           />
           <PropertyForm
-            componentHeadingText={'Property Information'}
+            componentHeadingText={"Property Information"}
             setPropertyName={setPropertyName}
             setPrice={setPrice}
             setPropertyType={setPropertyType}
@@ -116,7 +116,10 @@ const PropertyAdd = () => {
           </div>
         </div>
       </div>
-      <button>Save</button>
+      <div className="add-property-form-btns">
+        <button>Save</button>
+        <button>Clear</button>
+      </div>
     </div>
   );
 };

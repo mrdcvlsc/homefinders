@@ -13,7 +13,7 @@ const PropertyManage = () => {
   const [province, setProvince] = React.useState("");
   const [city, setCity] = React.useState("");
   const [barangay, setBarangay] = React.useState("");
-  const [exactAddress, setExactAddress] = React.useState("")
+  const [exactAddress, setExactAddress] = React.useState("");
 
   const [PropertyName, setPropertyName] = React.useState("");
   const [Price, setPrice] = React.useState(0);
@@ -39,7 +39,7 @@ const PropertyManage = () => {
   return (
     <div className="manage-property-page">
       <h1>Manage Properties</h1>
-{/* 
+      {/* 
       <p>region : {region}</p>
       <p>province : {province}</p>
       <p>city : {city}</p>
@@ -70,7 +70,7 @@ const PropertyManage = () => {
       <div className="manage-property-form-container">
         <div className="manage-property-form-left-side">
           <AddressForm
-            componentHeadingText={'Match Address Filter'}
+            componentHeadingText={"Match Address Filter"}
             setRegion={setRegion}
             setProvince={setProvince}
             setCity={setCity}
@@ -80,7 +80,7 @@ const PropertyManage = () => {
         </div>
         <div className="manage-property-form-right-side">
           <PropertyForm
-            componentHeadingText={'Match Property Information'}
+            componentHeadingText={"Match Property Information"}
             setPropertyName={setPropertyName}
             setPrice={setPrice}
             setPropertyType={setPropertyType}

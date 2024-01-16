@@ -23,7 +23,7 @@ export default function PropertyForm({
   setBalcony,
   setLanai,
   setCarPort,
-  setDescription
+  setDescription,
 }) {
   return (
     <div className="property-form">
@@ -233,16 +233,16 @@ export default function PropertyForm({
           })}
         </select>
       </div>
-      {setDescription ?
-      <textarea
-        onChange={setDescription}
-        name=""
-        id=""
-        cols="30"
-        rows="7"
-        placeholder="Description/Other Details"
-      /> :
-      null}
+      {setDescription ? (
+        <textarea
+          onChange={setDescription}
+          name=""
+          id=""
+          cols="30"
+          rows="7"
+          placeholder="Description/Other Details"
+        />
+      ) : null}
     </div>
   );
 }

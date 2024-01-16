@@ -11,7 +11,7 @@ import Registration from "./pages/register";
 
 import Listing from "./pages/listing";
 import PropertyAdd from "./pages/property-add";
-import PropertyManage from "./pages/property-manage"
+import PropertyManage from "./pages/property-manage";
 
 import ErrorPage from "./error-page";
 
