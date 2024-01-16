@@ -5,9 +5,9 @@
 - **`reg_code`** - 10 character unique code
 
 ```sql
-CREATE TABLE IF NOT EXISTS RegCodes {
+CREATE TABLE IF NOT EXISTS RegCodes (
     reg_code VARCHAR(10) UNIQUE NOT NULL
-}
+)
 ```
 
 ### Users Table
