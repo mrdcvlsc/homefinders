@@ -146,8 +146,12 @@ func (db *MariaDB) SaveProperty(property *Property) error {
 	return err
 }
 
-func (db *MariaDB) GetProperty(address string) (*Property, error) {
-	return nil, nil
+func (db *MariaDB) GetPropertyID(address string) (int, error) {
+	var id int
+
+	row := db.Instance.QueryRow("SELECT id FROM Properties WHERE street_address = ?", address)
+	err := row.Scan(&id)
+	return id, err
 }
 
 func (db *MariaDB) GetProperties(

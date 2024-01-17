@@ -18,7 +18,7 @@ type I interface {
 	FindRegCode(reg_code string) (string, error)
 
 	SaveProperty(*Property) error
-	GetProperty(address string) (*Property, error)
+	GetPropertyID(address string) (int, error)
 	GetProperties(
 		region, province, city, barangay, street_address string,
 

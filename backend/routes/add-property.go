@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/mrdcvlsc/homefinders/cdn"
 	"github.com/mrdcvlsc/homefinders/database"
 	"github.com/mrdcvlsc/homefinders/persistence"
 	"github.com/mrdcvlsc/homefinders/respond"
@@ -103,18 +104,62 @@ func AddProperty(c *gin.Context) {
 		return
 	}
 
+	//////////////// get property id ////////////////
+
+	property_id, getIdErr := persistence.GetPropertyID(property_form.StreetAddress)
+
+	if getIdErr != nil {
+		log.Println(getIdErr)
+		c.JSON(http.StatusForbidden, gin.H{"msg": respond.InternalServerError})
+		return
+	}
+
 	//////////////// get images ////////////////
 
 	sample_images := form.File["sample_images[]"]
 	floor_plans := form.File["floor_plans[]"]
 
 	for index, file := range sample_images {
+		saveErr := c.SaveUploadedFile(file, fmt.Sprintf("uploads/%s", file.Filename))
+
+		if saveErr != nil {
+			log.Println("UPLOAD sample_images ERROR : ", saveErr)
+			continue
+		}
+
+		cloudinary_img_id := fmt.Sprintf("%d-sample-image-%d", property_id, index)
+		cloudinary_url, cloudinaryUploadErr := cdn.UploadImage(fmt.Sprintf("uploads/%s", file.Filename), cloudinary_img_id)
+		if cloudinaryUploadErr != nil {
+			log.Println(cloudinaryUploadErr)
+			c.JSON(http.StatusForbidden, gin.H{"msg": respond.InternalServerError})
+			return
+		}
+
 		fmt.Printf("sample_image file (%02d) : %+v\n", index, file.Filename)
+		fmt.Println("sample_image uploaded URL : ", cloudinary_url)
 	}
 
 	for index, file := range floor_plans {
+		saveErr := c.SaveUploadedFile(file, fmt.Sprintf("uploads/%s", file.Filename))
+
+		if saveErr != nil {
+			log.Println("UPLOAD floor_plans ERROR : ", saveErr)
+			continue
+		}
+
+		cloudinary_img_id := fmt.Sprintf("%d-floor-plan-%d", property_id, index)
+		cloudinary_url, cloudinaryUploadErr := cdn.UploadImage(fmt.Sprintf("uploads/%s", file.Filename), cloudinary_img_id)
+		if cloudinaryUploadErr != nil {
+			log.Println(cloudinaryUploadErr)
+			c.JSON(http.StatusForbidden, gin.H{"msg": respond.InternalServerError})
+			return
+		}
+
 		fmt.Printf("floor_plans file (%02d) : %+v\n", index, file.Filename)
+		fmt.Println("floor_plans uploaded URL : ", cloudinary_url)
 	}
+
+	//////////////// TODO: save cloudinary data to mariadb ////////////////
 
 	///////////////////////////////////////////
 

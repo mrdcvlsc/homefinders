@@ -52,6 +52,10 @@ func GetUser(username_or_email string) (*database.User, error) {
 	return user, err
 }
 
+func GetPropertyID(address string) (int, error) {
+	return db.GetPropertyID(address)
+}
+
 // returns true if the given registration code is available.
 func IsValidRegCode(reg_code string) bool {
 	_, err := db.FindRegCode(reg_code)
