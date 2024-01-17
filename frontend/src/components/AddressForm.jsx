@@ -82,7 +82,7 @@ export default function AddressForm({
     <div className="address-form">
       <h3>{componentHeadingText}</h3>
       <div className="address-fields-drop-box-row">
-        <select onChange={selectRegion}>
+        <select onChange={selectRegion} required>
           <option
             value={regionIndex}
             label="Region"
@@ -92,7 +92,11 @@ export default function AddressForm({
           {extractOptions(PhLocationJSON.r)}
         </select>
 
-        <select onChange={selectProvince} disabled={regionIndex === -1}>
+        <select
+          onChange={selectProvince}
+          disabled={regionIndex === -1}
+          required
+        >
           <option
             value={provinceIndex}
             label="Province"
@@ -103,7 +107,7 @@ export default function AddressForm({
             extractOptions(PhLocationJSON.r[regionIndex].p)}
         </select>
 
-        <select onChange={selectCity} disabled={provinceIndex === -1}>
+        <select onChange={selectCity} disabled={provinceIndex === -1} required>
           <option
             value={cityIndex}
             label="City"
@@ -114,7 +118,7 @@ export default function AddressForm({
             extractOptions(PhLocationJSON.r[regionIndex].p[provinceIndex].c)}
         </select>
 
-        <select onChange={selectBarangay} disabled={cityIndex === -1}>
+        <select onChange={selectBarangay} disabled={cityIndex === -1} required>
           <option
             value={barangayIndex}
             label="Barangay"
@@ -130,6 +134,7 @@ export default function AddressForm({
       <input
         onChange={(e) => setExactAddress(e.target.value)}
         type="text"
+        required
         placeholder="Street Name/House No./Building/Exact Address"
       />
     </div>

@@ -15,26 +15,26 @@ const PropertyManage = () => {
   const [barangay, setBarangay] = React.useState("");
   const [exactAddress, setExactAddress] = React.useState("");
 
-  const [PropertyName, setPropertyName] = React.useState("");
-  const [Price, setPrice] = React.useState(0);
-  const [PropertyType, setPropertyType] = React.useState("");
-  const [Storeys, setStoreys] = React.useState(0);
-  const [LivableFloorArea, setLivableFloorArea] = React.useState(0);
-  const [GrossArea, setGrossArea] = React.useState(0);
-  const [LotLength, setLotLength] = React.useState(0);
-  const [LotWidth, setLotWidth] = React.useState(0);
-  const [LivingRoom, setLivingRoom] = React.useState(0);
-  const [Kitchen, setKitchen] = React.useState(0);
-  const [DiningRoom, setDiningRoom] = React.useState(0);
-  const [BathRoom, setBathRoom] = React.useState(0);
-  const [Bedroom, setBedroom] = React.useState(0);
-  const [MastersBedroom, setMastersBedroom] = React.useState(0);
-  const [MaidRoom, setMaidRoom] = React.useState(0);
-  const [Toilet, setToilet] = React.useState(0);
-  const [WalkInCloset, setWalkInCloset] = React.useState(0);
-  const [Balcony, setBalcony] = React.useState(0);
-  const [Lanai, setLanai] = React.useState(0);
-  const [CarPort, setCarPort] = React.useState(0);
+  const [propertyName, setPropertyName] = React.useState("");
+  const [price, setPrice] = React.useState(-1);
+  const [propertyType, setPropertyType] = React.useState("");
+  const [storeys, setStoreys] = React.useState(-1);
+  const [livableFloorArea, setLivableFloorArea] = React.useState(-1);
+  const [grossArea, setGrossArea] = React.useState(-1);
+  const [lotLength, setLotLength] = React.useState(-1);
+  const [lotWidth, setLotWidth] = React.useState(-1);
+  const [livingRoom, setLivingRoom] = React.useState(-1);
+  const [kitchen, setKitchen] = React.useState(-1);
+  const [diningRoom, setDiningRoom] = React.useState(-1);
+  const [bathRoom, setBathRoom] = React.useState(-1);
+  const [bedroom, setBedroom] = React.useState(-1);
+  const [mastersBedroom, setMastersBedroom] = React.useState(-1);
+  const [maidRoom, setMaidRoom] = React.useState(-1);
+  const [toilet, setToilet] = React.useState(-1);
+  const [walkInCloset, setWalkInCloset] = React.useState(-1);
+  const [balcony, setBalcony] = React.useState(-1);
+  const [lanai, setLanai] = React.useState(-1);
+  const [carPort, setCarPort] = React.useState(-1);
 
   return (
     <div className="manage-property-page">

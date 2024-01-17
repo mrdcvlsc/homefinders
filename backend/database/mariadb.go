@@ -125,3 +125,41 @@ func (db *MariaDB) FindRegCode(reg_code string) (string, error) {
 	err := row.Scan(&read_reg_code)
 	return read_reg_code, err
 }
+
+func (db *MariaDB) SaveProperty(property *Property) error {
+	_, err := db.Instance.Exec(
+		`INSERT INTO Properties (
+			region, province, city, barangay, street_address,
+			property_description, property_name, property_type, property_price, storeys,
+			livable_area_sqm, gross_area_sqm, lot_length_m, lot_width_m,
+			living_room, kitchen, dining_room, bath_room,
+			bedroom, masters_bedroom, maid_room, toilet,
+			walk_in_closet, balcony, lanai, car_port
+		) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+		property.Region, property.Province, property.City, property.Barangay, property.StreetAddress,
+		property.Description, property.Name, property.Type, property.Price, property.Storeys,
+		property.LivableAreaSQM, property.GrossAreaSQM, property.LotLengthM, property.LotWidthM,
+		property.LivingRoom, property.Kitchen, property.DiningRoom, property.BathRoom,
+		property.Bedroom, property.MastersBedroom, property.MaidRoom, property.Toilet,
+		property.WalkInCloset, property.Balcony, property.Lanai, property.CarPort,
+	)
+	return err
+}
+
+func (db *MariaDB) GetProperty(address string) (*Property, error) {
+	return nil, nil
+}
+
+func (db *MariaDB) GetProperties(
+	region, province, city, barangay, street_address string,
+
+	name, property_type string, price float32, storeys int,
+
+	livable_area_sqm, gross_area_sqm, lot_length_m, lot_width_m float32,
+
+	living_room, kitchen, dining_room, bath_room int,
+	bedroom, masters, maid_room, toilet int,
+	walkincloset, balcony, lanai, carport int,
+) (*Property, error) {
+	return nil, nil
+}

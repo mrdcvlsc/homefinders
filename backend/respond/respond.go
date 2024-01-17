@@ -18,3 +18,5 @@ var BadRequest = "*Bad request, body might be wrong, corrupted or maliciously al
 var InternalServerError = "*Internal server error"
 
 var UploadSuccess = "Upload success"
+
+var PropertySaveSuccess = "Property save successful"

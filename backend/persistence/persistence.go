@@ -35,6 +35,10 @@ func SaveUserWithUsername(user *database.User) error {
 	return db.SaveUserWithUsername(user)
 }
 
+func SaveProperty(property *database.Property) error {
+	return db.SaveProperty(property)
+}
+
 // test with `err == sql.ErrNoRows`, if true user not found, else internal server error
 func GetUser(username_or_email string) (*database.User, error) {
 	user := &database.User{}
