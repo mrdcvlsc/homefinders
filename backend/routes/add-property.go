@@ -46,15 +46,15 @@ type PropertyForm struct {
 }
 
 func AddProperty(c *gin.Context) {
-	form, err := c.MultipartForm()
+	form, formErr := c.MultipartForm()
 
-	if err != nil {
+	if formErr != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"msg": respond.BadRequest})
 		log.Println("error parsing form data in the server")
 		return
 	}
 
-	//////////////// get form inputs ////////////////
+	//////////////// save form inputs ////////////////
 
 	property_form_raw := form.Value["form_inputs"][0]
 
@@ -114,52 +114,70 @@ func AddProperty(c *gin.Context) {
 		return
 	}
 
-	//////////////// get images ////////////////
+	//////////////// upload sample images ////////////////
 
 	sample_images := form.File["sample_images[]"]
 	floor_plans := form.File["floor_plans[]"]
 
 	for index, file := range sample_images {
-		saveErr := c.SaveUploadedFile(file, fmt.Sprintf("uploads/%s", file.Filename))
+		// upload to server's file storage temporarily
 
-		if saveErr != nil {
-			log.Println("UPLOAD sample_images ERROR : ", saveErr)
+		if err := c.SaveUploadedFile(file, fmt.Sprintf("uploads/%s", file.Filename)); err != nil {
+			log.Println("UPLOAD sample_images ERROR : ", err)
 			continue
 		}
+
+		// upload the uploaded images in file storage to cloudinary
 
 		cloudinary_img_id := fmt.Sprintf("%d-sample-image-%d", property_id, index)
+
 		cloudinary_url, cloudinaryUploadErr := cdn.UploadImage(fmt.Sprintf("uploads/%s", file.Filename), cloudinary_img_id)
+
 		if cloudinaryUploadErr != nil {
 			log.Println(cloudinaryUploadErr)
-			c.JSON(http.StatusForbidden, gin.H{"msg": respond.InternalServerError})
+			c.JSON(http.StatusForbidden, gin.H{"msg": respond.ExternalServerError})
 			return
 		}
 
-		fmt.Printf("sample_image file (%02d) : %+v\n", index, file.Filename)
-		fmt.Println("sample_image uploaded URL : ", cloudinary_url)
+		// save the necessary cloudinary data into the database server
+
+		if err := persistence.SaveImageData(property_id, cloudinary_url, cloudinary_img_id); err != nil {
+			log.Println(err)
+			c.JSON(http.StatusForbidden, gin.H{"msg": respond.InternalServerError})
+			return
+		}
 	}
 
-	for index, file := range floor_plans {
-		saveErr := c.SaveUploadedFile(file, fmt.Sprintf("uploads/%s", file.Filename))
+	//////////////// upload floor plan images ////////////////
 
-		if saveErr != nil {
-			log.Println("UPLOAD floor_plans ERROR : ", saveErr)
+	for index, file := range floor_plans {
+		// upload to server's file storage temporarily
+
+		if err := c.SaveUploadedFile(file, fmt.Sprintf("uploads/%s", file.Filename)); err != nil {
+			log.Println("UPLOAD floor_plans ERROR : ", err)
 			continue
 		}
 
+		// upload the uploaded images in file storage to cloudinary
+
 		cloudinary_img_id := fmt.Sprintf("%d-floor-plan-%d", property_id, index)
+
 		cloudinary_url, cloudinaryUploadErr := cdn.UploadImage(fmt.Sprintf("uploads/%s", file.Filename), cloudinary_img_id)
+
 		if cloudinaryUploadErr != nil {
 			log.Println(cloudinaryUploadErr)
-			c.JSON(http.StatusForbidden, gin.H{"msg": respond.InternalServerError})
+			c.JSON(http.StatusForbidden, gin.H{"msg": respond.ExternalServerError})
 			return
 		}
 
-		fmt.Printf("floor_plans file (%02d) : %+v\n", index, file.Filename)
-		fmt.Println("floor_plans uploaded URL : ", cloudinary_url)
-	}
+		// save the necessary cloudinary data into the database server
 
-	//////////////// TODO: save cloudinary data to mariadb ////////////////
+		if err := persistence.SaveImageData(property_id, cloudinary_url, cloudinary_img_id); err != nil {
+			log.Println(err)
+			c.JSON(http.StatusForbidden, gin.H{"msg": respond.InternalServerError})
+			return
+		}
+	}
 
 	///////////////////////////////////////////
 

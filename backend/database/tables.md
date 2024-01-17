@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS Properties (
     province VARCHAR(30) NOT NULL,
     city VARCHAR(30) NOT NULL,
     barangay VARCHAR(60) NOT NULL,
-    street_address VARCHAR(60) UNIQUE NOT NULL,
+    street_address VARCHAR(255) UNIQUE NOT NULL,
 
     property_description VARCHAR(400),
     property_name VARCHAR(25) NOT NULL,
@@ -49,12 +49,11 @@ CREATE TABLE IF NOT EXISTS Properties (
 
 ### Image Table
 
-TODO TOMORROW
-
 ```sql
 CREATE TABLE IF NOT EXISTS Images (
-    property_id INT NOT NULL,
-    image_url UNIQUE NOT NULL
+    id INT NOT NULL,
+    image_url VARCHAR(255) UNIQUE NOT NULL,
+    image_public_id VARCHAR(255) UNIQUE NOT NULL
 );
 ```
 

@@ -167,3 +167,13 @@ func (db *MariaDB) GetProperties(
 ) (*Property, error) {
 	return nil, nil
 }
+
+func (db *MariaDB) SaveImageData(associated_property_id int, cloudinary_url, cloudinary_img_id string) error {
+	_, err := db.Instance.Exec(
+		"INSERT INTO Images (id, image_url, image_public_id) VALUES (?, ?, ?)",
+		associated_property_id,
+		cloudinary_url,
+		cloudinary_img_id,
+	)
+	return err
+}

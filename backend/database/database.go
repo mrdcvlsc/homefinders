@@ -30,6 +30,8 @@ type I interface {
 		bedroom, masters, maid_room, toilet int,
 		walkincloset, balcony, lanai, carport int,
 	) (*Property, error)
+
+	SaveImageData(associated_property_id int, cloudinary_url, cloudinary_img_id string) error
 }
 
 /*

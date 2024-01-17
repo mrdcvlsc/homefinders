@@ -16,6 +16,7 @@ var RegisterUsernameTaken = "*That username or email is taken"
 
 var BadRequest = "*Bad request, body might be wrong, corrupted or maliciously altered"
 var InternalServerError = "*Internal server error"
+var ExternalServerError = "*External server error"
 
 var UploadSuccess = "Upload success"
 

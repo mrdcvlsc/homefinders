@@ -39,6 +39,10 @@ func SaveProperty(property *database.Property) error {
 	return db.SaveProperty(property)
 }
 
+func SaveImageData(associated_property_id int, cloudinary_url, cloudinary_img_id string) error {
+	return db.SaveImageData(associated_property_id, cloudinary_url, cloudinary_img_id)
+}
+
 // test with `err == sql.ErrNoRows`, if true user not found, else internal server error
 func GetUser(username_or_email string) (*database.User, error) {
 	user := &database.User{}
