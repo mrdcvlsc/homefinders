@@ -30,4 +30,6 @@ go.work
 env.txt
 *.env
 
+backend/uploads/*
+
 # frontend gitignore
