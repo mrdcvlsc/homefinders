@@ -2,6 +2,8 @@
 # Dependencies
 ################################################################################
 
+OS:=$(shell uname)
+
 GO_SRC := $(wildcard backend/*/*.go)
 GO_SRC_SUBDIR := $(wildcard backend/*/*/*.go)
 REACT_SRC_FILES := $(wildcard frontend/src/*.*)
@@ -17,17 +19,17 @@ run: backend/app frontend/dist/index.html
 ################################################################################
 
 backend/app: backend/main.go $(GO_SRC) $(GO_SRC_SUBDIR)
-	go -C backend build -tags netgo -ldflags '-s -w' -o app
+	cd backend && go build -tags netgo -ldflags '-s -w' -o app
 
 frontend/dist/index.html: $(REACT_SRC_FILES) $(REACT_SRC_SUBDIR_FILES)
-	npm install --prefix frontend && npm run build --prefix frontend
+	cd frontend && npm install && npm run build
 
 ################################################################################
 # Canary Targets
 ################################################################################
 
 isolated_backend_build: frontend backend/main.go $(GO_SRC) $(GO_SRC_SUBDIR)
-	go -C backend build -tags netgo -ldflags '-s -w' -o app
+	cd backend && go build -tags netgo -ldflags '-s -w' -o app
 
 isolated_frontend_build: $(REACT_SRC_FILES) $(REACT_SRC_SUBDIR_FILES)
-	npm install --prefix frontend && npm run build --prefix frontend
+	cd frontend && npm install && npm run build
