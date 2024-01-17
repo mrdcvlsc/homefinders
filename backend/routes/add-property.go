@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
@@ -44,11 +45,23 @@ type PropertyForm struct {
 }
 
 func AddProperty(c *gin.Context) {
+	form, err := c.MultipartForm()
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"msg": respond.BadRequest})
+		log.Println("error parsing form data in the server")
+		return
+	}
+
+	//////////////// get form inputs ////////////////
+
+	property_form_raw := form.Value["form_inputs"][0]
+
 	property_form := PropertyForm{}
 
-	if err := c.BindJSON(&property_form); err != nil {
+	if err := json.Unmarshal([]byte(property_form_raw), &property_form); err != nil {
 		log.Println(err)
-		c.JSON(http.StatusBadRequest, gin.H{"msg": respond.BadRequest})
+		c.JSON(http.StatusBadRequest, gin.H{"msg": respond.InternalServerError})
 		return
 	}
 
@@ -89,6 +102,21 @@ func AddProperty(c *gin.Context) {
 		c.JSON(http.StatusForbidden, gin.H{"msg": respond.InternalServerError})
 		return
 	}
+
+	//////////////// get images ////////////////
+
+	sample_images := form.File["sample_images[]"]
+	floor_plans := form.File["floor_plans[]"]
+
+	for index, file := range sample_images {
+		fmt.Printf("sample_image file (%02d) : %+v\n", index, file.Filename)
+	}
+
+	for index, file := range floor_plans {
+		fmt.Printf("floor_plans file (%02d) : %+v\n", index, file.Filename)
+	}
+
+	///////////////////////////////////////////
 
 	c.JSON(http.StatusOK, gin.H{"msg": respond.PropertySaveSuccess})
 }

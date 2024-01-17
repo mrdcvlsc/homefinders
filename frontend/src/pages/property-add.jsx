@@ -12,6 +12,8 @@ import "../styles/property-add.css";
 const PropertyAdd = () => {
   const navigate = useNavigate();
 
+  ////////////////////// Input Field Helpers //////////////////////
+
   const [region, setRegion] = React.useState("");
   const [province, setProvince] = React.useState("");
   const [city, setCity] = React.useState("");
@@ -88,6 +90,83 @@ const PropertyAdd = () => {
     }
   };
 
+  ////////////////////// Image Upload Helpers //////////////////////
+
+  const [sampleImages, setSampleImages] = React.useState(null);
+  const [floorPlans, setFloorPlans] = React.useState(null);
+
+  const handleUpload = async (e) => {
+    setDisable(true)
+    e.preventDefault()
+
+    console.log("Uploading files :");
+    console.log(sampleImages);
+    console.log();
+
+    const selectedFiles = new FormData();
+
+    if (sampleImages) {
+      for (const file of sampleImages) {
+        selectedFiles.append("sample_images[]", file, file.name);
+      }
+    }
+
+    if (floorPlans) {
+      for (const file of floorPlans) {
+        selectedFiles.append("floor_plans[]", file, file.name);
+      }
+    }    
+
+    selectedFiles.set("form_inputs", JSON.stringify({
+      region: region,
+      province: province,
+      city: city,
+      barangay: barangay,
+      street_address: exactAddress,
+      name: propertyName,
+      type: propertyType,
+      description: description,
+      price: price,
+      storeys: storeys,
+      livable_area_sqm: livableFloorArea,
+      gross_area_sqm: grossArea,
+      lot_length_m: lotLength,
+      lot_width_m: lotWidth,
+      living_room: livingRoom,
+      kitchen: kitchen,
+      dining_room: diningRoom,
+      bath_room: bathRoom,
+      bedroom: bedroom,
+      masters_bedroom: mastersBedroom,
+      maid_room: maidRoom,
+      toilet: toilet,
+      walk_in_closet: walkInCloset,
+      balcony: balcony,
+      lanai: lanai,
+      car_port: carPort,
+    }))
+
+    console.log("selectedFiles = ");
+    console.log(selectedFiles);
+
+    try {
+      const response = await fetch("/add-property", {
+        credentials: "include",
+        method: "POST",
+        body: selectedFiles,
+      });
+
+      const data = await response.json();
+      console.log("fetched data = ");
+      console.log(data);
+    } catch (err) {
+      console.log("upload try catch error = ");
+      console.error(err);
+    }
+  };
+
+  ////////////////////// Add Property Page Body //////////////////////
+
   return (
     <div className="add-property-page">
       <h1>Add New Property</h1>
@@ -132,16 +211,26 @@ const PropertyAdd = () => {
           <div className="add-property-form-right-side">
             <div className="add-property-form-right-content">
               <h3>Property Sample Images</h3>
-              <UploadDragOrSelect imagesUploadPostRoute={"/upload"} />
+              <UploadDragOrSelect
+                imagesUploadPostRoute={"/upload"}
+                handleUpload={handleUpload}
+                files={sampleImages}
+                setFiles={setSampleImages}
+              />
             </div>
             <div className="add-property-form-right-content">
               <h3>Floor Plan Images</h3>
-              <UploadDragOrSelect imagesUploadPostRoute={"/upload"} />
+              <UploadDragOrSelect
+                imagesUploadPostRoute={"/upload"}
+                handleUpload={handleUpload}
+                files={floorPlans}
+                setFiles={setFloorPlans}
+              />
             </div>
           </div>
         </div>
         <div className="add-property-form-btns">
-          <button onClick={(e) => handleSaveProperty(e)} type="submit">
+          <button onClick={(e) => handleUpload(e)} type="submit">
             Save
           </button>
           <button>Clear</button>

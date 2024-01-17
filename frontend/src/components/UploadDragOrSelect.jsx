@@ -2,8 +2,7 @@ import React from "react";
 
 import "../styles/UploadDragOrSelect.css";
 
-export default function UploadDragOrSelect({ imagesUploadPostRoute }) {
-  const [files, setFiles] = React.useState(null);
+export default function UploadDragOrSelect({ files, setFiles }) {
   const inputRef = React.useRef();
 
   const handleDrag = (e) => {
@@ -14,38 +13,7 @@ export default function UploadDragOrSelect({ imagesUploadPostRoute }) {
     e.preventDefault();
     setFiles(e.dataTransfer.files);
   };
-
-  const handleUpload = async (e) => {
-    e.preventDefault();
-    console.log("Uploading files :");
-    console.log(files);
-    console.log();
-
-    const selectedFiles = new FormData();
-
-    for (const file of files) {
-      selectedFiles.append("files[]", file, file.name);
-    }
-
-    console.log("selectedFiles = ");
-    console.log(selectedFiles);
-
-    try {
-      const response = await fetch(imagesUploadPostRoute, {
-        credentials: "include",
-        method: "POST",
-        body: selectedFiles,
-      });
-
-      const data = await response.json();
-      console.log("fetched data = ");
-      console.log(data);
-    } catch (err) {
-      console.log("upload try catch error = ");
-      console.error(err);
-    }
-  };
-
+  
   return (
     <>
       {!files ? (
@@ -65,7 +33,10 @@ export default function UploadDragOrSelect({ imagesUploadPostRoute }) {
             ref={inputRef}
           />
 
-          <button onClick={() => inputRef.current.click()}>Select Files</button>
+          <button onClick={(e) => {
+            e.preventDefault()
+            inputRef.current.click()
+          }}>Select Files</button>
         </div>
       ) : (
         <div className="dropbox">
@@ -76,8 +47,6 @@ export default function UploadDragOrSelect({ imagesUploadPostRoute }) {
           </ul>
 
           <div className="upload-selection-buttons">
-            <button onClick={(e) => handleUpload(e)}>Upload</button>
-
             <button onClick={() => setFiles(null)}>Clear</button>
           </div>
         </div>
