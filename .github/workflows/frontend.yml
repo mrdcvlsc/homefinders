@@ -12,8 +12,8 @@ jobs:
 
     strategy:
       matrix:
-        os: [ubuntu-latest]
-        node-version: [18.x, 20.x]
+        os: [ubuntu-latest, windows-latest]
+        node-version: [20.x]
         architecture: [x64, x86]
 
     steps:
