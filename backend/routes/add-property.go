@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/gin-gonic/gin"
 	"github.com/mrdcvlsc/homefinders/cdn"
@@ -146,6 +147,14 @@ func AddProperty(c *gin.Context) {
 			c.JSON(http.StatusForbidden, gin.H{"msg": respond.InternalServerError})
 			return
 		}
+
+		// remove the temporarily uploaded images in the file storage of the server
+
+		if err := os.Remove(fmt.Sprintf("uploads/%s", file.Filename)); err != nil {
+			log.Println(err)
+			c.JSON(http.StatusForbidden, gin.H{"msg": respond.InternalServerError})
+			return
+		}
 	}
 
 	//////////////// upload floor plan images ////////////////
@@ -173,6 +182,14 @@ func AddProperty(c *gin.Context) {
 		// save the necessary cloudinary data into the database server
 
 		if err := persistence.SaveImageData(property_id, cloudinary_url, cloudinary_img_id); err != nil {
+			log.Println(err)
+			c.JSON(http.StatusForbidden, gin.H{"msg": respond.InternalServerError})
+			return
+		}
+
+		// remove the temporarily uploaded images in the file storage of the server
+
+		if err := os.Remove(fmt.Sprintf("uploads/%s", file.Filename)); err != nil {
 			log.Println(err)
 			c.JSON(http.StatusForbidden, gin.H{"msg": respond.InternalServerError})
 			return
