@@ -5,6 +5,8 @@ export default function PropertyForm({
   componentHeadingText,
   setPropertyName,
   setPrice,
+  setMinPrice,
+  setMaxPrice,
   setPropertyType,
   setStoreys,
   setLivableFloorArea,
@@ -38,30 +40,68 @@ export default function PropertyForm({
         required
       />
       {/*=======================================================================*/}
-      <div className="property-form-single-row-price-type-storeys">
-        <input
-          onChange={(e) => setPrice(Number(e.target.value))}
-          type="number"
-          placeholder="Price"
-          required
-        />
-        {/*=======================================================================*/}
-        <select onChange={(e) => setPropertyType(e.target.value)} required>
-          <option label="Property Type" disabled selected />
-          {PropertyOptionsJSON.types.map((value, index) => {
-            return <option key={index} value={value} label={value} />;
-          })}
-        </select>
-        {/*=======================================================================*/}
-        <select onChange={(e) => setStoreys(Number(e.target.value))} required>
-          <option label="Storeys/Floors" disabled selected />
-          {PropertyOptionsJSON.storeys.map((value, index) => {
-            return (
-              <option key={index} value={value} label={value + " storey"} />
-            );
-          })}
-        </select>
-      </div>
+      {setPrice ? (
+        <div className="property-form-single-row-price-type-storeys">
+          <input
+            onChange={(e) => setPrice(Number(e.target.value))}
+            type="number"
+            placeholder="Price"
+            required
+          />
+          {/*=======================================================================*/}
+          <select onChange={(e) => setPropertyType(e.target.value)} required>
+            <option label="Property Type" disabled selected />
+            {PropertyOptionsJSON.types.map((value, index) => {
+              return <option key={index} value={value} label={value} />;
+            })}
+          </select>
+          {/*=======================================================================*/}
+          <select onChange={(e) => setStoreys(Number(e.target.value))} required>
+            <option label="Storeys/Floors" disabled selected />
+            {PropertyOptionsJSON.storeys.map((value, index) => {
+              return (
+                <option key={index} value={value} label={value + " storey"} />
+              );
+            })}
+          </select>
+        </div>
+      ) : null}
+
+      {setMinPrice && setMaxPrice ? (
+        <div className="property-form-single-row-four-fields">
+          <input
+            onChange={(e) => setMinPrice(Number(e.target.value))}
+            type="number"
+            placeholder="Mininum Price"
+            required
+          />
+
+          <input
+            onChange={(e) => setMaxPrice(Number(e.target.value))}
+            type="number"
+            placeholder="Maximum Price"
+            required
+          />
+          {/*=======================================================================*/}
+          <select onChange={(e) => setPropertyType(e.target.value)} required>
+            <option label="Property Type" disabled selected />
+            {PropertyOptionsJSON.types.map((value, index) => {
+              return <option key={index} value={value} label={value} />;
+            })}
+          </select>
+          {/*=======================================================================*/}
+          <select onChange={(e) => setStoreys(Number(e.target.value))} required>
+            <option label="Storeys/Floors" disabled selected />
+            {PropertyOptionsJSON.storeys.map((value, index) => {
+              return (
+                <option key={index} value={value} label={value + " storey"} />
+              );
+            })}
+          </select>
+        </div>
+      ) : null}
+
+      {setMinPrice && setMaxPrice ? <h3>Set Minimum Limit</h3> : null}
 
       {/*=======================================================================*/}
 
@@ -94,7 +134,10 @@ export default function PropertyForm({
 
       <div className="property-form-single-row-four-fields">
         {/*=======================================================================*/}
-        <select onChange={(e) => setLivingRoom(Number(e.target.value))} required>
+        <select
+          onChange={(e) => setLivingRoom(Number(e.target.value))}
+          required
+        >
           <option label="Living Room" disabled selected />
           {PropertyOptionsJSON.roomCounts.map((value, index) => {
             return (
@@ -118,7 +161,10 @@ export default function PropertyForm({
         </select>
 
         {/*=======================================================================*/}
-        <select onChange={(e) => setDiningRoom(Number(e.target.value))} required>
+        <select
+          onChange={(e) => setDiningRoom(Number(e.target.value))}
+          required
+        >
           <option label="Dining Room" disabled selected />
           {PropertyOptionsJSON.roomCounts.map((value, index) => {
             return (
@@ -154,7 +200,10 @@ export default function PropertyForm({
         </select>
 
         {/*=======================================================================*/}
-        <select onChange={(e) => setMastersBedroom(Number(e.target.value))} required>
+        <select
+          onChange={(e) => setMastersBedroom(Number(e.target.value))}
+          required
+        >
           <option label="Masters Bedroom" disabled selected />
           {PropertyOptionsJSON.roomCounts.map((value, index) => {
             return (
@@ -190,7 +239,10 @@ export default function PropertyForm({
 
       <div className="property-form-single-row-four-fields">
         {/*=======================================================================*/}
-        <select onChange={(e) => setWalkInCloset(Number(e.target.value))} required>
+        <select
+          onChange={(e) => setWalkInCloset(Number(e.target.value))}
+          required
+        >
           <option label="Walk in Closet" disabled selected />
           {PropertyOptionsJSON.roomCounts.map((value, index) => {
             return (

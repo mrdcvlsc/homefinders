@@ -60,6 +60,27 @@ func GetPropertyID(address string) (int, error) {
 	return db.GetPropertyID(address)
 }
 
+func GetProperties(
+	region, province, city, barangay, street_address string,
+
+	property_name, property_type string, min_price, max_price float32, storeys int,
+
+	livable_area_sqm, gross_area_sqm, lot_length_m, lot_width_m float32,
+
+	living_room, kitchen, dining_room, bath_room int,
+	bedroom, masters_bedroom, maid_room, toilet int,
+	walk_in_closet, balcony, lanai, car_port int,
+) ([]database.Property, error) {
+	return db.GetProperties(
+		region, province, city, barangay, street_address,
+		property_name, property_type, min_price, max_price, storeys,
+		livable_area_sqm, gross_area_sqm, lot_length_m, lot_width_m,
+		living_room, kitchen, dining_room, bath_room,
+		bedroom, masters_bedroom, maid_room, toilet,
+		walk_in_closet, balcony, lanai, car_port,
+	)
+}
+
 // returns true if the given registration code is available.
 func IsValidRegCode(reg_code string) bool {
 	_, err := db.FindRegCode(reg_code)

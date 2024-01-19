@@ -42,14 +42,36 @@ const PropertyAdd = () => {
   const [carPort, setCarPort] = React.useState(0);
   const [description, setDescription] = React.useState("");
 
-  const [disable, setDisable] = React.useState(false)
+  const [disable, setDisable] = React.useState(false);
 
-  const handleSaveProperty = async (e) => {
-    setDisable(true)
-    e.preventDefault()
+  const [sampleImages, setSampleImages] = React.useState(null);
+  const [floorPlans, setFloorPlans] = React.useState(null);
 
-    try {
-      const [ok, data] = await post_with_credentials("/add-property", {
+  const handleUpload = async (e) => {
+    setDisable(true);
+    e.preventDefault();
+
+    console.log("Uploading files :");
+    console.log(sampleImages);
+    console.log();
+
+    const selectedFiles = new FormData();
+
+    if (sampleImages) {
+      for (const file of sampleImages) {
+        selectedFiles.append("sample_images[]", file, file.name);
+      }
+    }
+
+    if (floorPlans) {
+      for (const file of floorPlans) {
+        selectedFiles.append("floor_plans[]", file, file.name);
+      }
+    }
+
+    selectedFiles.set(
+      "form_inputs",
+      JSON.stringify({
         region: region,
         province: province,
         city: city,
@@ -76,75 +98,8 @@ const PropertyAdd = () => {
         balcony: balcony,
         lanai: lanai,
         car_port: carPort,
-      })
-
-      if (ok) {
-        console.log('success add property')
-        // validation_result.success = data.msg;
-      } else {
-        throw new Error(data.msg)
-      }
-    } catch (err) {
-      console.log('add-property page error : ')
-      console.log(err)
-    }
-  };
-
-  ////////////////////// Image Upload Helpers //////////////////////
-
-  const [sampleImages, setSampleImages] = React.useState(null);
-  const [floorPlans, setFloorPlans] = React.useState(null);
-
-  const handleUpload = async (e) => {
-    setDisable(true)
-    e.preventDefault()
-
-    console.log("Uploading files :");
-    console.log(sampleImages);
-    console.log();
-
-    const selectedFiles = new FormData();
-
-    if (sampleImages) {
-      for (const file of sampleImages) {
-        selectedFiles.append("sample_images[]", file, file.name);
-      }
-    }
-
-    if (floorPlans) {
-      for (const file of floorPlans) {
-        selectedFiles.append("floor_plans[]", file, file.name);
-      }
-    }    
-
-    selectedFiles.set("form_inputs", JSON.stringify({
-      region: region,
-      province: province,
-      city: city,
-      barangay: barangay,
-      street_address: exactAddress,
-      name: propertyName,
-      type: propertyType,
-      description: description,
-      price: price,
-      storeys: storeys,
-      livable_area_sqm: livableFloorArea,
-      gross_area_sqm: grossArea,
-      lot_length_m: lotLength,
-      lot_width_m: lotWidth,
-      living_room: livingRoom,
-      kitchen: kitchen,
-      dining_room: diningRoom,
-      bath_room: bathRoom,
-      bedroom: bedroom,
-      masters_bedroom: mastersBedroom,
-      maid_room: maidRoom,
-      toilet: toilet,
-      walk_in_closet: walkInCloset,
-      balcony: balcony,
-      lanai: lanai,
-      car_port: carPort,
-    }))
+      }),
+    );
 
     console.log("selectedFiles = ");
     console.log(selectedFiles);

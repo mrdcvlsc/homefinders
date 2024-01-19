@@ -157,15 +157,101 @@ func (db *MariaDB) GetPropertyID(address string) (int, error) {
 func (db *MariaDB) GetProperties(
 	region, province, city, barangay, street_address string,
 
-	name, property_type string, price float32, storeys int,
+	property_name, property_type string, min_price, max_price float32, storeys int,
 
 	livable_area_sqm, gross_area_sqm, lot_length_m, lot_width_m float32,
 
 	living_room, kitchen, dining_room, bath_room int,
-	bedroom, masters, maid_room, toilet int,
-	walkincloset, balcony, lanai, carport int,
-) (*Property, error) {
-	return nil, nil
+	bedroom, masters_bedroom, maid_room, toilet int,
+	walk_in_closet, balcony, lanai, car_port int,
+) ([]Property, error) {
+	fmt.Println("phase 0")
+
+	properties := make([]Property, 0)
+
+	query := `SELECT * FROM Properties WHERE
+		region LIKE CONCAT('%', ?) AND
+		province LIKE CONCAT('%', ?) AND
+		city LIKE CONCAT('%', ?) AND
+		barangay LIKE CONCAT('%', ?) AND
+		street_address LIKE CONCAT('%', ?) AND
+		property_name LIKE CONCAT('%', ?) AND
+		property_type LIKE CONCAT('%', ?) AND
+		property_price >= ? AND property_price <= ? AND
+		livable_area_sqm >= ? AND
+		gross_area_sqm >= ? AND
+		lot_length_m >= ? AND
+		lot_width_m >= ? AND
+		living_room >= ? AND
+		kitchen >= ? AND
+		dining_room >= ? AND
+		bath_room >= ? AND
+		bedroom >= ? AND
+		masters_bedroom >= ? AND
+		maid_room >= ? AND
+		toilet >= ? AND
+		walk_in_closet >= ? AND
+		balcony >= ? AND
+		lanai >= ? AND
+		car_port >= ?
+	`
+
+	var rows *sql.Rows
+	var queryErr error
+
+	if storeys > -1 {
+		query += " AND storeys = ?"
+
+		rows, queryErr = db.Instance.Query(query,
+			region, province, city, barangay, street_address,
+			property_name, property_type, min_price, max_price,
+			livable_area_sqm, gross_area_sqm, lot_length_m, lot_width_m,
+			living_room, kitchen, dining_room, bath_room,
+			bedroom, masters_bedroom, maid_room, toilet,
+			walk_in_closet, balcony, lanai, car_port, storeys,
+		)
+	} else {
+		rows, queryErr = db.Instance.Query(query,
+			region, province, city, barangay, street_address,
+			property_name, property_type, min_price, max_price,
+			livable_area_sqm, gross_area_sqm, lot_length_m, lot_width_m,
+			living_room, kitchen, dining_room, bath_room,
+			bedroom, masters_bedroom, maid_room, toilet,
+			walk_in_closet, balcony, lanai, car_port,
+		)
+	}
+
+	if queryErr != nil {
+		fmt.Println("phase 1")
+		return nil, queryErr
+	}
+
+	defer rows.Close()
+
+	for rows.Next() {
+		var rp Property
+		if err := rows.Scan(
+			&rp.Id,
+			&rp.Region, &rp.Province, &rp.City, &rp.Barangay,
+			&rp.StreetAddress,
+			&rp.Description,
+			&rp.Name, &rp.Type, &rp.Price, &rp.Storeys,
+			&rp.LivableAreaSQM, &rp.GrossAreaSQM, &rp.LotLengthM, &rp.LotWidthM,
+			&rp.LivingRoom, &rp.Kitchen, &rp.DiningRoom, &rp.BathRoom,
+			&rp.Bedroom, &rp.MastersBedroom, &rp.MaidRoom, &rp.Toilet,
+			&rp.WalkInCloset, &rp.Balcony, &rp.Lanai, &rp.CarPort,
+		); err != nil {
+			return properties, err
+		}
+
+		properties = append(properties, rp)
+	}
+
+	if err := rows.Err(); err != nil {
+		return properties, err
+	}
+
+	return properties, nil
 }
 
 func (db *MariaDB) SaveImageData(associated_property_id int, cloudinary_url, cloudinary_img_id string) error {

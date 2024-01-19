@@ -22,14 +22,14 @@ type I interface {
 	GetProperties(
 		region, province, city, barangay, street_address string,
 
-		name, property_type string, price float32, storeys int,
+		property_name, property_type string, min_price, max_price float32, storeys int,
 
 		livable_area_sqm, gross_area_sqm, lot_length_m, lot_width_m float32,
 
 		living_room, kitchen, dining_room, bath_room int,
-		bedroom, masters, maid_room, toilet int,
-		walkincloset, balcony, lanai, carport int,
-	) (*Property, error)
+		bedroom, masters_bedroom, maid_room, toilet int,
+		walk_in_closet, balcony, lanai, car_port int,
+	) ([]Property, error)
 
 	SaveImageData(associated_property_id int, cloudinary_url, cloudinary_img_id string) error
 }

@@ -51,6 +51,7 @@ func main() {
 	router.POST("/register", routes.Register)
 	router.POST("/login", routes.LogIn)
 	router.POST("/upload", routes.Upload)
+	router.POST("/get-properties", routes.GetProperties)
 
 	router.POST("/add-property", routes.AddProperty)
 

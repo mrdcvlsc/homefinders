@@ -13,7 +13,7 @@ export default function UploadDragOrSelect({ files, setFiles }) {
     e.preventDefault();
     setFiles(e.dataTransfer.files);
   };
-  
+
   return (
     <>
       {!files ? (
@@ -33,10 +33,14 @@ export default function UploadDragOrSelect({ files, setFiles }) {
             ref={inputRef}
           />
 
-          <button onClick={(e) => {
-            e.preventDefault()
-            inputRef.current.click()
-          }}>Select Files</button>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              inputRef.current.click();
+            }}
+          >
+            Select Files
+          </button>
         </div>
       ) : (
         <div className="dropbox">
