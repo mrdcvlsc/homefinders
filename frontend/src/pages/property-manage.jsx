@@ -6,6 +6,8 @@ import PropertyForm from "../components/PropertyForm";
 
 import "../styles/property-manage.css";
 
+import { post_with_credentials } from "../requests/post";
+
 const PropertyManage = () => {
   const navigate = useNavigate();
 
@@ -43,12 +45,14 @@ const PropertyManage = () => {
   const [lanai, setLanai] = React.useState(-1);
   const [carPort, setCarPort] = React.useState(-1);
 
-  const handleSaveProperty = async (e) => {
-    setDisable(true);
+  const handleApplyFilters = async (e) => {
+    console.log('handleApplyFilters()')
+    // setDisable(true);
     e.preventDefault();
 
     try {
       const [ok, data] = await post_with_credentials("/get-properties", {
+        fetch_size: fetchSize,
         region: region,
         province: province,
         city: city,
@@ -153,7 +157,7 @@ const PropertyManage = () => {
           </div>
 
           <div className="add-property-form-btns">
-            <button onClick={(e) => handleUpload(e)} type="submit">
+            <button onClick={(e) => handleApplyFilters(e)} type="submit">
               Apply Filter
             </button>
             <button onClick={() => setShowFilter(false)}>Close</button>

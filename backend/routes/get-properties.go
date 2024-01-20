@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 
@@ -42,6 +43,35 @@ type ManagePropertyForm struct {
 }
 
 func GetProperties(c *gin.Context) {
+	property_filter := ManagePropertyForm{}
+
+	if err := c.BindJSON(&property_filter); err != nil {
+		c.IndentedJSON(http.StatusBadRequest, respond.BadRequest)
+		return
+	}
+
+	fmt.Printf("\npost request payload : \n%+v\n\n", property_filter)
+
+	///
+	properties, err := persistence.GetProperties(
+		"", "", "", "", "",
+		"", "", -1, 9999999999999, -1,
+		-1, -1, -1, -1,
+		-1, -1, -1, -1,
+		-1, -1, -1, -1,
+		-1, -1, -1, -1,
+	)
+
+	if err != nil {
+		log.Print(err)
+		c.JSON(http.StatusInternalServerError, gin.H{"msg": respond.InternalServerError})
+	}
+
+	c.IndentedJSON(http.StatusOK, properties)
+}
+
+func GetPropertiesTemporary(c *gin.Context) {
+
 	properties, err := persistence.GetProperties(
 		"", "", "", "", "",
 		"", "", -1, 9999999999999, -1,

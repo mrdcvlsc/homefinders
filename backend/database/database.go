@@ -58,6 +58,12 @@ func NewUser(username, email, salted_hash_passwrd, data_created string) *User {
 	}
 }
 
+type PropertyImage struct {
+	Id       int
+	Url      string
+	PublicID string
+}
+
 type Property struct {
 	Id            int
 	Region        string
@@ -89,6 +95,9 @@ type Property struct {
 	Balcony        int
 	Lanai          int
 	CarPort        int
+
+	SampleImagesURL []string
+	FloorPlansURL   []string
 }
 
 func NewProperty(

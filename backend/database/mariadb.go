@@ -2,7 +2,7 @@ package database
 
 import (
 	"database/sql"
-	"fmt"
+	"log"
 	"os"
 
 	"github.com/go-sql-driver/mysql"
@@ -40,7 +40,7 @@ func (db *MariaDB) Connect() error {
 		return err
 	}
 
-	fmt.Println("Successfully connected to MariaDB!")
+	log.Println("Successfully connected to MariaDB!")
 	return nil
 }
 
@@ -60,7 +60,7 @@ func (db *MariaDB) InitializeTables() error {
 		"INSERT INTO RegCodes (reg_code) VALUES (?)",
 		"cafebabe03", // default code
 	); err != nil {
-		fmt.Print("\n\nDB INITIALIZATION LOG: an initial registration code is already existing\n\n")
+		log.Print("\n\nDB INITIALIZATION LOG: an initial registration code is already existing\n\n")
 	}
 
 	// create users table if it is not created yet
@@ -165,18 +165,16 @@ func (db *MariaDB) GetProperties(
 	bedroom, masters_bedroom, maid_room, toilet int,
 	walk_in_closet, balcony, lanai, car_port int,
 ) ([]Property, error) {
-	fmt.Println("phase 0")
-
 	properties := make([]Property, 0)
 
 	query := `SELECT * FROM Properties WHERE
-		region LIKE CONCAT('%', ?) AND
-		province LIKE CONCAT('%', ?) AND
-		city LIKE CONCAT('%', ?) AND
-		barangay LIKE CONCAT('%', ?) AND
-		street_address LIKE CONCAT('%', ?) AND
-		property_name LIKE CONCAT('%', ?) AND
-		property_type LIKE CONCAT('%', ?) AND
+		region LIKE CONCAT('%', ?, '%') AND
+		province LIKE CONCAT('%', ?, '%') AND
+		city LIKE CONCAT('%', ?, '%') AND
+		barangay LIKE CONCAT('%', ?, '%') AND
+		street_address LIKE CONCAT('%', ?, '%') AND
+		property_name LIKE CONCAT('%', ?, '%') AND
+		property_type LIKE CONCAT('%', ?, '%') AND
 		property_price >= ? AND property_price <= ? AND
 		livable_area_sqm >= ? AND
 		gross_area_sqm >= ? AND
@@ -222,7 +220,6 @@ func (db *MariaDB) GetProperties(
 	}
 
 	if queryErr != nil {
-		fmt.Println("phase 1")
 		return nil, queryErr
 	}
 
@@ -243,6 +240,49 @@ func (db *MariaDB) GetProperties(
 		); err != nil {
 			return properties, err
 		}
+
+		/////////////// get sample images ///////////////
+
+		sampleImgRows, sampleImgQueryErr := db.Instance.Query(
+			"SELECT * FROM Images WHERE id = ? AND image_public_id LIKE CONCAT('%', ?, '%')", rp.Id, "sample-image",
+		)
+
+		if sampleImgQueryErr != nil {
+			log.Print(sampleImgQueryErr)
+			continue
+		}
+
+		for sampleImgRows.Next() {
+			var propertyImage PropertyImage
+			if err := sampleImgRows.Scan(&propertyImage.Id, &propertyImage.Url, &propertyImage.PublicID); err != nil {
+				log.Print(err)
+				break
+			}
+			rp.SampleImagesURL = append(rp.SampleImagesURL, propertyImage.Url)
+		}
+
+		/////////////// get floor plan images ///////////////
+
+		floorPlanRows, floorPlanQueryErr := db.Instance.Query(
+			"SELECT * FROM Images WHERE id = ? AND image_public_id LIKE CONCAT('%', ?, '%')", rp.Id, "floor-plan",
+		)
+
+		if floorPlanQueryErr != nil {
+			log.Print(floorPlanQueryErr)
+			continue
+		}
+
+		for floorPlanRows.Next() {
+			var floorPlanImage PropertyImage
+			if err := floorPlanRows.Scan(&floorPlanImage.Id, &floorPlanImage.Url, &floorPlanImage.PublicID); err != nil {
+				log.Print(err)
+				break
+			}
+
+			rp.FloorPlansURL = append(rp.FloorPlansURL, floorPlanImage.Url)
+		}
+
+		//////////////////////////////////////////////////////
 
 		properties = append(properties, rp)
 	}
