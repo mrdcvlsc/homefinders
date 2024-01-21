@@ -55,6 +55,7 @@ func main() {
 	router.GET("/get-all-properties", routes.GetPropertiesTemporary)
 
 	router.POST("/add-property", routes.AddProperty)
+	router.POST("/save-edit-property", routes.EditProperty)
 
 	/////// examples routes ////////
 

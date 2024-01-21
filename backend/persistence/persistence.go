@@ -39,6 +39,10 @@ func SaveProperty(property *database.Property) error {
 	return db.SaveProperty(property)
 }
 
+func EditProperty(property *database.Property) error {
+	return db.EditProperty(property)
+}
+
 func SaveImageData(associated_property_id int, cloudinary_url, cloudinary_img_id string) error {
 	return db.SaveImageData(associated_property_id, cloudinary_url, cloudinary_img_id)
 }
@@ -85,4 +89,20 @@ func GetProperties(
 func IsValidRegCode(reg_code string) bool {
 	_, err := db.FindRegCode(reg_code)
 	return err == nil
+}
+
+func GetImageSamples(associated_property_id int) ([]database.PropertyImage, error) {
+	return db.GetImageSamples(associated_property_id)
+}
+
+func GetImageFloorPlans(associated_property_id int) ([]database.PropertyImage, error) {
+	return db.GetImageFloorPlans(associated_property_id)
+}
+
+func DeleteImageSamples(associated_property_id int) error {
+	return db.DeleteImageSamples(associated_property_id)
+}
+
+func DeleteImageFloorPlans(associated_property_id int) error {
+	return db.DeleteImageFloorPlans(associated_property_id)
 }

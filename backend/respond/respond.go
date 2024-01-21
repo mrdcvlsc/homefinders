@@ -21,3 +21,4 @@ var ExternalServerError = "*External server error"
 var UploadSuccess = "Upload success"
 
 var PropertySaveSuccess = "Property save successful"
+var PropertyEdituccess = "Property edit successful"

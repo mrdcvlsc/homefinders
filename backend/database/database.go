@@ -4,36 +4,6 @@ import (
 	"database/sql"
 )
 
-type I interface {
-	Connect() error
-	GetInstance() *sql.DB
-	InitializeTables() error
-
-	SaveUserWithEmail(*User) error
-	SaveUserWithUsername(*User) error
-
-	GetUserWithEmail(email string) (*User, error)
-	GetUserWithUsername(username string) (*User, error)
-
-	FindRegCode(reg_code string) (string, error)
-
-	SaveProperty(*Property) error
-	GetPropertyID(address string) (int, error)
-	GetProperties(
-		region, province, city, barangay, street_address string,
-
-		property_name, property_type string, min_price, max_price float32, storeys int,
-
-		livable_area_sqm, gross_area_sqm, lot_length_m, lot_width_m float32,
-
-		living_room, kitchen, dining_room, bath_room int,
-		bedroom, masters_bedroom, maid_room, toilet int,
-		walk_in_closet, balcony, lanai, car_port int,
-	) ([]Property, error)
-
-	SaveImageData(associated_property_id int, cloudinary_url, cloudinary_img_id string) error
-}
-
 /*
 When creating a new account; if the user inputs an email during registration, the
 `Username` attribute value will be the characters before the `@` of the provided email,
@@ -48,14 +18,6 @@ type User struct {
 	Email             string
 	SaltedHashPasswrd string
 	DateCreated       string
-}
-
-func NewUser(username, email, salted_hash_passwrd, data_created string) *User {
-	return &User{
-		Username:    username,
-		Email:       salted_hash_passwrd,
-		DateCreated: data_created,
-	}
 }
 
 type PropertyImage struct {
@@ -98,6 +60,53 @@ type Property struct {
 
 	SampleImagesURL []string
 	FloorPlansURL   []string
+}
+
+type I interface {
+	Connect() error
+	GetInstance() *sql.DB
+	InitializeTables() error
+
+	SaveUserWithEmail(*User) error
+	SaveUserWithUsername(*User) error
+
+	GetUserWithEmail(email string) (*User, error)
+	GetUserWithUsername(username string) (*User, error)
+
+	FindRegCode(reg_code string) (string, error)
+
+	SaveProperty(*Property) error
+	EditProperty(*Property) error
+	DeleteProperty(property_id int) error
+
+	GetPropertyID(address string) (int, error)
+	GetProperties(
+		region, province, city, barangay, street_address string,
+
+		property_name, property_type string, min_price, max_price float32, storeys int,
+
+		livable_area_sqm, gross_area_sqm, lot_length_m, lot_width_m float32,
+
+		living_room, kitchen, dining_room, bath_room int,
+		bedroom, masters_bedroom, maid_room, toilet int,
+		walk_in_closet, balcony, lanai, car_port int,
+	) ([]Property, error)
+
+	SaveImageData(associated_property_id int, cloudinary_url, cloudinary_img_id string) error
+	GetImageSamples(associated_property_id int) ([]PropertyImage, error)
+	GetImageFloorPlans(associated_property_id int) ([]PropertyImage, error)
+	GetImageData(associated_property_id int) ([]PropertyImage, error)
+	DeleteImageData(associated_property_id int) error
+	DeleteImageSamples(associated_property_id int) error
+	DeleteImageFloorPlans(associated_property_id int) error
+}
+
+func NewUser(username, email, salted_hash_passwrd, data_created string) *User {
+	return &User{
+		Username:    username,
+		Email:       salted_hash_passwrd,
+		DateCreated: data_created,
+	}
 }
 
 func NewProperty(

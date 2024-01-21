@@ -146,6 +146,27 @@ func (db *MariaDB) SaveProperty(property *Property) error {
 	return err
 }
 
+func (db *MariaDB) EditProperty(property *Property) error {
+	_, err := db.Instance.Exec(
+		`UPDATE Properties SET
+			region = ?, province = ?, city = ?, barangay = ?, street_address = ?,
+			property_description = ?, property_name = ?, property_type = ?, property_price = ?, storeys = ?,
+			livable_area_sqm = ?, gross_area_sqm = ?, lot_length_m = ?, lot_width_m = ?,
+			living_room = ?, kitchen = ?, dining_room = ?, bath_room = ?,
+			bedroom = ?, masters_bedroom = ?, maid_room = ?, toilet = ?,
+			walk_in_closet = ?, balcony = ?, lanai = ?, car_port = ?
+		WHERE id = ?`,
+		property.Region, property.Province, property.City, property.Barangay, property.StreetAddress,
+		property.Description, property.Name, property.Type, property.Price, property.Storeys,
+		property.LivableAreaSQM, property.GrossAreaSQM, property.LotLengthM, property.LotWidthM,
+		property.LivingRoom, property.Kitchen, property.DiningRoom, property.BathRoom,
+		property.Bedroom, property.MastersBedroom, property.MaidRoom, property.Toilet,
+		property.WalkInCloset, property.Balcony, property.Lanai, property.CarPort, property.Id,
+	)
+
+	return err
+}
+
 func (db *MariaDB) GetPropertyID(address string) (int, error) {
 	var id int
 
@@ -301,5 +322,106 @@ func (db *MariaDB) SaveImageData(associated_property_id int, cloudinary_url, clo
 		cloudinary_url,
 		cloudinary_img_id,
 	)
+	return err
+}
+
+func (db *MariaDB) GetImageData(associated_property_id int) ([]PropertyImage, error) {
+	property_images := []PropertyImage{}
+
+	rows, err := db.Instance.Query(
+		"SELECT * FROM Images WHERE id = ?", associated_property_id,
+	)
+
+	if err != nil {
+		return property_images, err
+	}
+
+	for rows.Next() {
+		var read_image PropertyImage
+		if err := rows.Scan(&read_image.Id, &read_image.Url, &read_image.PublicID); err != nil {
+			return property_images, err
+		}
+
+		property_images = append(property_images, read_image)
+	}
+
+	return property_images, nil
+}
+
+func (db *MariaDB) GetImageSamples(associated_property_id int) ([]PropertyImage, error) {
+	property_images := []PropertyImage{}
+
+	rows, err := db.Instance.Query(
+		"SELECT * FROM Images WHERE id = ? AND image_public_id LIKE CONCAT('%', ?, '%')", associated_property_id, "sample-image",
+	)
+
+	if err != nil {
+		return property_images, err
+	}
+
+	for rows.Next() {
+		var read_image PropertyImage
+		if err := rows.Scan(&read_image.Id, &read_image.Url, &read_image.PublicID); err != nil {
+			return property_images, err
+		}
+
+		property_images = append(property_images, read_image)
+	}
+
+	return property_images, nil
+}
+
+func (db *MariaDB) GetImageFloorPlans(associated_property_id int) ([]PropertyImage, error) {
+	property_images := []PropertyImage{}
+
+	rows, err := db.Instance.Query(
+		"SELECT * FROM Images WHERE id = ? AND image_public_id LIKE CONCAT('%', ?, '%')", associated_property_id, "floor-plan",
+	)
+
+	if err != nil {
+		return property_images, err
+	}
+
+	for rows.Next() {
+		var read_image PropertyImage
+		if err := rows.Scan(&read_image.Id, &read_image.Url, &read_image.PublicID); err != nil {
+			return property_images, err
+		}
+
+		property_images = append(property_images, read_image)
+	}
+
+	return property_images, nil
+}
+
+func (db *MariaDB) DeleteImageData(associated_property_id int) error {
+	_, err := db.Instance.Exec(
+		"DELETE FROM Images WHERE id = ?", associated_property_id,
+	)
+
+	return err
+}
+
+func (db *MariaDB) DeleteImageSamples(associated_property_id int) error {
+	_, err := db.Instance.Exec(
+		"DELETE FROM Images WHERE id = ? AND image_public_id LIKE CONCAT('%', ?, '%')", associated_property_id, "sample-image",
+	)
+
+	return err
+}
+
+func (db *MariaDB) DeleteImageFloorPlans(associated_property_id int) error {
+	_, err := db.Instance.Exec(
+		"DELETE FROM Images WHERE id = ? AND image_public_id LIKE CONCAT('%', ?, '%')", associated_property_id, "floor-plan",
+	)
+
+	return err
+}
+
+func (db *MariaDB) DeleteProperty(property_id int) error {
+	_, err := db.Instance.Exec(
+		"DELETE FROM Properties WHERE id = ?", property_id,
+	)
+
 	return err
 }

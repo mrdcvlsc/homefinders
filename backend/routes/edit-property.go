@@ -14,7 +14,9 @@ import (
 	"github.com/mrdcvlsc/homefinders/respond"
 )
 
-type PropertyForm struct {
+type EditPropertyForm struct {
+	Id int `json:"id"`
+
 	Region        string `json:"region"`
 	Province      string `json:"province"`
 	City          string `json:"city"`
@@ -46,7 +48,7 @@ type PropertyForm struct {
 	CarPort        int `json:"car_port"`
 }
 
-func AddProperty(c *gin.Context) {
+func EditProperty(c *gin.Context) {
 	form, formErr := c.MultipartForm()
 
 	if formErr != nil {
@@ -59,7 +61,7 @@ func AddProperty(c *gin.Context) {
 
 	property_form_raw := form.Value["form_inputs"][0]
 
-	property_form := PropertyForm{}
+	property_form := EditPropertyForm{}
 
 	if err := json.Unmarshal([]byte(property_form_raw), &property_form); err != nil {
 		log.Println(err)
@@ -67,9 +69,10 @@ func AddProperty(c *gin.Context) {
 		return
 	}
 
-	fmt.Printf("\n\nReceived Property : \n%+v\n\n", property_form)
+	fmt.Printf("\n\nReceived Edit Property : \n%+v\n\n", property_form)
 
-	if err := persistence.SaveProperty(&database.Property{
+	if err := persistence.EditProperty(&database.Property{
+		Id:            property_form.Id,
 		Region:        property_form.Region,
 		Province:      property_form.Province,
 		City:          property_form.City,
@@ -105,19 +108,36 @@ func AddProperty(c *gin.Context) {
 		return
 	}
 
-	//////////////// get property id ////////////////
-
-	property_id, getIdErr := persistence.GetPropertyID(property_form.StreetAddress)
-
-	if getIdErr != nil {
-		log.Println(getIdErr)
-		c.JSON(http.StatusForbidden, gin.H{"msg": respond.InternalServerError})
-		return
-	}
-
 	//////////////// upload sample images ////////////////
 
 	sample_images := form.File["sample_images[]"]
+
+	// delete previous sample images if there are new sample image uploads
+	if len(sample_images) != 0 {
+
+		// retrieve images data from the database
+		sample_images_data, retDbImagesErr := persistence.GetImageSamples(property_form.Id)
+
+		if retDbImagesErr != nil {
+			log.Println(retDbImagesErr)
+			c.JSON(http.StatusForbidden, gin.H{"msg": respond.InternalServerError})
+			return
+		}
+
+		// delete images cloudinary CDN
+		for i := 0; i < len(sample_images_data); i++ {
+			cdnDeleteErr := cdn.DeleteImage(sample_images_data[i].PublicID)
+
+			if cdnDeleteErr != nil {
+				log.Println(cdnDeleteErr)
+				c.JSON(http.StatusForbidden, gin.H{"msg": respond.ExternalServerError})
+				return
+			}
+		}
+
+		// delete images data in database
+		persistence.DeleteImageSamples(property_form.Id)
+	}
 
 	for index, file := range sample_images {
 		// upload to server's file storage temporarily
@@ -129,7 +149,7 @@ func AddProperty(c *gin.Context) {
 
 		// upload the uploaded images in file storage to cloudinary
 
-		cloudinary_img_id := fmt.Sprintf("%d-sample-image-%d", property_id, index)
+		cloudinary_img_id := fmt.Sprintf("%d-sample-image-%d", property_form.Id, index)
 
 		cloudinary_url, cloudinaryUploadErr := cdn.UploadImage(fmt.Sprintf("uploads/%s", file.Filename), cloudinary_img_id)
 
@@ -141,7 +161,7 @@ func AddProperty(c *gin.Context) {
 
 		// save the necessary cloudinary data into the database server
 
-		if err := persistence.SaveImageData(property_id, cloudinary_url, cloudinary_img_id); err != nil {
+		if err := persistence.SaveImageData(property_form.Id, cloudinary_url, cloudinary_img_id); err != nil {
 			log.Println(err)
 			c.JSON(http.StatusForbidden, gin.H{"msg": respond.InternalServerError})
 			return
@@ -160,6 +180,33 @@ func AddProperty(c *gin.Context) {
 
 	floor_plans := form.File["floor_plans[]"]
 
+	// delete previous sample images if there are new sample image uploads
+	if len(floor_plans) != 0 {
+
+		// retrieve images data from the database
+		floor_plan_data, retDbImagesErr := persistence.GetImageFloorPlans(property_form.Id)
+
+		if retDbImagesErr != nil {
+			log.Println(retDbImagesErr)
+			c.JSON(http.StatusForbidden, gin.H{"msg": respond.InternalServerError})
+			return
+		}
+
+		// delete images cloudinary CDN
+		for i := 0; i < len(floor_plan_data); i++ {
+			cdnDeleteErr := cdn.DeleteImage(floor_plan_data[i].PublicID)
+
+			if cdnDeleteErr != nil {
+				log.Println(cdnDeleteErr)
+				c.JSON(http.StatusForbidden, gin.H{"msg": respond.ExternalServerError})
+				return
+			}
+		}
+
+		// delete images data in database
+		persistence.DeleteImageFloorPlans(property_form.Id)
+	}
+
 	for index, file := range floor_plans {
 		// upload to server's file storage temporarily
 
@@ -170,7 +217,7 @@ func AddProperty(c *gin.Context) {
 
 		// upload the uploaded images in file storage to cloudinary
 
-		cloudinary_img_id := fmt.Sprintf("%d-floor-plan-%d", property_id, index)
+		cloudinary_img_id := fmt.Sprintf("%d-floor-plan-%d", property_form.Id, index)
 
 		cloudinary_url, cloudinaryUploadErr := cdn.UploadImage(fmt.Sprintf("uploads/%s", file.Filename), cloudinary_img_id)
 
@@ -182,7 +229,7 @@ func AddProperty(c *gin.Context) {
 
 		// save the necessary cloudinary data into the database server
 
-		if err := persistence.SaveImageData(property_id, cloudinary_url, cloudinary_img_id); err != nil {
+		if err := persistence.SaveImageData(property_form.Id, cloudinary_url, cloudinary_img_id); err != nil {
 			log.Println(err)
 			c.JSON(http.StatusForbidden, gin.H{"msg": respond.InternalServerError})
 			return
