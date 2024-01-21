@@ -51,7 +51,12 @@ func UploadImage(image, out_img_public_id string) (string, error) {
 
 // delete an image in the cloudinary storage
 func DeleteImage(img_public_id string) error {
-	var ctx = context.Background()
+	if !initialized {
+		if cloudinary_err := InitializeCloudinary(); cloudinary_err != nil {
+			return cloudinary_err
+		}
+	}
+
 	result, err := cld.Admin.DeleteAssets(ctx, admin.DeleteAssetsParams{
 		PublicIDs:    []string{fmt.Sprintf("%s/%s", cloudinary_folder, img_public_id)},
 		DeliveryType: "upload",

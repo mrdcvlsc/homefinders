@@ -8,6 +8,7 @@ import UploadDragOrSelect from "../components/UploadDragOrSelect";
 import "../styles/property-manage.css";
 import "../styles/property-add.css";
 
+import { delete_with_credentials } from "../requests/delete"
 import { post_with_credentials } from "../requests/post";
 import DummyData from "../assets/dummy-data";
 import PropertyRowItem from "../components/PropertyRowItem";
@@ -214,6 +215,22 @@ const PropertyManage = () => {
     }
   };
 
+  /////////////////////// Delete Property States And Methods ///////////////////////
+
+  const handleDeleteProperty = async (e, property_id) => {
+    try {
+      const [ok, data] = await delete_with_credentials(`/delete-property/${property_id}`)
+
+      if (ok) {
+        console.log("delete request success")
+        console.log(data)
+      }
+    } catch (err) {
+      console.log("delete request error : ")
+      console.error(err)
+    }
+  }
+
   ////////////////////////////////////////////////////////////////////////////////
 
   return !selectedProperty ? (
@@ -336,6 +353,7 @@ const PropertyManage = () => {
                   key={i}
                   propertyData={p}
                   setSelectedProperty={setSelectedProperty}
+                  deletePropertyHandler={handleDeleteProperty}
                 />
               );
             })

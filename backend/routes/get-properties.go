@@ -65,6 +65,7 @@ func GetProperties(c *gin.Context) {
 	if err != nil {
 		log.Print(err)
 		c.JSON(http.StatusInternalServerError, gin.H{"msg": respond.InternalServerError})
+		return
 	}
 
 	c.IndentedJSON(http.StatusOK, properties)
@@ -84,6 +85,7 @@ func GetPropertiesTemporary(c *gin.Context) {
 	if err != nil {
 		log.Print(err)
 		c.JSON(http.StatusInternalServerError, gin.H{"msg": respond.InternalServerError})
+		return
 	}
 
 	c.IndentedJSON(http.StatusOK, properties)

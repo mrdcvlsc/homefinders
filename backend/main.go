@@ -57,6 +57,12 @@ func main() {
 	router.POST("/add-property", routes.AddProperty)
 	router.POST("/save-edit-property", routes.EditProperty)
 
+	router.DELETE("/delete-property/:id", routes.DeleteProperty)
+
+	/*
+		A NOTE TO SELF: PLEASE USE THE CORRECT HTTP VERB FOR YOUR ROUTES IN THE FUTURE
+	*/
+
 	/////// examples routes ////////
 
 	router.GET("/albums", routes.GetAlbums)

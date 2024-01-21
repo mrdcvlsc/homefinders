@@ -39,6 +39,10 @@ func SaveProperty(property *database.Property) error {
 	return db.SaveProperty(property)
 }
 
+func DeleteProperty(property_id int) error {
+	return db.DeleteProperty(property_id)
+}
+
 func EditProperty(property *database.Property) error {
 	return db.EditProperty(property)
 }
@@ -91,12 +95,20 @@ func IsValidRegCode(reg_code string) bool {
 	return err == nil
 }
 
+func GetImageData(associated_property_id int) ([]database.PropertyImage, error) {
+	return db.GetImageData(associated_property_id)
+}
+
 func GetImageSamples(associated_property_id int) ([]database.PropertyImage, error) {
 	return db.GetImageSamples(associated_property_id)
 }
 
 func GetImageFloorPlans(associated_property_id int) ([]database.PropertyImage, error) {
 	return db.GetImageFloorPlans(associated_property_id)
+}
+
+func DeleteImageData(associated_property_id int) error {
+	return db.DeleteImageData(associated_property_id)
 }
 
 func DeleteImageSamples(associated_property_id int) error {

@@ -14,7 +14,7 @@ const currency_formatter = new Intl.NumberFormat("en-PH", {
   maximumFractionDigits: 2,
 });
 
-const PropertyRowItem = ({ propertyData, setSelectedProperty }) => {
+const PropertyRowItem = ({ propertyData, setSelectedProperty, deletePropertyHandler }) => {
   const navigate = useNavigate();
 
   return (
@@ -47,7 +47,7 @@ const PropertyRowItem = ({ propertyData, setSelectedProperty }) => {
         >
           Edit
         </button>
-        <button className="homfinders-btn">Delete</button>
+        <button className="homfinders-btn" onClick={(e) => deletePropertyHandler(e, propertyData.Id) }>Delete</button>
       </div>
     </div>
   );
