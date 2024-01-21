@@ -11,7 +11,18 @@ export default function AddressForm({
   setCity,
   setBarangay,
   setExactAddress,
+  defaultProperty,
 }) {
+  React.useEffect(() => {
+    if (defaultProperty) {
+      setRegion(defaultProperty.Region);
+      setProvince(defaultProperty.Province);
+      setBarangay(defaultProperty.Barangay);
+      setCity(defaultProperty.City);
+      setExactAddress(defaultProperty.StreetAddress);
+    }
+  }, []);
+
   const [regionIndex, setRegionIndex] = React.useState(-1);
   const [provinceIndex, setProvinceIndex] = React.useState(-1);
   const [cityIndex, setCityIndex] = React.useState(-1);
@@ -84,8 +95,8 @@ export default function AddressForm({
       <div className="address-fields-drop-box-row">
         <select onChange={selectRegion} required>
           <option
-            value={regionIndex}
-            label="Region"
+            defaultValue={regionIndex}
+            label={!defaultProperty ? "Region" : defaultProperty.Region}
             disabled
             selected={regionIndex === -1}
           />
@@ -98,8 +109,8 @@ export default function AddressForm({
           required
         >
           <option
-            value={provinceIndex}
-            label="Province"
+            defaultValue={provinceIndex}
+            label={!defaultProperty ? "Province" : defaultProperty.Province}
             disabled
             selected={provinceIndex === -1}
           />
@@ -109,8 +120,8 @@ export default function AddressForm({
 
         <select onChange={selectCity} disabled={provinceIndex === -1} required>
           <option
-            value={cityIndex}
-            label="City"
+            defaultValue={cityIndex}
+            label={!defaultProperty ? "City" : defaultProperty.City}
             disabled
             selected={cityIndex === -1}
           />
@@ -120,8 +131,8 @@ export default function AddressForm({
 
         <select onChange={selectBarangay} disabled={cityIndex === -1} required>
           <option
-            value={barangayIndex}
-            label="Barangay"
+            defaultValue={barangayIndex}
+            label={!defaultProperty ? "Barangay" : defaultProperty.Barangay}
             disabled
             selected={barangayIndex === -1}
           />
@@ -136,6 +147,7 @@ export default function AddressForm({
         type="text"
         required
         placeholder="Street Name/House No./Building/Exact Address"
+        defaultValue={defaultProperty ? defaultProperty.StreetAddress : null}
       />
     </div>
   );

@@ -121,6 +121,6 @@ let DummyData = JSON.parse(`[
           "https://res.cloudinary.com/dqfelf82g/image/upload/v1705762068/homefinders/3-floor-plan-1.png"
       ]
   }
-]`)
+]`);
 
-export default DummyData
+export default DummyData;
