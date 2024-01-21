@@ -7,12 +7,15 @@ import PropertyForm from "../components/PropertyForm";
 import "../styles/property-manage.css";
 
 import { post_with_credentials } from "../requests/post";
+import DummyData from "../assets/dummy-data"
+import PropertyRowItem from "../components/PropertyRowItem";
 
 const PropertyManage = () => {
   const navigate = useNavigate();
 
   const [showFilter, setShowFilter] = React.useState(false);
-  const [properties, setProperties] = React.useState([])
+  const [propertyCollection, setPrpoertyCollection] = React.useState([])
+  const [selectedProperty, setSelectedProperty] = React.useState(null)
 
   const [fetchSize, setFetchSize] = React.useState(20)
   const [maxViewTable, setMaxViewTable] = React.useState(20)
@@ -82,8 +85,10 @@ const PropertyManage = () => {
       });
 
       if (ok) {
-        console.log("success add property");
-        // validation_result.success = data.msg;
+        console.log("success fetching properties");
+        
+        console.log('data = ')
+        setPrpoertyCollection(data)
       } else {
         throw new Error(data.msg);
       }
@@ -162,7 +167,20 @@ const PropertyManage = () => {
             </button>
             <button onClick={() => setShowFilter(false)}>Close</button>
           </div>
-        </>) : <button className="homfinders-btn" onClick={() => setShowFilter(true)}>Filters</button>}
+        </>) : <button className="homfinders-btn" onClick={() => {
+          console.log('properties = ')
+          console.log(propertyCollection)
+          setShowFilter(true)
+        }}>Filters</button>}
+      </div>
+
+      <div className="manage-property-contents-container">
+        {propertyCollection ? (propertyCollection.map((p, i) => {
+          return (
+            <PropertyRowItem propertyData={p}/>
+          )
+        })) : null}
+          
       </div>
     </div>
   );

@@ -1,0 +1,33 @@
+.property-row-item {
+    border: solid 2px blueviolet;
+    padding: 0.5em;
+
+    display: flex;
+    gap: 0.25em;
+
+    transition: 0.1s ease;
+}
+
+.property-row-item:hover {
+    scale: 1.007;
+    cursor: pointer;
+}
+
+.property-row-img-container {
+    border: solid 1px red;
+    width: 10%;
+}
+
+.property-row-img-container > img {
+    width: 100%;
+}
+
+.property-row-txt-container {
+    border: solid 1px green;
+    width: 75%;
+}
+
+.property-row-btn-container {
+    border: solid 1px pink;
+    width: 15%;
+}
