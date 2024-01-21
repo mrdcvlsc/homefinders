@@ -14,7 +14,11 @@ const currency_formatter = new Intl.NumberFormat("en-PH", {
   maximumFractionDigits: 2,
 });
 
-const PropertyRowItem = ({ propertyData, setSelectedProperty, deletePropertyHandler }) => {
+const PropertyRowItem = ({
+  propertyData,
+  setSelectedProperty,
+  deletePropertyHandler,
+}) => {
   const navigate = useNavigate();
 
   return (
@@ -22,7 +26,7 @@ const PropertyRowItem = ({ propertyData, setSelectedProperty, deletePropertyHand
       <div className="property-row-img-container">
         <img
           src={
-            propertyData.SampleImagesURL[0]
+            propertyData?.SampleImagesURL
               ? propertyData.SampleImagesURL[0]
               : empty_img_link
           }
@@ -47,7 +51,12 @@ const PropertyRowItem = ({ propertyData, setSelectedProperty, deletePropertyHand
         >
           Edit
         </button>
-        <button className="homfinders-btn" onClick={(e) => deletePropertyHandler(e, propertyData.Id) }>Delete</button>
+        <button
+          className="homfinders-btn"
+          onClick={(e) => deletePropertyHandler(e, propertyData.Id)}
+        >
+          Delete
+        </button>
       </div>
     </div>
   );

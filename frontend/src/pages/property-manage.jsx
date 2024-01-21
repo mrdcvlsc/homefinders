@@ -8,7 +8,7 @@ import UploadDragOrSelect from "../components/UploadDragOrSelect";
 import "../styles/property-manage.css";
 import "../styles/property-add.css";
 
-import { delete_with_credentials } from "../requests/delete"
+import { delete_with_credentials } from "../requests/delete";
 import { post_with_credentials } from "../requests/post";
 import DummyData from "../assets/dummy-data";
 import PropertyRowItem from "../components/PropertyRowItem";
@@ -18,7 +18,7 @@ const PropertyManage = () => {
 
   /////////////////////// Filter States And Methods ///////////////////////
   const [showFilter, setShowFilter] = React.useState(false);
-  const [propertyCollection, setPrpoertyCollection] = React.useState([]) // prod
+  const [propertyCollection, setPrpoertyCollection] = React.useState([]); // prod
   // const [propertyCollection, setPrpoertyCollection] = React.useState(DummyData); // dev
   const [selectedProperty, setSelectedProperty] = React.useState(null);
 
@@ -219,17 +219,19 @@ const PropertyManage = () => {
 
   const handleDeleteProperty = async (e, property_id) => {
     try {
-      const [ok, data] = await delete_with_credentials(`/delete-property/${property_id}`)
+      const [ok, data] = await delete_with_credentials(
+        `/delete-property/${property_id}`,
+      );
 
       if (ok) {
-        console.log("delete request success")
-        console.log(data)
+        console.log("delete request success");
+        console.log(data);
       }
     } catch (err) {
-      console.log("delete request error : ")
-      console.error(err)
+      console.log("delete request error : ");
+      console.error(err);
     }
-  }
+  };
 
   ////////////////////////////////////////////////////////////////////////////////
 
