@@ -1,16 +1,15 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 import AddressForm from "../components/AddressForm";
 import PropertyForm from "../components/PropertyForm";
 import UploadDragOrSelect from "../components/UploadDragOrSelect";
 
-import { post_with_credentials } from "../requests/post";
-
 import "../styles/property-add.css";
+import Loading from "../components/Loading";
 
 const PropertyAdd = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   ////////////////////// Input Field Helpers //////////////////////
 
@@ -42,18 +41,13 @@ const PropertyAdd = () => {
   const [carPort, setCarPort] = React.useState(0);
   const [description, setDescription] = React.useState("");
 
-  const [disable, setDisable] = React.useState(false);
-
   const [sampleImages, setSampleImages] = React.useState(null);
   const [floorPlans, setFloorPlans] = React.useState(null);
 
   const handleUpload = async (e) => {
-    setDisable(true);
     e.preventDefault();
-
-    console.log("Uploading files :");
-    console.log(sampleImages);
-    console.log();
+    
+    setShow(true);
 
     const selectedFiles = new FormData();
 
@@ -105,6 +99,7 @@ const PropertyAdd = () => {
     console.log(selectedFiles);
 
     try {
+
       const response = await fetch("/add-property", {
         credentials: "include",
         method: "POST",
@@ -112,13 +107,22 @@ const PropertyAdd = () => {
       });
 
       const data = await response.json();
-      console.log("fetched data = ");
+
+      setSuccess(true);
       console.log(data);
     } catch (err) {
-      console.log("upload try catch error = ");
+      setSuccess(false);
       console.error(err);
     }
+
+    setFetched(true);
   };
+
+  ////////////////////// Loading State Properties //////////////////////
+
+  const [show, setShow] = React.useState(false);
+  const [success, setSuccess] = React.useState(false);
+  const [fetched, setFetched] = React.useState(false);
 
   ////////////////////// Add Property Page Body //////////////////////
 
@@ -188,9 +192,18 @@ const PropertyAdd = () => {
           <button onClick={(e) => handleUpload(e)} type="submit">
             Save
           </button>
-          <button>Clear</button>
+          <button type="reset">Clear</button>
         </div>
       </form>
+      <Loading
+        show={show}
+        setShow={setShow}
+        success={success}
+        setSuccess={setSuccess}
+        fetched={fetched}
+        setFetched={setFetched}
+        successAfterAction={() => {}}
+      />
     </div>
   );
 };

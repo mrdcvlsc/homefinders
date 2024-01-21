@@ -54,12 +54,16 @@ func GetProperties(c *gin.Context) {
 
 	///
 	properties, err := persistence.GetProperties(
-		"", "", "", "", "",
-		"", "", -1, 9999999999999, -1,
-		-1, -1, -1, -1,
-		-1, -1, -1, -1,
-		-1, -1, -1, -1,
-		-1, -1, -1, -1,
+		property_filter.Region, property_filter.Province, property_filter.City, property_filter.Barangay,
+		property_filter.StreetAddress,
+		property_filter.Name, property_filter.Type,
+		property_filter.MinPrice, property_filter.MaxPrice,
+		property_filter.Storeys,
+		property_filter.LivableAreaSQM, property_filter.GrossAreaSQM,
+		property_filter.LotLengthM, property_filter.LotWidthM,
+		property_filter.LivingRoom, property_filter.Kitchen, property_filter.DiningRoom, property_filter.BathRoom,
+		property_filter.Bedroom, property_filter.MastersBedroom, property_filter.MaidRoom, property_filter.Toilet,
+		property_filter.WalkInCloset, property_filter.Balcony, property_filter.Lanai, property_filter.CarPort,
 	)
 
 	if err != nil {

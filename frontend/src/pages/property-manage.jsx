@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 import AddressForm from "../components/AddressForm";
 import PropertyForm from "../components/PropertyForm";
@@ -10,11 +10,12 @@ import "../styles/property-add.css";
 
 import { delete_with_credentials } from "../requests/delete";
 import { post_with_credentials } from "../requests/post";
-import DummyData from "../assets/dummy-data";
+// import DummyData from "../assets/dummy-data";
 import PropertyRowItem from "../components/PropertyRowItem";
+import Loading from "../components/Loading";
 
 const PropertyManage = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   /////////////////////// Filter States And Methods ///////////////////////
   const [showFilter, setShowFilter] = React.useState(false);
@@ -60,7 +61,12 @@ const PropertyManage = () => {
     // setDisable(true);
     e.preventDefault();
 
+    setFetched(false)
+    setSuccess(false)
+
     try {
+      setShow(true)
+
       const [ok, data] = await post_with_credentials("/get-properties", {
         fetch_size: fetchSize,
         region: matchRegion,
@@ -99,10 +105,15 @@ const PropertyManage = () => {
       } else {
         throw new Error(data.msg);
       }
+
+      setSuccess(true)
     } catch (err) {
+      setSuccess(false)
       console.log("add-property page error : ");
       console.log(err);
     }
+
+    setFetched(true);
   };
 
   /////////////////////// Edit Property States And Methods ///////////////////////
@@ -138,12 +149,12 @@ const PropertyManage = () => {
   const [sampleImages, setSampleImages] = React.useState(null);
   const [floorPlans, setFloorPlans] = React.useState(null);
 
-  const [disableEditPropertyForm, setDisableEditPropertyForm] =
-    React.useState(false);
-
   const handleSaveEdit = async (e) => {
-    setDisableEditPropertyForm(true);
     e.preventDefault();
+
+    setShow(true)
+    setSuccess(false)
+    setFetched(false)
 
     console.log("Uploading files :");
     console.log(sampleImages);
@@ -209,15 +220,24 @@ const PropertyManage = () => {
       const data = await response.json();
       console.log("fetched data = ");
       console.log(data);
+
+      setSuccess(true)
     } catch (err) {
+      setSuccess(false)
       console.log("upload try catch error = ");
       console.error(err);
     }
+
+    setFetched(true);
   };
 
   /////////////////////// Delete Property States And Methods ///////////////////////
 
   const handleDeleteProperty = async (e, property_id) => {
+    setShow(true)
+    setSuccess(false)
+    setFetched(false);
+
     try {
       const [ok, data] = await delete_with_credentials(
         `/delete-property/${property_id}`,
@@ -227,11 +247,22 @@ const PropertyManage = () => {
         console.log("delete request success");
         console.log(data);
       }
+
+      setSuccess(true)
     } catch (err) {
+      setSuccess(false)
       console.log("delete request error : ");
       console.error(err);
     }
+
+    setFetched(true);
   };
+
+  ////////////////////// Loading State Properties //////////////////////
+
+  const [show, setShow] = React.useState(false);
+  const [success, setSuccess] = React.useState(false);
+  const [fetched, setFetched] = React.useState(false);
 
   ////////////////////////////////////////////////////////////////////////////////
 
@@ -361,6 +392,18 @@ const PropertyManage = () => {
             })
           : null}
       </div>
+
+      <Loading
+        show={show}
+        setShow={setShow}
+        success={success}
+        setSuccess={setSuccess}
+        fetched={fetched}
+        setFetched={setFetched}
+        successAfterAction={() => {
+          setShow(false)
+        }}
+      />
     </div>
   ) : (
     // ============================= Edit Property Page =============================
@@ -427,6 +470,16 @@ const PropertyManage = () => {
           <button onClick={() => setSelectedProperty(null)}>Cancel</button>
         </div>
       </form>
+
+      <Loading
+        show={show}
+        setShow={setShow}
+        success={success}
+        setSuccess={setSuccess}
+        fetched={fetched}
+        setFetched={setFetched}
+        successAfterAction={() => {}}
+      />
     </div>
   );
 };
