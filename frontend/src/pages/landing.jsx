@@ -21,9 +21,9 @@ export default function Landing() {
   const [propertiesArray, setPropertiesArray] = React.useState([]);
   const [selectedProperty, setSelectedProperty] = React.useState(null);
 
-  // const [displayedProperties, setDisplayedProperties] = React.useState(null); // prod -------------------
-  const [displayedProperties, setDisplayedProperties] =
-    React.useState(DummyData); // dev -------------------
+  const [displayedProperties, setDisplayedProperties] = React.useState(null); // prod -------------------
+  // const [displayedProperties, setDisplayedProperties] =
+  React.useState(DummyData); // dev -------------------
 
   const [availableProvinces, setAvailableProvinces] = React.useState([]);
   const [availablePropertyTypes, setAvailablePropertyTypes] = React.useState(
@@ -104,7 +104,7 @@ export default function Landing() {
               <h1>Discover Your Perfect Home</h1>
               <h3>Your Journey Starts Here</h3>
 
-              <div className="landing-contacts">
+              {/* <div className="landing-contacts">
                 <button
                   className="homefinders-btn"
                   onClick={() => navigate("/inquire")}
@@ -112,7 +112,7 @@ export default function Landing() {
                   Inquire Now
                 </button>
                 <button className="homefinders-btn">Call Us</button>
-              </div>
+              </div> */}
 
               <div className="search-box">
                 <div className="drop-box-container">

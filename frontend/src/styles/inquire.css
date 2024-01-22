@@ -34,8 +34,9 @@
   gap: 0.5em;
 }
 
-.inquire-section > h2, .inquire-section > p {
-  font-family: 'Roboto';
+.inquire-section > h2,
+.inquire-section > p {
+  font-family: "Roboto";
 }
 
 .inquire-section > p {

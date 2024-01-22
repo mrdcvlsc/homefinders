@@ -48,7 +48,9 @@ export default function Inquire() {
           />
 
           <div className="inquire-section-buttons">
-            <button type="submit" className="homefinders-btn">Send Inquiry</button>
+            <button type="submit" className="homefinders-btn">
+              Send Inquiry
+            </button>
           </div>
 
           <p>Or contact us through phone : 09xx-xxx-xxxx</p>
