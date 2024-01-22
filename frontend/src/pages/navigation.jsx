@@ -142,7 +142,7 @@ export default function Navigation() {
       </div>
 
       <div>
-        <Outlet />
+        <Outlet context={[getLoggedInUser]} />
         {/* {visibleLoginForm && (
           <LoginPopup
             closeLoginForm={closeLoginForm}

@@ -1,13 +1,15 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useOutletContext } from "react-router-dom";
 
 import { validateForm } from "../helpers/validate";
 import { post_with_credentials } from "../requests/post";
 
 import "../styles/LoginPopup.css";
 
-export default function LoginPopup({ getLoggedInUser }) {
+export default function LoginPopup() {
   const navigate = useNavigate();
+
+  const [getLoggedInUser] = useOutletContext()
 
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -46,7 +48,7 @@ export default function LoginPopup({ getLoggedInUser }) {
         setFormCatch(validation_result);
         setDisable(false);
         getLoggedInUser();
-        navigate("listing");
+        navigate("/listing");
         return;
       } else {
         throw new Error(data.msg);
