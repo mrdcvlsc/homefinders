@@ -29,7 +29,8 @@ func main() {
 
 	routes.SetSessionOptions(sessions.Options{
 		// MaxAge:   259200, // 3 days
-		MaxAge:   60, // 1 minute
+		// MaxAge:   60, // 1 minute
+		MaxAge:   60 * 15, // 15 minute
 		Secure:   use_secure_cookie,
 		HttpOnly: true,
 		SameSite: same_site,

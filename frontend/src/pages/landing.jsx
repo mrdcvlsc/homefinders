@@ -201,7 +201,15 @@ export default function Landing() {
                 <h3>Search Results</h3>
                 <button
                   className="homefinders-btn"
-                  onClick={() => setDisplayedProperties(null)}
+                  onClick={() => {
+                    setDisplayedProperties(null)
+                    setSelectedProvince("");
+                    setSelectedType("");
+                    setSelectedPriceRange({
+                      min: 0,
+                      max: 999_999_999_999,
+                    });
+                  }}
                 >
                   Clear Results
                 </button>
