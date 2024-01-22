@@ -166,3 +166,7 @@
 .hidden-black {
   color: black;
 }
+
+.listing-btn {
+  padding-inline: 3em;
+}

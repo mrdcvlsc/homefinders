@@ -104,7 +104,7 @@ export default function Navigation() {
           </div> */}
 
           {user && (
-            <Link className="react-router-link" to={`listing`}>
+            <Link className="react-router-link listing-btn" to={`listing`}>
               Listings
               <div>
               <Link className="react-router-sub-link" to={`add-property`}>
