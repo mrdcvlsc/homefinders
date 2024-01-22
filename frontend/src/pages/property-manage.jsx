@@ -18,8 +18,8 @@ import { get } from "../requests/get";
 const PropertyManage = () => {
   // const navigate = useNavigate();
 
-  // const [propertyCollection, setPropertyCollection] = React.useState([]); // prod
-  const [propertyCollection, setPropertyCollection] = React.useState(DummyData); // dev
+  const [propertyCollection, setPropertyCollection] = React.useState([]); // prod
+  // const [propertyCollection, setPropertyCollection] = React.useState(DummyData); // dev
   const [selectedProperty, setSelectedProperty] = React.useState(null);
 
   const quickDirtyGetProperties = async () => {
@@ -280,7 +280,54 @@ const PropertyManage = () => {
       console.log("fetched data = ");
       console.log(data);
 
-      setSuccess(response.ok);
+      if (!response.ok) {
+        throw new Error(data.msg)
+      }
+
+      //// fetch new data /////
+
+      const [refetched_ok, new_data] = await post_with_credentials("/get-properties", {
+        fetch_size: fetchSize,
+        region: matchRegion,
+        province: matchProvince,
+        city: matchCity,
+        barangay: matchBarangay,
+        street_address: matchExactAddress,
+        name: matchPropertyName,
+        type: matchPropertyType,
+        min_price: minPrice,
+        max_price: maxPrice,
+        storeys: matchStoreys,
+        livable_area_sqm: minLivableFloorArea,
+        gross_area_sqm: minGrossArea,
+        lot_length_m: minLotLength,
+        lot_width_m: minLotWidth,
+        living_room: minLivingRoom,
+        kitchen: minKitchen,
+        dining_room: minDiningRoom,
+        bath_room: minBathRoom,
+        bedroom: minBedroom,
+        masters_bedroom: minMastersBedroom,
+        maid_room: minMaidRoom,
+        toilet: minToilet,
+        walk_in_closet: minWalkInCloset,
+        balcony: minBalcony,
+        lanai: minLanai,
+        car_port: minCarPort,
+      });
+
+      if (refetched_ok) {
+        console.log("success fetching new properties");
+
+        console.log("new_data = ");
+        setPropertyCollection(new_data);
+      } else {
+        throw new Error(new_data.msg);
+      }
+
+      ///////
+
+      setSuccess(refetched_ok);
     } catch (err) {
       setSuccess(false);
       console.log("upload try catch error = ");
