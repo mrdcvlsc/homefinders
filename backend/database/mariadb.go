@@ -77,6 +77,57 @@ func (db *MariaDB) InitializeTables() error {
 		return err
 	}
 
+	// create property table if it's not created yet
+	property_tbl_create_query :=
+		`CREATE TABLE IF NOT EXISTS Properties (
+			id INT AUTO_INCREMENT PRIMARY KEY,
+			region VARCHAR(60) NOT NULL,
+			province VARCHAR(30) NOT NULL,
+			city VARCHAR(30) NOT NULL,
+			barangay VARCHAR(60) NOT NULL,
+			street_address VARCHAR(255) UNIQUE NOT NULL,
+		
+			property_description VARCHAR(400),
+			property_name VARCHAR(25) NOT NULL,
+			property_type VARCHAR(25) NOT NULL,
+			property_price FLOAT NOT NULL,
+			storeys INT(2) NOT NULL,
+		
+			livable_area_sqm FLOAT NOT NULL,
+			gross_area_sqm FLOAT NOT NULL,
+			lot_length_m FLOAT NOT NULL,
+			lot_width_m FLOAT NOT NULL,
+		
+			living_room INT(2),
+			kitchen INT(2),
+			dining_room INT(2),
+			bath_room INT(2),
+			bedroom INT(2),
+			masters_bedroom INT(2),
+			maid_room INT(2),
+			toilet INT(2),
+			walk_in_closet INT(2),
+			balcony INT(2),
+			lanai INT(2),
+			car_port INT(2)
+		)`
+
+	if _, err := db.Instance.Exec(property_tbl_create_query); err != nil {
+		return err
+	}
+
+	// create image table if it's not created yet
+	image_tbl_create_query :=
+		`CREATE TABLE IF NOT EXISTS Images (
+			id INT NOT NULL,
+			image_url VARCHAR(255) UNIQUE NOT NULL,
+			image_public_id VARCHAR(255) UNIQUE NOT NULL
+		)`
+
+	if _, err := db.Instance.Exec(image_tbl_create_query); err != nil {
+		return err
+	}
+
 	return nil
 }
 
