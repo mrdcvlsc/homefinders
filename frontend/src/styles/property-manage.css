@@ -5,21 +5,21 @@
   align-items: center;
   justify-content: center;
 
-  border: 2px solid green;
+  /* border: 2px solid green; */
   gap: 1em;
 
   padding: 1em;
 }
 
 .filter-container {
-  border: 2px solid red;
+  /* border: 2px solid red; */
   padding-bottom: 0.75em;
   border-bottom: solid grey thin;
   width: 100%;
 }
 
 .manage-property-contents-container {
-  border: 2px solid pink;
+  /* border: 2px solid pink; */
   width: 100%;
 
   display: flex;
@@ -36,7 +36,7 @@
 
   width: 100%;
 
-  border: 2px solid pink;
+  /* border: 2px solid pink; */
 }
 
 .manage-property-form-left-side {
@@ -46,16 +46,21 @@
   gap: 1em;
 
   width: 60%;
-  border: solid gold 2px;
+  /* border: solid gold 2px; */
 }
 
 .manage-property-form-right-side {
   width: 40%;
-  border: solid orange 2px;
+  /* border: solid orange 2px; */
 }
 
 .manage-property-pagnation-form {
-  border: solid 2px blue;
+  padding: 1em;
+  border-radius: 0.5em;
+
+  border: thin solid rgb(199, 199, 199);
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+
   display: flex;
   flex-direction: column;
   gap: 1em;

@@ -551,7 +551,7 @@ export default function PropertyForm({
           name=""
           id=""
           cols="30"
-          rows="7"
+          rows="5"
           placeholder="Description/Other Details"
         />
       ) : null}

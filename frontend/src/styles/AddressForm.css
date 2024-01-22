@@ -3,7 +3,11 @@
   flex-direction: column;
   gap: 0.5em;
 
-  border: solid 2px blueviolet;
+  padding: 1em;
+  border-radius: 0.5em;
+
+  border: thin solid rgb(199, 199, 199);
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
 }
 
 .address-fields-drop-box-row {

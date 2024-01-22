@@ -12,7 +12,7 @@
   gap: 4em;
   padding: 2em;
 
-  border: thick solid pink;
+  /* border: thick solid pink; */
 }
 
 .landing-contacts {
@@ -20,7 +20,7 @@
 
   gap: 1em;
 
-  border: solid 1px green;
+  /* border: solid 1px green; */
 }
 
 .landing-contacts > button {
@@ -100,12 +100,12 @@
   justify-content: space-between;
 
   width: 90%;
-  border: solid 1px green;
+  /* border: solid 1px green; */
 }
 
 .content-result-container {
   width: clamp(400px, 80%, 1600px);
-  border: solid 2px red;
+  /* border: solid 2px red; */
 
   display: flex;
   flex-wrap: wrap;

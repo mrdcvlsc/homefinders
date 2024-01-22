@@ -90,7 +90,7 @@ export default function Navigation() {
             About Us
           </Link>
 
-          <div className="react-router-link" to={"#"}>
+          {/* <div className="react-router-link" to={"#"}>
             {" "}
             Listing Temporary
             <div>
@@ -101,11 +101,19 @@ export default function Navigation() {
                 Manage Property
               </Link>
             </div>
-          </div>
+          </div> */}
 
           {user && (
             <Link className="react-router-link" to={`listing`}>
               Listings
+              <div>
+              <Link className="react-router-sub-link" to={`add-property`}>
+                Add Property
+              </Link>
+              <Link className="react-router-sub-link" to={`manage-property`}>
+                Manage Property
+              </Link>
+            </div>
             </Link>
           )}
 

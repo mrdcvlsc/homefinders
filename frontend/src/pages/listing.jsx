@@ -30,15 +30,7 @@ export default function Listing() {
 
   return (
     <div>
-      {user ? <h1>Welcome : {user}</h1> : <h1>Login first</h1>}
-      <br />
-      <h3>
-        <i>cooming soon...</i>
-      </h3>
-      <br />
-      <h3>
-        <i>dev note: dev build session cookie should only last for 1 minute</i>
-      </h3>
+      {user ? <h1>Currently Logged-In User : {user}</h1> : <h1>Login first</h1>}
     </div>
   );
 }

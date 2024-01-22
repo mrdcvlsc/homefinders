@@ -20,6 +20,7 @@ function Loading({
       setShow(null);
     } else {
       e.preventDefault();
+      setShow(null);
       successAfterAction();
     }
   };

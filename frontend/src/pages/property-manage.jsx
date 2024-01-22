@@ -45,6 +45,41 @@ const PropertyManage = () => {
   }, []);
 
   /////////////////////// Filter States And Methods ///////////////////////
+  // set every filter state back to it's initail value
+  const handleFilterClose = () => {
+    setShowFilter(false)
+    setFetchSize(20)
+    setMaxViewTable(20)
+    setMatchRegion("")
+    setMatchProvince("")
+    setMatchCity("")
+    setMatchBarangay("")
+    setMatchExactAddress("")
+    setMatchPropertyName("")
+    setMinPrice(-1)
+    setMaxPrice(999_999_999_999)
+    setMatchPropertyType("")
+    setMatchStoreys(-1)
+    setMinLivableFloorArea(-1)
+    setMinGrossArea(-1)
+    setMinLotLength(-1)
+    setMinLotWidth(-1)
+    setMinLivingRoom(-1)
+    setMinKitchen(-1)
+    setMinDiningRoom(-1)
+    setMinBathRoom(-1)
+    setMinBedroom(-1)
+    setMinMastersBedroom(-1)
+    setMinMaidRoom(-1)
+    setMinToilet(-1)
+    setMinWalkInCloset(-1)
+    setMinBalcony(-1)
+    setMinLanai(-1)
+    setMinCarPort(-1)
+
+    setShowFilter(false)
+  }
+
   const [showFilter, setShowFilter] = React.useState(false);
 
   const [fetchSize, setFetchSize] = React.useState(20);
@@ -130,7 +165,7 @@ const PropertyManage = () => {
         throw new Error(data.msg);
       }
 
-      setSuccess(true);
+      setSuccess(ok);
     } catch (err) {
       setSuccess(false);
       console.log("add-property page error : ");
@@ -245,7 +280,7 @@ const PropertyManage = () => {
       console.log("fetched data = ");
       console.log(data);
 
-      setSuccess(true);
+      setSuccess(response.ok);
     } catch (err) {
       setSuccess(false);
       console.log("upload try catch error = ");
@@ -263,16 +298,60 @@ const PropertyManage = () => {
     setFetched(false);
 
     try {
-      const [ok, data] = await delete_with_credentials(
+      ////// delete request ///////
+      const [deleteOk, deleteData] = await delete_with_credentials(
         `/delete-property/${property_id}`,
       );
 
-      if (ok) {
+      if (deleteOk) {
         console.log("delete request success");
-        console.log(data);
+        console.log(deleteData);
       }
 
-      setSuccess(true);
+      //// fetch new data /////
+
+      const [ok, data] = await post_with_credentials("/get-properties", {
+        fetch_size: fetchSize,
+        region: matchRegion,
+        province: matchProvince,
+        city: matchCity,
+        barangay: matchBarangay,
+        street_address: matchExactAddress,
+        name: matchPropertyName,
+        type: matchPropertyType,
+        min_price: minPrice,
+        max_price: maxPrice,
+        storeys: matchStoreys,
+        livable_area_sqm: minLivableFloorArea,
+        gross_area_sqm: minGrossArea,
+        lot_length_m: minLotLength,
+        lot_width_m: minLotWidth,
+        living_room: minLivingRoom,
+        kitchen: minKitchen,
+        dining_room: minDiningRoom,
+        bath_room: minBathRoom,
+        bedroom: minBedroom,
+        masters_bedroom: minMastersBedroom,
+        maid_room: minMaidRoom,
+        toilet: minToilet,
+        walk_in_closet: minWalkInCloset,
+        balcony: minBalcony,
+        lanai: minLanai,
+        car_port: minCarPort,
+      });
+
+      if (ok) {
+        console.log("success fetching new properties");
+
+        console.log("data = ");
+        setPropertyCollection(data);
+      } else {
+        throw new Error(data.msg);
+      }
+
+      ///////
+
+      setSuccess(ok);
     } catch (err) {
       setSuccess(false);
       console.log("delete request error : ");
@@ -315,6 +394,7 @@ const PropertyManage = () => {
 
                   <div className="manage-property-pagnation-form-two-select">
                     <select
+                      className="homefinders-form-fields"
                       onChange={(e) => setFetchSize(Number(e.target.value))}
                       required
                     >
@@ -330,6 +410,7 @@ const PropertyManage = () => {
                     </select>
 
                     <select
+                      className="homefinders-form-fields"
                       onChange={(e) => setMaxViewTable(Number(e.target.value))}
                       required
                     >
@@ -391,7 +472,7 @@ const PropertyManage = () => {
               </button>
               <button
                 className="homefinders-btn"
-                onClick={() => setShowFilter(false)}
+                onClick={() => handleFilterClose()}
               >
                 Close
               </button>
