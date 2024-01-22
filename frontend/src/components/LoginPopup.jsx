@@ -1,12 +1,12 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { validateForm } from "../helpers/validate";
 import { post_with_credentials } from "../requests/post";
 
 import "../styles/LoginPopup.css";
 
-export default function LoginPopup({ closeLoginForm, getLoggedInUser }) {
+export default function LoginPopup({ getLoggedInUser }) {
   const navigate = useNavigate();
 
   const [username, setUsername] = React.useState("");
@@ -45,7 +45,6 @@ export default function LoginPopup({ closeLoginForm, getLoggedInUser }) {
         validation_result.success = data.msg;
         setFormCatch(validation_result);
         setDisable(false);
-        closeLoginForm();
         getLoggedInUser();
         navigate("listing");
         return;
@@ -63,7 +62,7 @@ export default function LoginPopup({ closeLoginForm, getLoggedInUser }) {
   return (
     <div className="login-page-container">
       <div className="login-div">
-        <span className="login-btn-close" onClick={() => closeLoginForm()}>
+        <span className="login-btn-close" onClick={() => navigate('/')}>
           <ion-icon name="close"></ion-icon>
         </span>
 
@@ -116,6 +115,8 @@ export default function LoginPopup({ closeLoginForm, getLoggedInUser }) {
               {" "}
               Login
             </button>
+            <Link to={'/forgot-password'}>Forgot Password</Link>
+            
             {formCatch.error && (
               <p className="form-error-message">{formCatch.error}</p>
             )}

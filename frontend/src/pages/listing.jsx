@@ -2,7 +2,7 @@ import React from "react";
 
 import { get_loggedin_user } from "../requests/get";
 
-import "../styles/units.css";
+import "../styles/listing.css";
 
 export default function Listing() {
   const [user, setLoggedInUser] = React.useState("");
@@ -29,8 +29,12 @@ export default function Listing() {
   }, []);
 
   return (
-    <div>
-      {user ? <h1>Currently Logged-In User : {user}</h1> : <h1>Login first</h1>}
+    <div className="listing-page">
+      {user ? <h1>Welcome {user}!</h1> : <h1>Login first</h1>}
+    
+      <p>
+        Hover on this page's button to see the options to manipulate and/or add real-estate units/properties
+      </p>
     </div>
   );
 }

@@ -118,9 +118,13 @@ export default function Navigation() {
               Logout
             </button>
           ) : (
-            <button id="admin-login-btn" onClick={() => openLoginForm()}>
-              Admin Login
-            </button>
+            // <button id="admin-login-btn" onClick={() => openLoginForm()}>
+            //   Admin Login
+            // </button>
+
+            <Link id="admin-login-btn" to={`login-user`}>
+              Broker Login
+            </Link>
           )}
 
           <div className="react-router-link hidden-black" to={"#"}>
@@ -139,12 +143,12 @@ export default function Navigation() {
 
       <div>
         <Outlet />
-        {visibleLoginForm && (
+        {/* {visibleLoginForm && (
           <LoginPopup
             closeLoginForm={closeLoginForm}
             getLoggedInUser={getLoggedInUser}
           />
-        )}
+        )} */}
       </div>
     </>
   );

@@ -155,6 +155,8 @@
   font-weight: 500;
   transition: 0.5s;
 
+  text-decoration: none;
+
   padding: 0.65em;
 }
 

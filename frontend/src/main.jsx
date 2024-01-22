@@ -17,6 +17,8 @@ import ErrorPage from "./error-page";
 
 import "./styles/main.css";
 import Inquire from "./pages/inquire";
+import ForgotPassword from "./pages/forgot-password";
+import LoginPopup from "./components/LoginPopup";
 
 const router = createBrowserRouter([
   {
@@ -36,6 +38,10 @@ const router = createBrowserRouter([
       {
         path: "inquire",
         element: <Inquire />,
+      },
+      {
+        path: "forgot-password",
+        element: <ForgotPassword />,
       },
       {
         path: "calculator",
@@ -64,6 +70,10 @@ const router = createBrowserRouter([
       {
         path: "login",
         element: <Login />,
+      },
+      {
+        path: "login-user",
+        element: <LoginPopup />,
       },
     ],
   },

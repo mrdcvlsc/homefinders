@@ -1,0 +1,15 @@
+.listing-page {
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    padding: 1em;
+
+    gap: 2em;
+}
+
+.listing-page {
+    font-family: 'Roboto';
+}
