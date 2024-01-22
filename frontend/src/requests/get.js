@@ -23,3 +23,14 @@ export async function logout_request() {
 
   return [response.ok, await response.json()];
 }
+
+export async function get(route) {
+  const response = await fetch(route, {
+    headers: {
+      Accept: "application/json",
+    },
+    method: "get",
+  });
+
+  return [response.ok, await response.json()];
+}

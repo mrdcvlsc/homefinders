@@ -13,15 +13,39 @@ import { post_with_credentials } from "../requests/post";
 // import DummyData from "../assets/dummy-data";
 import PropertyRowItem from "../components/PropertyRowItem";
 import Loading from "../components/Loading";
+import { get } from "../requests/get";
 
 const PropertyManage = () => {
   // const navigate = useNavigate();
 
+  const [propertyCollection, setPropertyCollection] = React.useState([]); // prod
+  // const [propertyCollection, setPropertyCollection] = React.useState(DummyData); // dev
+  const [selectedProperty, setSelectedProperty] = React.useState(null);
+
+  const quickDirtyGetProperties = async () => {
+    try {
+      const [ok, data] = await get('/get-all-properties')
+        
+      if (ok) {
+        console.log('data = ')
+        console.log(data)
+      } else {
+        throw new Error(data.msg)
+      }
+
+      setPropertyCollection(data)
+    } catch (err) {
+      console.error('quickDirtyGetProperties()')
+      console.error(err)
+    }
+  }
+
+  React.useEffect(() => {
+    quickDirtyGetProperties()
+  }, [])
+
   /////////////////////// Filter States And Methods ///////////////////////
   const [showFilter, setShowFilter] = React.useState(false);
-  const [propertyCollection, setPrpoertyCollection] = React.useState([]); // prod
-  // const [propertyCollection, setPrpoertyCollection] = React.useState(DummyData); // dev
-  const [selectedProperty, setSelectedProperty] = React.useState(null);
 
   const [fetchSize, setFetchSize] = React.useState(20);
   const [maxViewTable, setMaxViewTable] = React.useState(20);
@@ -35,7 +59,7 @@ const PropertyManage = () => {
   const [matchPropertyName, setMatchPropertyName] = React.useState("");
 
   const [minPrice, setMinPrice] = React.useState(-1);
-  const [maxPrice, setMaxPrice] = React.useState(-1);
+  const [maxPrice, setMaxPrice] = React.useState(999_999_999_999);
   const [matchPropertyType, setMatchPropertyType] = React.useState("");
   const [matchStoreys, setMatchStoreys] = React.useState(-1);
 
@@ -101,7 +125,7 @@ const PropertyManage = () => {
         console.log("success fetching properties");
 
         console.log("data = ");
-        setPrpoertyCollection(data);
+        setPropertyCollection(data);
       } else {
         throw new Error(data.msg);
       }
