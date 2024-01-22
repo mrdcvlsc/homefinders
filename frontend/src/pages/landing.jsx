@@ -2,7 +2,6 @@ import "../styles/landing.css";
 
 import { useNavigate } from "react-router-dom";
 
-import PhLocationJSON from "../assets/locations";
 import { get } from "../requests/get";
 import React from "react";
 import DummyData from "../assets/dummy-data";
@@ -12,11 +11,17 @@ import PropertyView from "../components/PropertyView";
 export default function Landing() {
   const navigate = useNavigate();
 
+  const [selectedProvince, setSelectedProvince] = React.useState("");
+  const [selectedType, setSelectedType] = React.useState("");
+  const [selectedPriceRange, setSelectedPriceRange] = React.useState({
+    min: 0,
+    max: 999_999_999_999,
+  });
+
   const [propertiesArray, setPropertiesArray] = React.useState([]);
   const [selectedProperty, setSelectedProperty] = React.useState(null);
 
-  const [displayedProperties, setDisplayedProperties] =
-    React.useState(DummyData);
+  const [displayedProperties, setDisplayedProperties] = React.useState(null);
 
   const [availableProvinces, setAvailableProvinces] = React.useState([]);
   const [availablePropertyTypes, setAvailablePropertyTypes] = React.useState(
@@ -57,129 +62,168 @@ export default function Landing() {
     }
   };
 
+  const handleSearch = () => {
+    let property_to_display = [];
+
+    console.log("province      = ", selectedProvince);
+    console.log("property type = ", selectedType);
+    console.log("minimum price = ", selectedPriceRange.min);
+    console.log("maximum price = ", selectedPriceRange.max);
+
+    for (let i = 0; i < propertiesArray.length; ++i) {
+      if (
+        propertiesArray[i].Province.includes(selectedProvince) &&
+        propertiesArray[i].Type.includes(selectedType) &&
+        propertiesArray[i].Price >= selectedPriceRange.min &&
+        propertiesArray[i].Price <= selectedPriceRange.max
+      ) {
+        property_to_display.push(propertiesArray[i]);
+      }
+    }
+
+    setDisplayedProperties(property_to_display);
+  };
+
   React.useEffect(() => {
     quickDirtyGetProperties();
   }, []);
 
   return (
     <div id="landing-page">
-      {/* {!displayedProperties ? ( */}
-      <>
-        <h1>Discover Your Perfect Home</h1>
-        <h3>Your Journey Starts Here</h3>
-
-        <div className="landing-contacts">
-          <button
-            className="homefinders-btn"
-            onClick={() => navigate("/inquire")}
-          >
-            Inquire Now
-          </button>
-          <button className="homefinders-btn">Call Us</button>
-        </div>
-
-        <div className="search-box">
-          <div className="drop-box-container">
-            <p>Preferred province</p>
-            <select onChange={(e) => console.log(e.target.value)}>
-              <option
-                key={"default"}
-                value={""}
-                label="Select Province"
-                disabled
-                selected
-              />
-              {availableProvinces.map((value, index) => {
-                return <option key={index} value={value} label={value} />;
-              })}
-            </select>
-          </div>
-
-          <div className="drop-box-container">
-            <p>Preferred Property type</p>
-            <select onChange={(e) => console.log(e.target.value)}>
-              <option
-                key={"default"}
-                value={""}
-                label="Select Property Type"
-                disabled
-                selected
-              />
-              {availablePropertyTypes.map((value, index) => {
-                return <option key={index} value={value} label={value} />;
-              })}
-            </select>
-          </div>
-
-          <div className="drop-box-container">
-            <p>Preferred price range</p>
-            <select onChange={(e) => console.log(e.target.value)}>
-              <option
-                key={"default"}
-                value={""}
-                label="Select Price Range"
-                disabled
-                selected
-              />
-              <option
-                key={"1"}
-                value={{ min: 1_000_000, max: 3_000_000 }}
-                label="₱1,000,000 - ₱3,000,000"
-              />
-              <option
-                key={"2"}
-                value={{ min: 3_000_000, max: 5_000_000 }}
-                label="₱3,000,000 - ₱5,000,000"
-              />
-              <option
-                key={"3"}
-                value={{ min: 5_000_000, max: 10_000_000 }}
-                label="₱5,000,000 - ₱10,000,000"
-              />
-              <option
-                key={"4"}
-                value={{ min: 10_000_000, max: 999_999_999_999 }}
-                label="₱10,000,000 or Above"
-              />
-            </select>
-          </div>
-
-          <div className="drop-box-container">
-            <button>SEARCH</button>
-          </div>
-        </div>
-      </>
-      {/* ) : ( */}
-      <>
-        <div className="content-navigation-container">
-          <h3>Search Results</h3>
-          <button
-            className="homefinders-btn"
-            onClick={() => setDisplayedProperties(null)}
-          >
-            Clear Results
-          </button>
-        </div>
-
-        <div className="content-result-container">
-          {displayedProperties
-            ? displayedProperties.map((value, index) => {
-                return (
-                  <PropertyCard
-                    key={index}
-                    propertyData={value}
-                    setSelectedProperty={setSelectedProperty}
-                  />
-                );
-              })
-            : null}
-        </div>
-      </>
-      {/* )} */}
-
       {selectedProperty ? (
-        <PropertyView propertyData={selectedProperty} />
-      ) : null}
+        <PropertyView
+          propertyData={selectedProperty}
+          setSelectedProperty={setSelectedProperty}
+        />
+      ) : (
+        <>
+          {!displayedProperties ? (
+            <>
+              <h1>Discover Your Perfect Home</h1>
+              <h3>Your Journey Starts Here</h3>
+
+              <div className="landing-contacts">
+                <button
+                  className="homefinders-btn"
+                  onClick={() => navigate("/inquire")}
+                >
+                  Inquire Now
+                </button>
+                <button className="homefinders-btn">Call Us</button>
+              </div>
+
+              <div className="search-box">
+                <div className="drop-box-container">
+                  <p>Preferred province</p>
+                  <select onChange={(e) => setSelectedProvince(e.target.value)}>
+                    <option
+                      key={"default"}
+                      value={""}
+                      label="Select Province"
+                      disabled
+                      selected
+                    />
+                    {availableProvinces.map((value, index) => {
+                      return <option key={index} value={value} label={value} />;
+                    })}
+                  </select>
+                </div>
+
+                <div className="drop-box-container">
+                  <p>Preferred Property type</p>
+                  <select onChange={(e) => setSelectedType(e.target.value)}>
+                    <option
+                      key={"default"}
+                      value={""}
+                      label="Select Property Type"
+                      disabled
+                      selected
+                    />
+                    {availablePropertyTypes.map((value, index) => {
+                      return <option key={index} value={value} label={value} />;
+                    })}
+                  </select>
+                </div>
+
+                <div className="drop-box-container">
+                  <p>Preferred price range</p>
+                  <select
+                    onChange={(e) => {
+                      let parsed = JSON.parse(e.target.value);
+                      setSelectedPriceRange(parsed);
+                    }}
+                  >
+                    <option
+                      key={"default"}
+                      value={selectedPriceRange}
+                      label="Select Price Range"
+                      disabled
+                      selected
+                    />
+                    <option
+                      key={"1"}
+                      value={'{ "min": 1000000, "max": 2000000 }'}
+                      label="₱1,000,000 - ₱2,000,000"
+                    />
+                    <option
+                      key={"1"}
+                      value={'{ "min": 2000000, "max": 3000000 }'}
+                      label="₱2,000,000 - ₱3,000,000"
+                    />
+                    <option
+                      key={"2"}
+                      value={'{ "min": 3000000, "max": 5000000 }'}
+                      label="₱3,000,000 - ₱5,000,000"
+                    />
+                    <option
+                      key={"3"}
+                      value={'{ "min": 5000000, "max": 10000000 }'}
+                      label="₱5,000,000 - ₱10,000,000"
+                    />
+                    <option
+                      key={"4"}
+                      value={'{ "min": 10000000, "max": 999999999999 }'}
+                      label="₱10,000,000 or Above"
+                    />
+                  </select>
+                </div>
+
+                <div className="drop-box-container">
+                  <button onClick={handleSearch}>SEARCH</button>
+                </div>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="content-navigation-container">
+                <h3>Search Results</h3>
+                <button
+                  className="homefinders-btn"
+                  onClick={() => setDisplayedProperties(null)}
+                >
+                  Clear Results
+                </button>
+              </div>
+
+              <div className="content-result-container">
+                {displayedProperties ? (
+                  displayedProperties.map((value, index) => {
+                    return (
+                      <PropertyCard
+                        key={index}
+                        propertyData={value}
+                        setSelectedProperty={setSelectedProperty}
+                      />
+                    );
+                  })
+                ) : (
+                  <p>Empty</p>
+                )}
+              </div>
+            </>
+          )}
+        </>
+      )}
     </div>
   );
 }

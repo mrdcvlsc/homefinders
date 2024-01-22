@@ -21,11 +21,18 @@ const mod = (x, n) => {
   return ((x % n) + n) % n;
 };
 
-const PropertyView = ({ propertyData }) => {
+const PropertyView = ({ propertyData, setSelectedProperty }) => {
   const navigate = useNavigate();
 
   return (
     <div className="property-view">
+      <button
+        className="homefinders-btn"
+        onClick={() => setSelectedProperty(null)}
+      >
+        Close
+      </button>
+
       <div className="property-view-section">
         <h1>{propertyData.Name}</h1>
         <h3>{currency_formatter.format(propertyData.Price)}</h3>
