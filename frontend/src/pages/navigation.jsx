@@ -82,10 +82,6 @@ export default function Navigation() {
             </div>
           </div>
 
-          <Link className="react-router-link" to={`inquire`}>
-            Inquire
-          </Link>
-
           <Link className="react-router-link" to={`about`}>
             About Us
           </Link>
@@ -107,13 +103,13 @@ export default function Navigation() {
             <Link className="react-router-link listing-btn" to={`listing`}>
               Listings
               <div>
-              <Link className="react-router-sub-link" to={`add-property`}>
-                Add Property
-              </Link>
-              <Link className="react-router-sub-link" to={`manage-property`}>
-                Manage Property
-              </Link>
-            </div>
+                <Link className="react-router-sub-link" to={`add-property`}>
+                  Add Property
+                </Link>
+                <Link className="react-router-sub-link" to={`manage-property`}>
+                  Manage Property
+                </Link>
+              </div>
             </Link>
           )}
 

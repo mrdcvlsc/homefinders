@@ -21,7 +21,9 @@ export default function Landing() {
   const [propertiesArray, setPropertiesArray] = React.useState([]);
   const [selectedProperty, setSelectedProperty] = React.useState(null);
 
-  const [displayedProperties, setDisplayedProperties] = React.useState(null);
+  // const [displayedProperties, setDisplayedProperties] = React.useState(null); // prod -------------------
+  const [displayedProperties, setDisplayedProperties] =
+    React.useState(DummyData); // dev -------------------
 
   const [availableProvinces, setAvailableProvinces] = React.useState([]);
   const [availablePropertyTypes, setAvailablePropertyTypes] = React.useState(

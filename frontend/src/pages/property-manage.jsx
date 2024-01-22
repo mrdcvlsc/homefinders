@@ -47,38 +47,38 @@ const PropertyManage = () => {
   /////////////////////// Filter States And Methods ///////////////////////
   // set every filter state back to it's initail value
   const handleFilterClose = () => {
-    setShowFilter(false)
-    setFetchSize(20)
-    setMaxViewTable(20)
-    setMatchRegion("")
-    setMatchProvince("")
-    setMatchCity("")
-    setMatchBarangay("")
-    setMatchExactAddress("")
-    setMatchPropertyName("")
-    setMinPrice(-1)
-    setMaxPrice(999_999_999_999)
-    setMatchPropertyType("")
-    setMatchStoreys(-1)
-    setMinLivableFloorArea(-1)
-    setMinGrossArea(-1)
-    setMinLotLength(-1)
-    setMinLotWidth(-1)
-    setMinLivingRoom(-1)
-    setMinKitchen(-1)
-    setMinDiningRoom(-1)
-    setMinBathRoom(-1)
-    setMinBedroom(-1)
-    setMinMastersBedroom(-1)
-    setMinMaidRoom(-1)
-    setMinToilet(-1)
-    setMinWalkInCloset(-1)
-    setMinBalcony(-1)
-    setMinLanai(-1)
-    setMinCarPort(-1)
+    setShowFilter(false);
+    setFetchSize(20);
+    setMaxViewTable(20);
+    setMatchRegion("");
+    setMatchProvince("");
+    setMatchCity("");
+    setMatchBarangay("");
+    setMatchExactAddress("");
+    setMatchPropertyName("");
+    setMinPrice(-1);
+    setMaxPrice(999_999_999_999);
+    setMatchPropertyType("");
+    setMatchStoreys(-1);
+    setMinLivableFloorArea(-1);
+    setMinGrossArea(-1);
+    setMinLotLength(-1);
+    setMinLotWidth(-1);
+    setMinLivingRoom(-1);
+    setMinKitchen(-1);
+    setMinDiningRoom(-1);
+    setMinBathRoom(-1);
+    setMinBedroom(-1);
+    setMinMastersBedroom(-1);
+    setMinMaidRoom(-1);
+    setMinToilet(-1);
+    setMinWalkInCloset(-1);
+    setMinBalcony(-1);
+    setMinLanai(-1);
+    setMinCarPort(-1);
 
-    setShowFilter(false)
-  }
+    setShowFilter(false);
+  };
 
   const [showFilter, setShowFilter] = React.useState(false);
 
@@ -281,40 +281,43 @@ const PropertyManage = () => {
       console.log(data);
 
       if (!response.ok) {
-        throw new Error(data.msg)
+        throw new Error(data.msg);
       }
 
       //// fetch new data /////
 
-      const [refetched_ok, new_data] = await post_with_credentials("/get-properties", {
-        fetch_size: fetchSize,
-        region: matchRegion,
-        province: matchProvince,
-        city: matchCity,
-        barangay: matchBarangay,
-        street_address: matchExactAddress,
-        name: matchPropertyName,
-        type: matchPropertyType,
-        min_price: minPrice,
-        max_price: maxPrice,
-        storeys: matchStoreys,
-        livable_area_sqm: minLivableFloorArea,
-        gross_area_sqm: minGrossArea,
-        lot_length_m: minLotLength,
-        lot_width_m: minLotWidth,
-        living_room: minLivingRoom,
-        kitchen: minKitchen,
-        dining_room: minDiningRoom,
-        bath_room: minBathRoom,
-        bedroom: minBedroom,
-        masters_bedroom: minMastersBedroom,
-        maid_room: minMaidRoom,
-        toilet: minToilet,
-        walk_in_closet: minWalkInCloset,
-        balcony: minBalcony,
-        lanai: minLanai,
-        car_port: minCarPort,
-      });
+      const [refetched_ok, new_data] = await post_with_credentials(
+        "/get-properties",
+        {
+          fetch_size: fetchSize,
+          region: matchRegion,
+          province: matchProvince,
+          city: matchCity,
+          barangay: matchBarangay,
+          street_address: matchExactAddress,
+          name: matchPropertyName,
+          type: matchPropertyType,
+          min_price: minPrice,
+          max_price: maxPrice,
+          storeys: matchStoreys,
+          livable_area_sqm: minLivableFloorArea,
+          gross_area_sqm: minGrossArea,
+          lot_length_m: minLotLength,
+          lot_width_m: minLotWidth,
+          living_room: minLivingRoom,
+          kitchen: minKitchen,
+          dining_room: minDiningRoom,
+          bath_room: minBathRoom,
+          bedroom: minBedroom,
+          masters_bedroom: minMastersBedroom,
+          maid_room: minMaidRoom,
+          toilet: minToilet,
+          walk_in_closet: minWalkInCloset,
+          balcony: minBalcony,
+          lanai: minLanai,
+          car_port: minCarPort,
+        },
+      );
 
       if (refetched_ok) {
         console.log("success fetching new properties");

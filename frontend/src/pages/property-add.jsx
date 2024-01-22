@@ -15,35 +15,35 @@ const PropertyAdd = () => {
 
   // reset all state field values to default
   const handleClear = (e) => {
-    setRegion("")
-    setProvince("")
-    setCity("")
-    setBarangay("")
-    setExactAddress("")
-    setPropertyName("")
-    setPrice(0)
-    setPropertyType("")
-    setStoreys(0)
-    setLivableFloorArea(0)
-    setGrossArea(0)
-    setLotLength(0)
-    setLotWidth(0)
-    setLivingRoom(0)
-    setKitchen(0)
-    setDiningRoom(0)
-    setBathRoom(0)
-    setBedroom(0)
-    setMastersBedroom(0)
-    setMaidRoom(0)
-    setToilet(0)
-    setWalkInCloset(0)
-    setBalcony(0)
-    setLanai(0)
-    setCarPort(0)
-    setDescription("")
-    setSampleImages(null)
-    setFloorPlans(null)
-  }
+    setRegion("");
+    setProvince("");
+    setCity("");
+    setBarangay("");
+    setExactAddress("");
+    setPropertyName("");
+    setPrice(0);
+    setPropertyType("");
+    setStoreys(0);
+    setLivableFloorArea(0);
+    setGrossArea(0);
+    setLotLength(0);
+    setLotWidth(0);
+    setLivingRoom(0);
+    setKitchen(0);
+    setDiningRoom(0);
+    setBathRoom(0);
+    setBedroom(0);
+    setMastersBedroom(0);
+    setMaidRoom(0);
+    setToilet(0);
+    setWalkInCloset(0);
+    setBalcony(0);
+    setLanai(0);
+    setCarPort(0);
+    setDescription("");
+    setSampleImages(null);
+    setFloorPlans(null);
+  };
 
   const [region, setRegion] = React.useState("");
   const [province, setProvince] = React.useState("");
@@ -228,7 +228,11 @@ const PropertyAdd = () => {
           >
             Save
           </button>
-          <button onClick={(e) => handleClear(e)} className="homefinders-btn" type="reset">
+          <button
+            onClick={(e) => handleClear(e)}
+            className="homefinders-btn"
+            type="reset"
+          >
             Clear
           </button>
         </div>
@@ -241,7 +245,7 @@ const PropertyAdd = () => {
         fetched={fetched}
         setFetched={setFetched}
         successAfterAction={() => {
-          navigate('/listing')
+          navigate("/listing");
         }}
       />
     </div>

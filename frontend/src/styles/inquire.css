@@ -1,3 +1,62 @@
+.inquire-heading {
+  margin: 0.25em;
+}
+
 #inquire-page {
-  border: 2px solid green;
+  display: flex;
+  justify-content: center;
+
+  gap: 1em;
+
+  padding: 1em;
+
+  /* border: 2px solid green; */
+}
+
+.inquire-section-buttons {
+  padding: 0.5em;
+  display: flex;
+  justify-content: center;
+}
+
+.inquire-section {
+  border-radius: 0.5em;
+  border: thin solid rgb(199, 199, 199);
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+
+  width: clamp(300px, 40%, 800px);
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 1em;
+
+  gap: 0.5em;
+}
+
+.inquire-section > h2, .inquire-section > p {
+  font-family: 'Roboto';
+}
+
+.inquire-section > p {
+  font-weight: 300;
+  font-style: italic;
+  font-size: small;
+}
+
+.inquire-section > input {
+  height: 3em;
+  padding-inline: 1em;
+}
+
+.inquire-section > textarea {
+  padding: 1em;
+}
+
+.inquire-property-image-container {
+  border-inline: thin solid black;
+}
+
+.inquire-property-image-container > img {
+  width: 100%;
 }

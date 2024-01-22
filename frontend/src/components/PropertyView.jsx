@@ -30,7 +30,7 @@ const PropertyView = ({ propertyData, setSelectedProperty }) => {
         className="homefinders-btn"
         onClick={() => setSelectedProperty(null)}
       >
-        Close
+        Go Back
       </button>
 
       <div className="property-view-section">
@@ -44,6 +44,13 @@ const PropertyView = ({ propertyData, setSelectedProperty }) => {
           {propertyData.Barangay}, {propertyData.City}, {propertyData.Province}
         </p>
       </div>
+
+      <button
+        className="homefinders-btn"
+        onClick={() => navigate("/inquire", { state: propertyData })}
+      >
+        Inquire
+      </button>
 
       {/* ///////////////////////////////////////////////////////////// */}
 
