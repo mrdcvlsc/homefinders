@@ -10,7 +10,7 @@ import "../styles/property-add.css";
 
 import { delete_with_credentials } from "../requests/delete";
 import { post_with_credentials } from "../requests/post";
-// import DummyData from "../assets/dummy-data";
+import DummyData from "../assets/dummy-data";
 import PropertyRowItem from "../components/PropertyRowItem";
 import Loading from "../components/Loading";
 import { get } from "../requests/get";
@@ -18,31 +18,31 @@ import { get } from "../requests/get";
 const PropertyManage = () => {
   // const navigate = useNavigate();
 
-  const [propertyCollection, setPropertyCollection] = React.useState([]); // prod
-  // const [propertyCollection, setPropertyCollection] = React.useState(DummyData); // dev
+  // const [propertyCollection, setPropertyCollection] = React.useState([]); // prod
+  const [propertyCollection, setPropertyCollection] = React.useState(DummyData); // dev
   const [selectedProperty, setSelectedProperty] = React.useState(null);
 
   const quickDirtyGetProperties = async () => {
     try {
-      const [ok, data] = await get('/get-all-properties')
-        
+      const [ok, data] = await get("/get-all-properties");
+
       if (ok) {
-        console.log('data = ')
-        console.log(data)
+        console.log("data = ");
+        console.log(data);
       } else {
-        throw new Error(data.msg)
+        throw new Error(data.msg);
       }
 
-      setPropertyCollection(data)
+      setPropertyCollection(data);
     } catch (err) {
-      console.error('quickDirtyGetProperties()')
-      console.error(err)
+      console.error("quickDirtyGetProperties()");
+      console.error(err);
     }
-  }
+  };
 
   React.useEffect(() => {
-    quickDirtyGetProperties()
-  }, [])
+    quickDirtyGetProperties();
+  }, []);
 
   /////////////////////// Filter States And Methods ///////////////////////
   const [showFilter, setShowFilter] = React.useState(false);
@@ -85,11 +85,11 @@ const PropertyManage = () => {
     // setDisable(true);
     e.preventDefault();
 
-    setFetched(false)
-    setSuccess(false)
+    setFetched(false);
+    setSuccess(false);
 
     try {
-      setShow(true)
+      setShow(true);
 
       const [ok, data] = await post_with_credentials("/get-properties", {
         fetch_size: fetchSize,
@@ -130,9 +130,9 @@ const PropertyManage = () => {
         throw new Error(data.msg);
       }
 
-      setSuccess(true)
+      setSuccess(true);
     } catch (err) {
-      setSuccess(false)
+      setSuccess(false);
       console.log("add-property page error : ");
       console.log(err);
     }
@@ -176,9 +176,9 @@ const PropertyManage = () => {
   const handleSaveEdit = async (e) => {
     e.preventDefault();
 
-    setShow(true)
-    setSuccess(false)
-    setFetched(false)
+    setShow(true);
+    setSuccess(false);
+    setFetched(false);
 
     console.log("Uploading files :");
     console.log(sampleImages);
@@ -245,9 +245,9 @@ const PropertyManage = () => {
       console.log("fetched data = ");
       console.log(data);
 
-      setSuccess(true)
+      setSuccess(true);
     } catch (err) {
-      setSuccess(false)
+      setSuccess(false);
       console.log("upload try catch error = ");
       console.error(err);
     }
@@ -258,8 +258,8 @@ const PropertyManage = () => {
   /////////////////////// Delete Property States And Methods ///////////////////////
 
   const handleDeleteProperty = async (e, property_id) => {
-    setShow(true)
-    setSuccess(false)
+    setShow(true);
+    setSuccess(false);
     setFetched(false);
 
     try {
@@ -272,9 +272,9 @@ const PropertyManage = () => {
         console.log(data);
       }
 
-      setSuccess(true)
+      setSuccess(true);
     } catch (err) {
-      setSuccess(false)
+      setSuccess(false);
       console.log("delete request error : ");
       console.error(err);
     }
@@ -382,15 +382,24 @@ const PropertyManage = () => {
             </div>
 
             <div className="add-property-form-btns">
-              <button onClick={(e) => handleApplyFilters(e)} type="submit">
+              <button
+                className="homefinders-btn"
+                onClick={(e) => handleApplyFilters(e)}
+                type="submit"
+              >
                 Apply Filter
               </button>
-              <button onClick={() => setShowFilter(false)}>Close</button>
+              <button
+                className="homefinders-btn"
+                onClick={() => setShowFilter(false)}
+              >
+                Close
+              </button>
             </div>
           </>
         ) : (
           <button
-            className="homfinders-btn"
+            className="homefinders-btn"
             onClick={() => {
               console.log("properties = ");
               console.log(propertyCollection);
@@ -425,7 +434,7 @@ const PropertyManage = () => {
         fetched={fetched}
         setFetched={setFetched}
         successAfterAction={() => {
-          setShow(false)
+          setShow(false);
         }}
       />
     </div>
@@ -488,10 +497,19 @@ const PropertyManage = () => {
           </div>
         </div>
         <div className="add-property-form-btns">
-          <button onClick={(e) => handleSaveEdit(e)} type="submit">
+          <button
+            className="homefinders-btn"
+            onClick={(e) => handleSaveEdit(e)}
+            type="submit"
+          >
             Save
           </button>
-          <button onClick={() => setSelectedProperty(null)}>Cancel</button>
+          <button
+            className="homefinders-btn"
+            onClick={() => setSelectedProperty(null)}
+          >
+            Cancel
+          </button>
         </div>
       </form>
 

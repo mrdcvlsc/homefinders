@@ -2,7 +2,7 @@
 #navigation-panel {
   /* border: 1px solid red; */
   width: 100%;
-  background-color: black;
+  background-color: #14213d;
 
   display: flex;
   flex-direction: row;
@@ -16,6 +16,19 @@
   color: #fff;
   user-select: none;
   text-decoration: none;
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  gap: 0.25em;
+
+  /* border: solid yellow 2px; */
+}
+
+.logo > img {
+  width: 3.5em;
 }
 
 /* style for the container that holds the navigation buttons */
@@ -27,7 +40,12 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: 2em;
+
+  font-family: "Roboto", "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-weight: 100;
+
+  gap: 0.5em;
 }
 
 /* main buttons */
@@ -65,12 +83,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0.5em 1em;
+  padding: 0.5em 0.75em;
 }
 
 /* sub buttons */
 .react-router-sub-link {
-  background-color: black;
+  background-color: #14213d;
 }
 
 /* sub buttons - on hover */

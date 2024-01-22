@@ -1,0 +1,53 @@
+.property-card {
+  border: thin solid rgb(199, 199, 199);
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+
+  display: flex;
+  flex-direction: column;
+
+  width: 18em;
+  height: 18em;
+
+  border-radius: 0.5em;
+  overflow: hidden;
+
+  transition: 0.2s ease;
+}
+
+.property-card:hover {
+  scale: 1.01;
+  cursor: pointer;
+}
+
+.property-card > div {
+  width: 100%;
+}
+
+.property-card-image {
+  /* border: solid 2px red; */
+  width: 100%;
+  height: 80%;
+}
+
+.property-card-image > img {
+  width: 100%;
+  height: 100%;
+}
+
+.property-card-text-container {
+  font-family: "Roboto";
+
+  padding-inline: 0.75em;
+
+  /* border: solid 2px blue; */
+
+  height: 20%;
+}
+
+.property-card-address,
+.property-card-type {
+  font-family: "Roboto";
+  font-size: smaller;
+  color: rgb(77, 77, 77);
+  font-style: italic;
+}

@@ -46,7 +46,7 @@ const PropertyAdd = () => {
 
   const handleUpload = async (e) => {
     e.preventDefault();
-    
+
     setShow(true);
 
     const selectedFiles = new FormData();
@@ -99,7 +99,6 @@ const PropertyAdd = () => {
     console.log(selectedFiles);
 
     try {
-
       const response = await fetch("/add-property", {
         credentials: "include",
         method: "POST",
@@ -189,10 +188,16 @@ const PropertyAdd = () => {
           </div>
         </div>
         <div className="add-property-form-btns">
-          <button onClick={(e) => handleUpload(e)} type="submit">
+          <button
+            className="homefinders-btn"
+            onClick={(e) => handleUpload(e)}
+            type="submit"
+          >
             Save
           </button>
-          <button type="reset">Clear</button>
+          <button className="homefinders-btn" type="reset">
+            Clear
+          </button>
         </div>
       </form>
       <Loading

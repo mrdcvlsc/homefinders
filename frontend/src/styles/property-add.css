@@ -65,8 +65,3 @@
   border: 1px solid green;
   width: 100%;
 }
-
-.add-property-form-btns > button {
-  height: 2em;
-  width: 8em;
-}

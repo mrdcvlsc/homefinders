@@ -46,13 +46,13 @@ const PropertyRowItem = ({
       </div>
       <div className="property-row-btn-container">
         <button
-          className="homfinders-btn"
+          className="homefinders-btn"
           onClick={() => setSelectedProperty(propertyData)}
         >
           Edit
         </button>
         <button
-          className="homfinders-btn"
+          className="homefinders-btn"
           onClick={(e) => deletePropertyHandler(e, propertyData.Id)}
         >
           Delete

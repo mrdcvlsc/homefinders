@@ -1,12 +1,12 @@
 import "../styles/about.css";
 
-import AboutUsHouse from "../assets/logo.png";
+import AboutUsHouse from "../assets/about-us.jpg";
 
 export default function About() {
   return (
     <div id="about-page">
       <div className="about-box left-image">
-        <img src={AboutUsHouse} width={"50vh"} />
+        <img src={AboutUsHouse} width={"100%"} />
       </div>
       <div className="about-box right-text">
         <p>

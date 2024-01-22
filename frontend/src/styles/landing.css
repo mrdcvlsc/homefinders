@@ -9,8 +9,27 @@
 
   height: 100%;
 
-  gap: 5.25em;
-  padding: 5.25em;
+  gap: 4em;
+  padding: 2em;
+
+  border: thick solid pink;
+}
+
+.landing-contacts {
+  display: flex;
+
+  gap: 1em;
+
+  border: solid 1px green;
+}
+
+.landing-contacts > button {
+  height: 3em;
+  width: 12em;
+
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-weight: bold;
 }
 
 .search-box {
@@ -18,26 +37,81 @@
   gap: 1em;
 
   padding: 2em;
-  border: thick solid black;
+
   border-radius: 1em;
+  border: medium solid black;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
 }
 
 .drop-box-container {
   display: flex;
   flex-direction: column;
+
   justify-content: end;
+
+  gap: 0.75em;
+
+  width: 10em;
+}
+
+.drop-box-container > p {
+  font-family: "Roboto";
+  font-weight: 100;
 }
 
 .drop-box-container > button {
-  height: 2em;
-  width: 10em;
-
-  border-radius: 0.5em;
-}
-
-.drop-box-container > select {
-  height: 2em;
+  height: 2.5em;
   width: 100%;
 
   border-radius: 0.5em;
+  border: thin solid black;
+  background-color: white;
+  font-weight: bold;
+
+  transition: 0.2s ease-in;
+}
+
+.drop-box-container > button:hover {
+  outline: thick solid black;
+
+  cursor: pointer;
+}
+
+.drop-box-container > select {
+  height: 2.5em;
+  width: 100%;
+
+  border-radius: 0.5em;
+  outline: thin solid black;
+  background-color: rgb(243, 243, 243);
+
+  transition: 0.2s ease-in;
+}
+
+.drop-box-container > select:hover {
+  cursor: pointer;
+
+  outline: thick solid green;
+}
+
+.content-navigation-container {
+  display: flex;
+
+  justify-content: space-between;
+
+  width: 90%;
+  border: solid 1px green;
+}
+
+.content-result-container {
+  width: clamp(400px, 80%, 1600px);
+  border: solid 2px red;
+
+  display: flex;
+  flex-wrap: wrap;
+
+  justify-content: center;
+  /* align-items: center; */
+
+  gap: 1.5em;
 }

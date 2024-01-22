@@ -14,6 +14,33 @@ body {
   width: 100vw;
 }
 
-.homfinders-btn {
-  height: 2em;
+.homefinders-btn {
+  padding-inline: 2em;
+  padding-block: 1em;
+
+  font-family: "Roboto";
+  font-weight: bold;
+  background-color: white;
+  color: #14213d;
+  outline: none;
+
+  border: thin solid rgb(199, 199, 199);
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+
+  transition: 0.5s ease-out;
+}
+
+.homefinders-btn:hover {
+  background-color: #14213d;
+  color: white;
+  cursor: pointer;
+
+  scale: 1.01;
+}
+
+.homefinders-form-fields {
+  background-color: #eff9fd;
+
+  border: 0.15em solid black;
+  border-radius: 0.3em;
 }

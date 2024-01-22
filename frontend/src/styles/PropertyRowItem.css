@@ -1,20 +1,15 @@
 .property-row-item {
-  border: solid 2px blueviolet;
+  border: thin solid rgb(199, 199, 199);
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+
   padding: 0.5em;
 
   display: flex;
   gap: 0.25em;
-
-  transition: 0.1s ease;
-}
-
-.property-row-item:hover {
-  scale: 1.007;
-  cursor: pointer;
 }
 
 .property-row-img-container {
-  border: solid 1px red;
+  /* border: solid 1px red; */
   width: 10%;
 }
 
@@ -23,11 +18,19 @@
 }
 
 .property-row-txt-container {
-  border: solid 1px green;
+  /* border: solid 1px green; */
+  padding: 0.5em;
   width: 75%;
 }
 
 .property-row-btn-container {
-  border: solid 1px pink;
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  gap: 1em;
+
+  /* border: solid 1px pink; */
   width: 15%;
 }

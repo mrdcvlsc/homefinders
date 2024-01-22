@@ -34,7 +34,7 @@ export default function UploadDragOrSelect({ files, setFiles }) {
           />
 
           <button
-            className="homfinders-btn"
+            className="homefinders-btn"
             onClick={(e) => {
               e.preventDefault();
               inputRef.current.click();
@@ -52,7 +52,9 @@ export default function UploadDragOrSelect({ files, setFiles }) {
           </ul>
 
           <div className="upload-selection-buttons">
-            <button className="homfinders-btn" onClick={() => setFiles(null)}>Clear</button>
+            <button className="homefinders-btn" onClick={() => setFiles(null)}>
+              Clear
+            </button>
           </div>
         </div>
       )}

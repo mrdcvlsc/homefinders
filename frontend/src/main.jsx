@@ -16,6 +16,7 @@ import PropertyManage from "./pages/property-manage";
 import ErrorPage from "./error-page";
 
 import "./styles/main.css";
+import Inquire from "./pages/inquire";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
       {
         path: "home",
         element: <Landing />,
+      },
+      {
+        path: "inquire",
+        element: <Inquire />,
       },
       {
         path: "calculator",

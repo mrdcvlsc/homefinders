@@ -93,7 +93,11 @@ export default function AddressForm({
     <div className="address-form">
       <h3>{componentHeadingText}</h3>
       <div className="address-fields-drop-box-row">
-        <select onChange={selectRegion} required>
+        <select
+          className="homefinders-form-fields"
+          onChange={selectRegion}
+          required
+        >
           <option
             defaultValue={regionIndex}
             label={!defaultProperty ? "Region" : defaultProperty.Region}
@@ -104,6 +108,7 @@ export default function AddressForm({
         </select>
 
         <select
+          className="homefinders-form-fields"
           onChange={selectProvince}
           disabled={regionIndex === -1}
           required
@@ -118,7 +123,12 @@ export default function AddressForm({
             extractOptions(PhLocationJSON.r[regionIndex].p)}
         </select>
 
-        <select onChange={selectCity} disabled={provinceIndex === -1} required>
+        <select
+          className="homefinders-form-fields"
+          onChange={selectCity}
+          disabled={provinceIndex === -1}
+          required
+        >
           <option
             defaultValue={cityIndex}
             label={!defaultProperty ? "City" : defaultProperty.City}
@@ -129,7 +139,12 @@ export default function AddressForm({
             extractOptions(PhLocationJSON.r[regionIndex].p[provinceIndex].c)}
         </select>
 
-        <select onChange={selectBarangay} disabled={cityIndex === -1} required>
+        <select
+          className="homefinders-form-fields"
+          onChange={selectBarangay}
+          disabled={cityIndex === -1}
+          required
+        >
           <option
             defaultValue={barangayIndex}
             label={!defaultProperty ? "Barangay" : defaultProperty.Barangay}
@@ -143,6 +158,7 @@ export default function AddressForm({
         </select>
       </div>
       <input
+        className="homefinders-form-fields"
         onChange={(e) => setExactAddress(e.target.value)}
         type="text"
         required

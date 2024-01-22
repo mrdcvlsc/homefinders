@@ -84,6 +84,7 @@ export default function PropertyForm({
 
       {/*=======================================================================*/}
       <input
+        className="homefinders-form-fields"
         type="text"
         placeholder="Property Name"
         onChange={(e) => setPropertyName(e.target.value)}
@@ -94,6 +95,7 @@ export default function PropertyForm({
       {setPrice ? (
         <div className="property-form-single-row-price-type-storeys">
           <input
+            className="homefinders-form-fields"
             onChange={(e) => setPrice(Number(e.target.value))}
             type="number"
             placeholder="Price"
@@ -101,7 +103,11 @@ export default function PropertyForm({
             required
           />
           {/*=======================================================================*/}
-          <select onChange={(e) => setPropertyType(e.target.value)} required>
+          <select
+            className="homefinders-form-fields"
+            onChange={(e) => setPropertyType(e.target.value)}
+            required
+          >
             <option
               label={
                 defaultProperty
@@ -118,7 +124,11 @@ export default function PropertyForm({
             })}
           </select>
           {/*=======================================================================*/}
-          <select onChange={(e) => setStoreys(Number(e.target.value))} required>
+          <select
+            className="homefinders-form-fields"
+            onChange={(e) => setStoreys(Number(e.target.value))}
+            required
+          >
             <option
               label={
                 defaultProperty
@@ -142,6 +152,7 @@ export default function PropertyForm({
       {setMinPrice && setMaxPrice ? (
         <div className="property-form-single-row-four-fields">
           <input
+            className="homefinders-form-fields"
             onChange={(e) => setMinPrice(Number(e.target.value))}
             type="number"
             placeholder="Mininum Price"
@@ -149,20 +160,29 @@ export default function PropertyForm({
           />
 
           <input
+            className="homefinders-form-fields"
             onChange={(e) => setMaxPrice(Number(e.target.value))}
             type="number"
             placeholder="Maximum Price"
             required
           />
           {/*=======================================================================*/}
-          <select onChange={(e) => setPropertyType(e.target.value)} required>
+          <select
+            className="homefinders-form-fields"
+            onChange={(e) => setPropertyType(e.target.value)}
+            required
+          >
             <option label="Property Type" disabled selected />
             {PropertyOptionsJSON.types.map((value, index) => {
               return <option key={index} value={value} label={value} />;
             })}
           </select>
           {/*=======================================================================*/}
-          <select onChange={(e) => setStoreys(Number(e.target.value))} required>
+          <select
+            className="homefinders-form-fields"
+            onChange={(e) => setStoreys(Number(e.target.value))}
+            required
+          >
             <option label="Storeys/Floors" disabled selected />
             {PropertyOptionsJSON.storeys.map((value, index) => {
               return (
@@ -179,6 +199,7 @@ export default function PropertyForm({
 
       <div className="property-form-single-row-four-fields">
         <input
+          className="homefinders-form-fields"
           onChange={(e) => setLivableFloorArea(Number(e.target.value))}
           type="number"
           placeholder="Livable Floor Area (sqm.)"
@@ -186,6 +207,7 @@ export default function PropertyForm({
           required
         />
         <input
+          className="homefinders-form-fields"
           onChange={(e) => setGrossArea(Number(e.target.value))}
           type="number"
           placeholder="Gross Floor Area (sqm.)"
@@ -193,6 +215,7 @@ export default function PropertyForm({
           required
         />
         <input
+          className="homefinders-form-fields"
           onChange={(e) => setLotLength(Number(e.target.value))}
           type="number"
           placeholder="Lot Length (m)"
@@ -200,6 +223,7 @@ export default function PropertyForm({
           required
         />
         <input
+          className="homefinders-form-fields"
           onChange={(e) => setLotWidth(Number(e.target.value))}
           type="number"
           placeholder="Lot Width (m)"
@@ -211,6 +235,7 @@ export default function PropertyForm({
       <div className="property-form-single-row-four-fields">
         {/*=======================================================================*/}
         <select
+          className="homefinders-form-fields"
           onChange={(e) => setLivingRoom(Number(e.target.value))}
           required
         >
@@ -237,7 +262,11 @@ export default function PropertyForm({
         </select>
 
         {/*=======================================================================*/}
-        <select onChange={(e) => setKitchen(Number(e.target.value))} required>
+        <select
+          className="homefinders-form-fields"
+          onChange={(e) => setKitchen(Number(e.target.value))}
+          required
+        >
           <option
             label={
               defaultProperty
@@ -258,6 +287,7 @@ export default function PropertyForm({
 
         {/*=======================================================================*/}
         <select
+          className="homefinders-form-fields"
           onChange={(e) => setDiningRoom(Number(e.target.value))}
           required
         >
@@ -284,7 +314,11 @@ export default function PropertyForm({
         </select>
 
         {/*=======================================================================*/}
-        <select onChange={(e) => setBathRoom(Number(e.target.value))} required>
+        <select
+          className="homefinders-form-fields"
+          onChange={(e) => setBathRoom(Number(e.target.value))}
+          required
+        >
           <option
             label={
               defaultProperty
@@ -306,7 +340,11 @@ export default function PropertyForm({
 
       <div className="property-form-single-row-four-fields">
         {/*=======================================================================*/}
-        <select onChange={(e) => setBedroom(Number(e.target.value))} required>
+        <select
+          className="homefinders-form-fields"
+          onChange={(e) => setBedroom(Number(e.target.value))}
+          required
+        >
           <option
             label={
               defaultProperty
@@ -327,6 +365,7 @@ export default function PropertyForm({
 
         {/*=======================================================================*/}
         <select
+          className="homefinders-form-fields"
           onChange={(e) => setMastersBedroom(Number(e.target.value))}
           required
         >
@@ -353,7 +392,11 @@ export default function PropertyForm({
         </select>
 
         {/*=======================================================================*/}
-        <select onChange={(e) => setMaidRoom(Number(e.target.value))} required>
+        <select
+          className="homefinders-form-fields"
+          onChange={(e) => setMaidRoom(Number(e.target.value))}
+          required
+        >
           <option
             label={
               defaultProperty
@@ -373,7 +416,11 @@ export default function PropertyForm({
         </select>
 
         {/*=======================================================================*/}
-        <select onChange={(e) => setToilet(Number(e.target.value))} required>
+        <select
+          className="homefinders-form-fields"
+          onChange={(e) => setToilet(Number(e.target.value))}
+          required
+        >
           <option
             label={
               defaultProperty
@@ -396,6 +443,7 @@ export default function PropertyForm({
       <div className="property-form-single-row-four-fields">
         {/*=======================================================================*/}
         <select
+          className="homefinders-form-fields"
           onChange={(e) => setWalkInCloset(Number(e.target.value))}
           required
         >
@@ -422,7 +470,11 @@ export default function PropertyForm({
         </select>
 
         {/*=======================================================================*/}
-        <select onChange={(e) => setBalcony(Number(e.target.value))} required>
+        <select
+          className="homefinders-form-fields"
+          onChange={(e) => setBalcony(Number(e.target.value))}
+          required
+        >
           <option
             label={
               defaultProperty
@@ -442,7 +494,11 @@ export default function PropertyForm({
         </select>
 
         {/*=======================================================================*/}
-        <select onChange={(e) => setLanai(Number(e.target.value))} required>
+        <select
+          className="homefinders-form-fields"
+          onChange={(e) => setLanai(Number(e.target.value))}
+          required
+        >
           <option
             label={
               defaultProperty
@@ -462,7 +518,11 @@ export default function PropertyForm({
         </select>
 
         {/*=======================================================================*/}
-        <select onChange={(e) => setCarPort(Number(e.target.value))} required>
+        <select
+          className="homefinders-form-fields"
+          onChange={(e) => setCarPort(Number(e.target.value))}
+          required
+        >
           <option
             label={
               defaultProperty
@@ -483,7 +543,11 @@ export default function PropertyForm({
       </div>
       {setDescription ? (
         <textarea
+          className="homefinders-form-fields"
           onChange={(e) => setDescription(e.target.value)}
+          defaultValue={
+            defaultProperty?.Description ? defaultProperty?.Description : null
+          }
           name=""
           id=""
           cols="30"

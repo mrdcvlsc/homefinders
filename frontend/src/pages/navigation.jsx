@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import LoginPopup from "../components/LoginPopup";
 import { get_loggedin_user, logout_request } from "../requests/get";
 
+import ImgLogo from "../assets/logo.png";
+
 import "../styles/navigation.css";
 
 // The main navigation component, this is the root of the react-router-dom.
@@ -62,9 +64,7 @@ export default function Navigation() {
     <>
       <div id="navigation-panel">
         <div className="logo" to={`home`}>
-          {/* <img src={ImgLogo} width={'20em'} height={'20em'}></img>
-                <h3>Home Finders</h3> */}
-          <h2>Logo</h2>
+          <img src={ImgLogo} />
         </div>
 
         <div id="navigation-bar">
@@ -81,6 +81,10 @@ export default function Navigation() {
               </Link>
             </div>
           </div>
+
+          <Link className="react-router-link" to={`inquire`}>
+            Inquire
+          </Link>
 
           <Link className="react-router-link" to={`about`}>
             About Us
