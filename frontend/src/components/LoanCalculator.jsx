@@ -2,9 +2,11 @@ import React from "react";
 import "../styles/calculator.css";
 
 function isNumeric(str) {
-  if (typeof str != "string") return false // we only process strings!  
-  return !isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
-         !isNaN(parseFloat(str)) // ...and ensure strings of whitespace fail
+  if (typeof str != "string") return false; // we only process strings!
+  return (
+    !isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
+    !isNaN(parseFloat(str))
+  ); // ...and ensure strings of whitespace fail
 }
 
 export default function LoanCalculator() {
@@ -17,14 +19,14 @@ export default function LoanCalculator() {
   const [totalAmount, setTotalAmount] = React.useState(0);
 
   const calculateBtnHandler = () => {
-    console.log('calculate button')
+    console.log("calculate button");
 
     const interest = interestRate.current / 12.0 / 100.0;
-    console.log('interest = ', interest)
+    console.log("interest = ", interest);
 
-    console.log('loanAmount.current   = ', loanAmount.current)
-    console.log('interestRate.current = ', interestRate.current)
-    console.log('loanTenure.current   = ', loanTenure.current)
+    console.log("loanAmount.current   = ", loanAmount.current);
+    console.log("interestRate.current = ", interestRate.current);
+    console.log("loanTenure.current   = ", loanTenure.current);
 
     // calculate EMI
     const newLoanEMI =
@@ -48,66 +50,66 @@ export default function LoanCalculator() {
 
   const handleAmountInput = (e) => {
     if (isNumeric(e.target.value)) {
-      const num_input = Number(e.target.value)
-      loanAmount.current = num_input
+      const num_input = Number(e.target.value);
+      loanAmount.current = num_input;
 
       if (num_input < 0) {
-        e.target.value = Math.abs(num_input)
-        loanAmount.current = Number(Math.abs(num_input))
+        e.target.value = Math.abs(num_input);
+        loanAmount.current = Number(Math.abs(num_input));
       }
 
       if (num_input > 999_999_999_999) {
-        e.target.value = 999_999_999_999
-        loanAmount.current = Number(999_999_999_999)
+        e.target.value = 999_999_999_999;
+        loanAmount.current = Number(999_999_999_999);
       }
     } else {
-      e.target.value = ''
+      e.target.value = "";
     }
 
-    console.log('onChange loanAmount.current = ', loanAmount.current)
-  }
+    console.log("onChange loanAmount.current = ", loanAmount.current);
+  };
 
   const handleInterestInput = (e) => {
     if (isNumeric(e.target.value)) {
-      const num_input = Number(e.target.value)
-      interestRate.current = num_input
+      const num_input = Number(e.target.value);
+      interestRate.current = num_input;
 
       if (num_input < 0) {
-        e.target.value = Math.abs(num_input)
-        interestRate.current = Number(Math.abs(num_input))
+        e.target.value = Math.abs(num_input);
+        interestRate.current = Number(Math.abs(num_input));
       }
 
       if (num_input > 100) {
-        e.target.value = 100
-        interestRate.current = Number(100)
+        e.target.value = 100;
+        interestRate.current = Number(100);
       }
     } else {
-      e.target.value = ''
+      e.target.value = "";
     }
 
-    console.log('onChange interestRate.current = ', interestRate.current)
-  }
+    console.log("onChange interestRate.current = ", interestRate.current);
+  };
 
   const handleTenureInput = (e) => {
     if (isNumeric(e.target.value)) {
-      const num_input = Number(e.target.value)
-      loanTenure.current = num_input
+      const num_input = Number(e.target.value);
+      loanTenure.current = num_input;
 
       if (num_input < 0) {
-        e.target.value = Math.abs(num_input)
-        loanTenure.current = Number(Math.abs(num_input))
+        e.target.value = Math.abs(num_input);
+        loanTenure.current = Number(Math.abs(num_input));
       }
 
       if (num_input > 1200) {
-        e.target.value = 1200
-        loanTenure.current = Number(1200)
+        e.target.value = 1200;
+        loanTenure.current = Number(1200);
       }
     } else {
-      e.target.value = ''
+      e.target.value = "";
     }
 
-    console.log('onChange loanTenure.current = ', loanTenure.current)
-  }
+    console.log("onChange loanTenure.current = ", loanTenure.current);
+  };
 
   return (
     <div className="loan-calculator-form">
@@ -118,7 +120,7 @@ export default function LoanCalculator() {
           <div>
             <div className="loan-calculator-labels">Amount</div>
             <input
-              defaultValue={'0'}
+              defaultValue={"0"}
               required
               type="text"
               onChange={handleAmountInput}
@@ -128,7 +130,7 @@ export default function LoanCalculator() {
           <div>
             <div className="loan-calculator-labels">Interest Rate</div>
             <input
-              defaultValue={'0'}
+              defaultValue={"0"}
               required
               type="text"
               onChange={handleInterestInput}
@@ -138,7 +140,7 @@ export default function LoanCalculator() {
           <div>
             <div className="loan-calculator-labels">Tenure (in months)</div>
             <input
-              defaultValue={'0'}
+              defaultValue={"0"}
               required
               type="text"
               onChange={handleTenureInput}

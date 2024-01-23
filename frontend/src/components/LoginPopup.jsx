@@ -9,7 +9,7 @@ import "../styles/LoginPopup.css";
 export default function LoginPopup() {
   const navigate = useNavigate();
 
-  const [getLoggedInUser] = useOutletContext()
+  const [getLoggedInUser] = useOutletContext();
 
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -64,7 +64,7 @@ export default function LoginPopup() {
   return (
     <div className="login-page-container">
       <div className="login-div">
-        <span className="login-btn-close" onClick={() => navigate('/')}>
+        <span className="login-btn-close" onClick={() => navigate("/")}>
           <ion-icon name="close"></ion-icon>
         </span>
 
@@ -117,8 +117,8 @@ export default function LoginPopup() {
               {" "}
               Login
             </button>
-            <Link to={'/forgot-password'}>Forgot Password</Link>
-            
+            <Link to={"/forgot-password"}>Forgot Password</Link>
+
             {formCatch.error && (
               <p className="form-error-message">{formCatch.error}</p>
             )}

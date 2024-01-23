@@ -31,9 +31,10 @@ export default function Listing() {
   return (
     <div className="listing-page">
       {user ? <h1>Welcome {user}!</h1> : <h1>Login first</h1>}
-    
+
       <p>
-        Hover on this page's button to see the options to manipulate and/or add real-estate units/properties
+        Hover on this page's button to see the options to manipulate and/or add
+        real-estate units/properties
       </p>
     </div>
   );

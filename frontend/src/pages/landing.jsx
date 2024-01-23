@@ -202,7 +202,7 @@ export default function Landing() {
                 <button
                   className="homefinders-btn"
                   onClick={() => {
-                    setDisplayedProperties(null)
+                    setDisplayedProperties(null);
                     setSelectedProvince("");
                     setSelectedType("");
                     setSelectedPriceRange({
