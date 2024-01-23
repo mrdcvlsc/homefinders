@@ -10,6 +10,9 @@ const currency_formatter = new Intl.NumberFormat("en-PH", {
   maximumFractionDigits: 2,
 });
 
+let empty_img_link =
+  "https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg";
+
 export default function Inquire() {
   const { state } = useLocation();
 
@@ -61,7 +64,7 @@ export default function Inquire() {
             {state.Name} - {currency_formatter.format(state.Price)}
           </h2>
           <div className="inquire-property-image-container">
-            <img src={state.SampleImagesURL[0]} />
+            <img src={state.SampleImagesURL ? state.SampleImagesURL[0] : empty_img_link} />
           </div>
           <p>
             {state.Barangay}, {state.City}, {state.Province}

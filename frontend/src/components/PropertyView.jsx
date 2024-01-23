@@ -17,10 +17,6 @@ const currency_formatter = new Intl.NumberFormat("en-PH", {
   maximumFractionDigits: 2,
 });
 
-const mod = (x, n) => {
-  return ((x % n) + n) % n;
-};
-
 const PropertyView = ({ propertyData, setSelectedProperty }) => {
   const navigate = useNavigate();
 
@@ -58,11 +54,17 @@ const PropertyView = ({ propertyData, setSelectedProperty }) => {
         <div className="property-view-image">
           <h3>Sample Images</h3>
           <Carousel useKeyboardArrows={true}>
-            {propertyData.SampleImagesURL.map((URL, index) => (
+            {propertyData?.SampleImagesURL ? (
+              propertyData?.SampleImagesURL.map((URL, index) => (
+                <div className="slide">
+                  <img alt="sample_file" src={URL} key={index} />
+                </div>
+              ))
+            ) : (
               <div className="slide">
-                <img alt="sample_file" src={URL} key={index} />
+                <img alt="sample_file" src={empty_img_link} key={0} />
               </div>
-            ))}
+            )}
           </Carousel>
         </div>
 
@@ -149,11 +151,17 @@ const PropertyView = ({ propertyData, setSelectedProperty }) => {
         <div className="property-view-image">
           <h3>Floor Plans</h3>
           <Carousel useKeyboardArrows={true}>
-            {propertyData.FloorPlansURL.map((URL, index) => (
+            {propertyData?.FloorPlansURL ? (
+              propertyData?.FloorPlansURL.map((URL, index) => (
+                <div className="slide">
+                  <img alt="sample_file" src={URL} key={index} />
+                </div>
+              ))
+            ) : (
               <div className="slide">
-                <img alt="sample_file" src={URL} key={index} />
+                <img alt="sample_file" src={empty_img_link} key={0} />
               </div>
-            ))}
+            )}
           </Carousel>
         </div>
       </div>
