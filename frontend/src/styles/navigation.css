@@ -161,12 +161,12 @@
 }
 
 #admin-login-btn:hover {
-  color: black;
+  color: #14213d;
   background-color: white;
 }
 
 .hidden-black {
-  color: black;
+  color: #14213d;
 }
 
 .listing-btn {
