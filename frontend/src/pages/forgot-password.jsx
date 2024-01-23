@@ -21,8 +21,8 @@ export default function ForgotPassword() {
     setFormsDisabled(true);
 
     try {
-      if (username === '') {
-        throw new Error('Fillup Username Field')
+      if (username === "") {
+        throw new Error("Fillup Username Field");
       }
 
       const [ok, data] = await post("/generate-recovery-code", {
@@ -55,27 +55,29 @@ export default function ForgotPassword() {
 
     try {
       if (!fourDigitNumber) {
-        throw new Error('Fillup 4 digit code')
+        throw new Error("Fillup 4 digit code");
       }
 
       if (!(fourDigitNumber >= 1000 && fourDigitNumber <= 9999)) {
-        throw new Error('Only 4 digit code is allowed')
+        throw new Error("Only 4 digit code is allowed");
       }
 
-      if (newPassword === '') {
-        throw new Error('Fillup Password Field')
+      if (newPassword === "") {
+        throw new Error("Fillup Password Field");
       }
 
-      if (retypedPassword === '') {
-        throw new Error('Re-type password')
+      if (retypedPassword === "") {
+        throw new Error("Re-type password");
       }
 
       if (newPassword.length < 8) {
-        throw new Error('Password should be greater than/equal 8 characters long')
+        throw new Error(
+          "Password should be greater than/equal 8 characters long",
+        );
       }
 
       if (newPassword !== retypedPassword) {
-        throw new Error('Retyped password did not match')
+        throw new Error("Retyped password did not match");
       }
 
       const [ok, data] = await post("/validate-recovery-code", json_payload);
@@ -86,7 +88,7 @@ export default function ForgotPassword() {
         throw new Error(data.msg);
       }
 
-      setPhase2Err('')
+      setPhase2Err("");
     } catch (err) {
       setPhase2Err(err.message);
       setFormsDisabled(false);

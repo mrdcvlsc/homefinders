@@ -59,6 +59,7 @@ func main() {
 	router.POST("/save-edit-property", routes.EditProperty)
 	router.POST("/generate-recovery-code", routes.Generate4DigitCode)
 	router.POST("/validate-recovery-code", routes.Validate4DigitCode)
+	router.POST("/send-inquiry", routes.SendInquiry)
 
 	router.DELETE("/delete-property/:id", routes.DeleteProperty)
 
