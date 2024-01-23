@@ -35,6 +35,10 @@ func SaveUserWithUsername(user *database.User) error {
 	return db.SaveUserWithUsername(user)
 }
 
+func EditUserPassword(username, new_password_hash string) error {
+	return db.EditUserPassword(username, new_password_hash)
+}
+
 func SaveProperty(property *database.Property) error {
 	return db.SaveProperty(property)
 }
@@ -117,4 +121,12 @@ func DeleteImageSamples(associated_property_id int) error {
 
 func DeleteImageFloorPlans(associated_property_id int) error {
 	return db.DeleteImageFloorPlans(associated_property_id)
+}
+
+func SaveRecoveryCode(recovery_code *database.RecoveryCode) error {
+	return db.SaveRecoveryCode(recovery_code)
+}
+
+func GetLatestRecoveryCode(username string) (*database.RecoveryCode, error) {
+	return db.GetLatestRecoveryCode(username)
 }

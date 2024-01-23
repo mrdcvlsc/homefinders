@@ -128,6 +128,18 @@ func (db *MariaDB) InitializeTables() error {
 		return err
 	}
 
+	// create recovery code table if it's not created yet
+	recovery_codes_tbl_create_query :=
+		`CREATE TABLE IF NOT EXISTS RecoveryCodes (
+			code INT(4) NOT NULL,
+			username VARCHAR(25) NOT NULL,
+			date_issued DATETIME DEFAULT NOW()
+		)`
+
+	if _, err := db.Instance.Exec(recovery_codes_tbl_create_query); err != nil {
+		return err
+	}
+
 	return nil
 }
 
@@ -166,6 +178,15 @@ func (db *MariaDB) GetUserWithUsername(username string) (*User, error) {
 	row := db.Instance.QueryRow("SELECT id, username, salted_hash_passwrd, date_created FROM Users WHERE username = ?", username)
 	err := row.Scan(&user.Id, &user.Username, &user.SaltedHashPasswrd, &user.DateCreated)
 	return user, err
+}
+
+func (db *MariaDB) EditUserPassword(username, new_password_hash string) error {
+	_, err := db.Instance.Exec(
+		`UPDATE Users SET salted_hash_passwrd = ? WHERE username = ?`,
+		new_password_hash, username,
+	)
+
+	return err
 }
 
 // test with `err == sql.ErrNoRows`, if true user not found, else internal server error
@@ -475,4 +496,25 @@ func (db *MariaDB) DeleteProperty(property_id int) error {
 	)
 
 	return err
+}
+
+func (db *MariaDB) SaveRecoveryCode(recovery_code *RecoveryCode) error {
+	_, err := db.Instance.Exec(
+		"INSERT INTO RecoveryCodes (code, username) VALUES (?, ?)",
+		&recovery_code.Code,
+		&recovery_code.Username,
+	)
+	return err
+}
+
+func (db *MariaDB) GetLatestRecoveryCode(username string) (*RecoveryCode, error) {
+	recovery_code := &RecoveryCode{}
+
+	latest_recovery_code := db.Instance.QueryRow(
+		"SELECT * FROM RecoveryCodes WHERE username = ? ORDER BY date_issued DESC LIMIT 1",
+		username,
+	)
+
+	err := latest_recovery_code.Scan(&recovery_code.Code, &recovery_code.Username, &recovery_code.DateIssued)
+	return recovery_code, err
 }

@@ -7,8 +7,8 @@ import "../styles/forgot-password.css";
 export default function ForgotPassword() {
   const [formsDisabled, setFormsDisabled] = React.useState(false);
 
+  const [fourDigitNumber, setFourDigitNumber] = React.useState(null);
   const [username, setUsername] = React.useState("");
-  const [fourDigitNumber, setFourDigitNumber] = React.useState(0);
   const [newPassword, setNewPassword] = React.useState("");
   const [retypedPassword, setRetypedPassword] = React.useState("");
 
@@ -21,6 +21,10 @@ export default function ForgotPassword() {
     setFormsDisabled(true);
 
     try {
+      if (username === '') {
+        throw new Error('Fillup Username Field')
+      }
+
       const [ok, data] = await post("/generate-recovery-code", {
         username: username,
       });
@@ -50,6 +54,30 @@ export default function ForgotPassword() {
     console.log("payload = ", json_payload);
 
     try {
+      if (!fourDigitNumber) {
+        throw new Error('Fillup 4 digit code')
+      }
+
+      if (!(fourDigitNumber >= 1000 && fourDigitNumber <= 9999)) {
+        throw new Error('Only 4 digit code is allowed')
+      }
+
+      if (newPassword === '') {
+        throw new Error('Fillup Password Field')
+      }
+
+      if (retypedPassword === '') {
+        throw new Error('Re-type password')
+      }
+
+      if (newPassword.length < 8) {
+        throw new Error('Password should be greater than/equal 8 characters long')
+      }
+
+      if (newPassword !== retypedPassword) {
+        throw new Error('Retyped password did not match')
+      }
+
       const [ok, data] = await post("/validate-recovery-code", json_payload);
 
       if (ok) {
@@ -57,6 +85,8 @@ export default function ForgotPassword() {
       } else {
         throw new Error(data.msg);
       }
+
+      setPhase2Err('')
     } catch (err) {
       setPhase2Err(err.message);
       setFormsDisabled(false);

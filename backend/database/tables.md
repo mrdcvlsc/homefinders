@@ -72,3 +72,13 @@ CREATE TABLE IF NOT EXISTS Images (
     image_public_id VARCHAR(255) UNIQUE NOT NULL
 );
 ```
+
+### RecoveryCodes
+
+```sql
+CREATE TABLE IF NOT EXISTS RecoveryCodes (
+    code INT(4) NOT NULL,
+    username VARCHAR(25) NOT NULL,
+    date_issued DATETIME DEFAULT NOW()
+)
+```

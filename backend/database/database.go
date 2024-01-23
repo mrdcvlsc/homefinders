@@ -62,6 +62,12 @@ type Property struct {
 	FloorPlansURL   []string
 }
 
+type RecoveryCode struct {
+	Code       int
+	Username   string
+	DateIssued string
+}
+
 type I interface {
 	Connect() error
 	GetInstance() *sql.DB
@@ -72,6 +78,8 @@ type I interface {
 
 	GetUserWithEmail(email string) (*User, error)
 	GetUserWithUsername(username string) (*User, error)
+
+	EditUserPassword(username, new_password_hash string) error
 
 	FindRegCode(reg_code string) (string, error)
 
@@ -99,6 +107,9 @@ type I interface {
 	DeleteImageData(associated_property_id int) error
 	DeleteImageSamples(associated_property_id int) error
 	DeleteImageFloorPlans(associated_property_id int) error
+
+	SaveRecoveryCode(*RecoveryCode) error
+	GetLatestRecoveryCode(username string) (*RecoveryCode, error)
 }
 
 func NewUser(username, email, salted_hash_passwrd, data_created string) *User {
