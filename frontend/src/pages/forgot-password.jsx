@@ -15,6 +15,7 @@ export default function ForgotPassword() {
   const [phase1, setPhase1] = React.useState(true);
   const [pahse1Err, setPhase1Err] = React.useState("");
   const [pahse2Err, setPhase2Err] = React.useState("");
+  const [phase2Success, setPhase2Success] = React.useState('')
 
   const handleSendCode = async (e) => {
     console.log("handle send code");
@@ -88,6 +89,8 @@ export default function ForgotPassword() {
         throw new Error(data.msg);
       }
 
+      setPhase2Success(data.msg)
+
       setPhase2Err("");
     } catch (err) {
       setPhase2Err(err.message);
@@ -144,6 +147,7 @@ export default function ForgotPassword() {
               </button>
             )}
             <p className="homefinders-color-error">{pahse2Err}</p>
+            <p className="homefinders-color-success">{phase2Success}</p>
           </>
         )}
       </div>

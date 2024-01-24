@@ -69,7 +69,7 @@ export default function LoginPopup() {
         </span>
 
         <div className="login-form login">
-          <h2> Admin Login</h2>
+          <h2>Broker Login</h2>
           <form action="#">
             <div className="login-form-inputs">
               <span className="login-form-icons">
