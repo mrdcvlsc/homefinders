@@ -58,9 +58,9 @@ export default function LoanCalculator() {
         loanAmount.current = Number(Math.abs(num_input));
       }
 
-      if (num_input > 999_999_999_999) {
-        e.target.value = 999_999_999_999;
-        loanAmount.current = Number(999_999_999_999);
+      if (num_input > 999_999_999) {
+        e.target.value = 999_999_999;
+        loanAmount.current = Number(999_999_999);
       }
     } else {
       e.target.value = "";
@@ -79,9 +79,9 @@ export default function LoanCalculator() {
         interestRate.current = Number(Math.abs(num_input));
       }
 
-      if (num_input > 100) {
-        e.target.value = 100;
-        interestRate.current = Number(100);
+      if (num_input > 40) {
+        e.target.value = 40;
+        interestRate.current = Number(40);
       }
     } else {
       e.target.value = "";
@@ -100,9 +100,9 @@ export default function LoanCalculator() {
         loanTenure.current = Number(Math.abs(num_input));
       }
 
-      if (num_input > 1200) {
-        e.target.value = 1200;
-        loanTenure.current = Number(1200);
+      if (num_input > 360) {
+        e.target.value = 360;
+        loanTenure.current = Number(360);
       }
     } else {
       e.target.value = "";
@@ -174,10 +174,6 @@ export default function LoanCalculator() {
             Calculate
           </button>
         </div>
-
-        {/* <div className="right">
-                    <canvas id="myChart" width="400" height="400"></canvas>
-                </div> */}
       </div>
     </div>
   );
