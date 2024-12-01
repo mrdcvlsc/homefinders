@@ -2,6 +2,14 @@ import React from "react";
 import PropertyOptionsJSON from "../assets/property";
 import "../styles/PropertyForm.css";
 
+function isNumeric(str) {
+  if (typeof str != "string") return false; // we only process strings!
+  return (
+    !isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
+    !isNaN(parseFloat(str))
+  ); // ...and ensure strings of whitespace fail
+}
+
 export default function PropertyForm({
   componentHeadingText,
   setPropertyName,
@@ -78,6 +86,121 @@ export default function PropertyForm({
     setDescription,
   ]);
 
+  const handleInputLengthMeter = (e) => {
+    let num_input = 0
+
+    if (isNumeric(e.target.value)) {
+      num_input = Number(e.target.value);
+
+      if (num_input < 0) {
+        num_input = Math.abs(num_input);
+      }
+
+      if (num_input > 200) {
+        num_input = 200;
+      }
+    } else {
+      num_input = 0;
+    }
+
+    e.target.value = num_input
+
+    console.log('handleInputSQM')
+    setLotLength(num_input)
+  }
+
+  const handleInputWidthMeter = (e) => {
+    let num_input = 0
+
+    if (isNumeric(e.target.value)) {
+      num_input = Number(e.target.value);
+
+      if (num_input < 0) {
+        num_input = Math.abs(num_input);
+      }
+
+      if (num_input > 200) {
+        num_input = 200;
+      }
+    } else {
+      num_input = 0;
+    }
+
+    e.target.value = num_input
+
+    console.log('handleInputSQM')
+    setLotWidth(num_input)
+  }
+
+  const handleInputLivableSQM = (e) => {
+    let num_input = 0
+
+    if (isNumeric(e.target.value)) {
+      num_input = Number(e.target.value);
+
+      if (num_input < 0) {
+        num_input = Math.abs(num_input);
+      }
+
+      if (num_input > 40_000) {
+        num_input = 40_000;
+      }
+    } else {
+      num_input = 0;
+    }
+
+    e.target.value = num_input
+
+    console.log('handleInputSQM')
+    setLivableFloorArea(num_input)
+  }
+
+  const handleInputGrossSQM = (e) => {
+    let num_input = 0
+
+    if (isNumeric(e.target.value)) {
+      num_input = Number(e.target.value);
+
+      if (num_input < 0) {
+        num_input = Math.abs(num_input);
+      }
+
+      if (num_input > 40_000) {
+        num_input = 40_000;
+      }
+    } else {
+      num_input = 0;
+    }
+
+    e.target.value = num_input
+
+    console.log('handleInputSQM')
+    setGrossArea(num_input)
+  }
+
+  const handleInputPrice = (e) => {
+    let num_input = 0
+
+    if (isNumeric(e.target.value)) {
+      num_input = Number(e.target.value);
+
+      if (num_input < 0) {
+        num_input = Math.abs(num_input);
+      }
+
+      if (num_input > 999_999_999) {
+        num_input = 999_999_999;
+      }
+    } else {
+      num_input = 0;
+    }
+
+    e.target.value = num_input
+
+    console.log('handleInputPrice')
+    setPrice(num_input)
+  }
+
   return (
     <div className="property-form">
       <h3>{componentHeadingText}</h3>
@@ -96,7 +219,8 @@ export default function PropertyForm({
         <div className="property-form-single-row-price-type-storeys">
           <input
             className="homefinders-form-fields"
-            onChange={(e) => setPrice(Number(e.target.value))}
+            // onChange={(e) => setPrice(Number(e.target.value))}
+            onChange={handleInputPrice}
             type="number"
             placeholder="Price"
             defaultValue={defaultProperty ? defaultProperty.Price : null}
@@ -200,7 +324,8 @@ export default function PropertyForm({
       <div className="property-form-single-row-four-fields">
         <input
           className="homefinders-form-fields"
-          onChange={(e) => setLivableFloorArea(Number(e.target.value))}
+          // onChange={(e) => setLivableFloorArea(Number(e.target.value))}
+          onChange={handleInputLivableSQM}
           type="number"
           placeholder="Livable Floor Area (sqm.)"
           defaultValue={defaultProperty ? defaultProperty.LivableAreaSQM : null}
@@ -208,7 +333,8 @@ export default function PropertyForm({
         />
         <input
           className="homefinders-form-fields"
-          onChange={(e) => setGrossArea(Number(e.target.value))}
+          // onChange={(e) => setGrossArea(Number(e.target.value))}
+          onChange={handleInputGrossSQM}
           type="number"
           placeholder="Gross Floor Area (sqm.)"
           defaultValue={defaultProperty ? defaultProperty.GrossAreaSQM : null}
@@ -216,7 +342,8 @@ export default function PropertyForm({
         />
         <input
           className="homefinders-form-fields"
-          onChange={(e) => setLotLength(Number(e.target.value))}
+          // onChange={(e) => setLotLength(Number(e.target.value))}
+          onChange={handleInputLengthMeter}
           type="number"
           placeholder="Lot Length (m)"
           defaultValue={defaultProperty ? defaultProperty.LotLengthM : null}
@@ -224,7 +351,8 @@ export default function PropertyForm({
         />
         <input
           className="homefinders-form-fields"
-          onChange={(e) => setLotWidth(Number(e.target.value))}
+          // onChange={(e) => setLotWidth(Number(e.target.value))}
+          onChange={handleInputWidthMeter}
           type="number"
           placeholder="Lot Width (m)"
           defaultValue={defaultProperty ? defaultProperty.LotWidthM : null}
