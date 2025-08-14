@@ -2,6 +2,7 @@ package persistence
 
 import (
 	"database/sql"
+	"os"
 	"strings"
 
 	"github.com/mrdcvlsc/homefinders/database"
@@ -10,7 +11,12 @@ import (
 var db database.I
 
 func Initialize() error {
-	db = &database.MariaDB{}
+	backend := os.Getenv("DB_BACKEND")
+	if backend == "mongodb" {
+		db = &database.MongoDB{}
+	} else {
+		db = &database.MariaDB{}
+	}
 
 	if err := db.Connect(); err != nil {
 		return err
