@@ -15,6 +15,7 @@ import (
 
 func main() {
 	err := persistence.Initialize()
+
 	if err != nil {
 		fmt.Println("\nPersistence Initialization Error : ", err)
 		os.Exit(1)

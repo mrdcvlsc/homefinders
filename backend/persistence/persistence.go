@@ -2,6 +2,7 @@ package persistence
 
 import (
 	"database/sql"
+	"log"
 	"os"
 	"strings"
 
@@ -12,9 +13,14 @@ var db database.I
 
 func Initialize() error {
 	backend := os.Getenv("DB_BACKEND")
+
+	log.Println("DB_BACKEND: ", backend)
+
 	if backend == "mongodb" {
+		log.Println("Using MongoDB as database backend")
 		db = &database.MongoDB{}
 	} else {
+		log.Println("Using MariaDB as database backend")
 		db = &database.MariaDB{}
 	}
 
